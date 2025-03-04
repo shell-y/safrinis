@@ -1,0 +1,24 @@
+Eu Joaquim (proprietário do Zumbi Festival), 
+Quero um sistema que me entregue dados referentes 
+a artistas mais badalados por gênero musical
+para filtrar minhas decisões de line-up.
+
+
+Eu Alice (promoter do Zumbi Festival), 
+Quero métricas que me auxiliem a encontrar 
+as atrações do dia que para estarem 
+relacionadas com o público-alvo.
+
+
+Eu Sheila (Patrocinadora Zumbi Festival),
+Quero um festival que me proporcione o máximo de 
+retenção de público por dia 
+para que a minha marca tenha o máximo de engajamento.
+
+
+Eu Pedro (Staff contratado do Zumbi Festival),
+Quero informações relevantes dos consumidores do evento,
+para melhor logística e estratégia de merchandising 
+(roupas, bebidas, alimentícios...).
+
+

@@ -1,82 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AquaTech | Página Inicial</title>
-
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sonora</title>
+  <script src="./js/sessao.js"></script>
+  <link rel="stylesheet" href="./css/estilo.css">
+  <link rel="icon" href="./assets/icon/favicon2.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
 <body>
-    <div class="header">
-      <div class="container">
-        <h1 class="titulo">AquaTech</h1>
-        <ul class="navbar">
-          <li class="agora">
-            <a href="#">Inicial</a>
-          </li>
-          <li>
-            <a href="simulador.html">Simulador</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="login.html">Login</a>
-          </li>
-          <li>
-            <a href="cadastro.html">Cadastro</a>
-          </li>
-        </ul>
+  <header>
+    <img src="logo">
+
+    <nav>
+      <ul>
+        <li class="sec-atual">Home
+        <li>Line-up
+        <li>Dashboard
+        <li>Sobre
+        <li>
+          <button class="cheio">
+            Entrar
+          </button>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="carrossel">
+      <div class="painel-carrosel" id="1">
+        <span>Dados, na velocidade do som</span>
       </div>
-    </div>
-  
-    <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
+
+      <div class="painel-carrosel" id="2">
+        <!-- grupo de itens alinhado à esquerda... ou faz um flex pra todos os elementos ficarem à esquerda, vou faz uma caixa onde só ela vai ser colocada na esquerda... vou testar o primeiro método -->
+
+        <h1>A escolha perfeita para seu evento começa aqui!</h1>
+        <p>Descubra as tendências, analise o público e contrate os artistas certos</p>
+
+        <button>
+          Comece agora
+        </button>
+
       </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
+
+      <nav>
+        <input type="radio" class="radio-carrosel" id="1">
+        <input type="radio" class="radio-carrosel" id="2">
+      </nav>
+    </section>
+
+    <section>
+      <h2>Escolher a atração certa nunca foi tão fácil</h2>
+      <p>Produtores enfrentam o desafio de selecionar artistas que realmente engajem o público. Nosso sistema analisa dados de streaming para te ajudar a tomar decisões assertivas.</p>
+
+      <div id="cards">
+
+        <div class="card">
+          <img src="" alt="">
+          <p>Descubra os gêneros mais quentes</p>
+        </div>
+
+        <div class="card">
+          <img src="" alt="">
+          <p>Receba insights exclusibos sobre a sua seleção</p>
+        </div>
+
+        <div class="card">
+          <img src="" alt="">
+          <p>Compare artistas e seus públicos</p>
         </div>
       </div>
-    </div>
-  
-    <div class="footer">
-      <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
-        <span class="version">v1.0.0</span>
+
+      <button>
+        Monte já a sua seleção
+      </button>
+    </section>
+
+    <section>
+      <p>Nossa plataforma faz todo o trabalho para você!</p>
+
+      <div class="cards">
+        <p>Previsão de tendências</p>
+        <img src="" alt="">
+        <p>Antecipe-se ao mercado e contrate artistas em ascensão</p>
       </div>
-    </div>
-  </body>
+
+      <div class="cards">
+        <p>Análise inteligente</p>
+        <img src="" alt="">
+        <p>Identificamos padrões de comportamento e preferências de público</p>
+      </div>
+
+      <div class="cards">
+        <p>Decisões baseadas em dados</p>
+        <img src="" alt="">
+        <p>Sem achismos, tenha apenas insights confiáveis</p>
+      </div>
+    </section>
+
+    <section>
+      <h3>O que dizem nossos clientes?</h3>
+      <hr>
+
+      <div id="banners">
+
+        <div class="banner" id="um">
+          <blockquote>
+            “Antes, escolher atrações era um tiro no escuro. Agora, tenho insights precisos e acerto em cheio nas minhas
+            line-ups!”
+          </blockquote>
+
+          <p>– João, organizador de festivais</p>
+        </div>
+
+        <div class="banner" id="dois">
+          <blockquote>
+            “Antes, escolher atrações era um tiro no escuro. Agora, tenho insights precisos e acerto em cheio nas minhas
+            line-ups!”
+          </blockquote>
+
+          <p>– Marcos,produtor de shows</p>
+        </div>
+
+        <div class="banner" id="tres">
+          <blockquote>
+
+          </blockquote>
+           
+          <p></p>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <h2>Leve seu evento para o próximo nível!</h2>
+      <p>Comece agora a planejar suas atrações </p>
+
+      <div>
+        <button>
+          Quero testar agora
+        </button>
+
+        <button>
+          Fale conosco
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <section>
+      <img src="" alt="">
+
+      <address>
+        <strong>Sonora</strong><br>
+        Haddock Lobo, 595<br>
+        São Paulo, SP - Brasil
+      </address>
+
+      <div>
+        <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt="">
+      </div>
+ 
+      <small>2025. Sonora. Todos os direitos reservados.</small>
+    </section>
+
+    <section>
+      <h4>Newsletters</h4>
+      <p>Fique por dentro das últimas novidades da música</p>
+
+      <div>
+        <input placeholder="seu@email.com">
+        
+        <button>
+          Inscreva-se
+        </button>
+      </div>
+
+      <small>Ao se inscrever, você concorda em receber nossos e-mails e está de acordo com os nossos Termos e Condições.</small>
+    </section>
+  </footer>
+</body>
 
 </html>

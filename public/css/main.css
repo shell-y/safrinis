@@ -1,0 +1,151 @@
+/* 
+  O arquivo main.css serve para abrigar os padrões de estilo que estarão presentes em todas as páginas do projeto. A ideia é não repetir códigos e todos os arquivos CSS mais fáceis de mexer.
+  Para facilitar a gestão e compreensão desse arquivo, ele foi oganizado em algumas seções.
+*/
+
+/* Variáveis */
+:root { /* representa a raiz do documento HTML. pode definir globalmente alguma propriedade ou servir para criar variáveis de estilo */
+  --area-segura-lateral: 4rem;
+  
+  color: white;
+  --cor-desaturada: gray;
+
+  --cor-azul-escuro: #3737c8;
+  --cor-azul: #5f5fd3;
+  --cor-azul-claro: #87aade;
+  --cor-verde-claro: #80ffb3;
+  --cor-verde: #37c871;
+}
+/* Fim variáveis */
+
+/* Responsividade */
+html {
+  font-size: 62.5%;
+
+  /* 
+    essa configuração faz com que o valor de REM seja exatamente 10px. ou seja, se quero definir uma letra com 25px eu uso 2.5rem
+    isso facilita na hora de definir tamanhos e também descomplica a responsividade: 
+    * dependendo da necessidade, basta diminuir essa porcentagem que o site já se encaixa melhor no dispositvo
+    * os tamanhos definidos em REM não precisarão ser alterados, pois os cálculos de escala serão feitos automaticamente
+  */
+}
+/* Fim responsividade */
+
+
+/* Padronização */
+body {
+  background-color: #030303;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  outline: none;
+  border: none;
+  text-transform: uppercase;
+  background: transparent;
+  
+  border: .1rem solid var(--cor-azul);
+  border-radius: .7rem;
+  text-wrap-mode: nowrap;
+}
+
+button.cheio {
+  padding: 1.5rem 1.3rem;
+
+  color: white;
+  background-image: linear-gradient(var(--cor-verde), var(--cor-azul));
+
+}
+/* Fim padronização */
+
+
+/* Elementos presentes em todas as páginas do site */
+header {
+  padding: 1.5rem var(--area-segura-lateral);
+
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+header img {
+  width: 15rem;
+}
+
+header ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 4rem;
+}
+
+footer {
+  padding: 3rem var(--area-segura-lateral);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 1.5rem;
+}
+
+footer small {
+  color: var(--cor-desaturada);
+}
+
+footer section>img {
+  width: 10rem;
+}
+
+footer section>address {
+  margin: 4rem 0;
+  font-style: normal;
+}
+
+footer section>div {
+  margin: 4rem 0;
+}
+
+footer section>div img {
+  width: 1.5rem;
+  margin-right: 2rem;
+}
+
+footer aside {
+  width: 40rem;
+}
+
+footer aside p {
+  margin: 0;
+  margin-top: .3rem;
+}
+
+footer aside>div {
+  width: 100%;
+  margin: 1.5rem 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+footer aside>div>input {
+  width: 100%;
+  padding: 1.5rem;
+
+  color: white;
+  background-color: transparent;
+  border: .1rem solid var(--cor-desaturada);
+}
+
+/* Fim elementos */

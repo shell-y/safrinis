@@ -9,6 +9,23 @@
     public class Main {
         public static void main(String[] args) {
 
+            /*
+            System.out.println("\n" +
+                    "╔═╗╔═╗╔╗╔╔═╗╦═╗╔═╗\n" +
+                    "╚═╗║ ║║║║║ ║╠╦╝╠═╣\n" +
+                    "╚═╝╚═╝╝╚╝╚═╝╩╚═╩ ╩");
+            */
+            System.out.println("\n" +
+                    "_________________________________\n"+
+                    "   ________  _  ______  ___  ___ \n" +
+                    "  / __/ __ \\/ |/ / __ \\/ _ \\/ _ |\n" +
+                    " _\\ \\/ /_/ /    / /_/ / , _/ __ |\n" +
+                    "/___/\\____/_/|_/\\____/_/|_/_/ |_|");
+            System.out.println(
+                    "_________________________________\n"+
+                    "   DADOS, NA VELOCIDADE DO SOM\n"+
+                    "---------------------------------\n");
+
 
             Timer exibirHora = new Timer(); // Criação do timer
             DateTimeFormatter formatarHora = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); // Formatador do timer

@@ -3,11 +3,14 @@
   Para facilitar a gestão e compreensão desse arquivo, ele foi oganizado em algumas seções.
 */
 
-/* Variáveis */
+/* Variáveis e fontes */
 :root { /* representa a raiz do documento HTML. pode definir globalmente alguma propriedade ou servir para criar variáveis de estilo */
+  color: white;
+  font-family: 'Raleway', sans-serif;
+
   --area-segura-lateral: 4rem;
   
-  color: white;
+  --cor-body: #030303;
   --cor-desaturada: gray;
 
   --cor-azul-escuro: #3737c8;
@@ -15,8 +18,18 @@
   --cor-azul-claro: #87aade;
   --cor-verde-claro: #80ffb3;
   --cor-verde: #37c871;
+
+  /* propriedades button.degrade */
+  --btn-degrade-borda: .1rem;
+  --btn-degrade-pos: -.1rem;
 }
-/* Fim variáveis */
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('../assets/fonts/raleway.ttf') format('truetype');
+  font-weight: 100 900;
+}
+/* Fim variáveis e fontes */
 
 /* Responsividade */
 html {
@@ -34,7 +47,7 @@ html {
 
 /* Padronização */
 body {
-  background-color: #030303;
+  background-color: var(--cor-body);
   margin: 0;
   padding: 0;
 }
@@ -43,19 +56,61 @@ button {
   outline: none;
   border: none;
   text-transform: uppercase;
-  background: transparent;
-  
-  border: .1rem solid var(--cor-azul);
-  border-radius: .7rem;
-  text-wrap-mode: nowrap;
-}
+  white-space: nowrap; /* negar quebra de linha */
 
-button.cheio {
   padding: 1.5rem 1.3rem;
 
-  color: white;
   background-image: linear-gradient(var(--cor-verde), var(--cor-azul));
+  color: white;
 
+  border-width: .1rem;
+  border-radius: .7rem;
+}
+
+button.degrade {
+  color: transparent;
+  background-image: none;
+  position: relative;
+  padding: 0;
+
+  width: 35rem;
+  height: 5rem;
+
+  font-weight: 400;
+  font-size: 1.9rem;
+  
+  background-color: var(--cor-body);
+}
+
+button.degrade::before { /* borda */
+  content: '';
+  position: absolute;
+  top: var(--btn-degrade-pos);
+  left: var(--btn-degrade-pos);
+  
+  z-index: -1;
+  padding: var(--btn-degrade-borda);
+  
+  width: 100%;
+  height: 100%;
+  
+  background-image: linear-gradient(to right, var(--cor-verde-claro), var(--cor-azul-claro));
+  border-radius: .7rem;
+  filter: blur(.4rem);
+}
+
+button.degrade::after { /* texto interno */
+  content: attr(inner-text);
+  color: transparent;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  opacity: 0.85;
+  background-image: linear-gradient(to right, var(--cor-verde-claro), var(--cor-azul-claro));
+  background-clip: text;
 }
 /* Fim padronização */
 

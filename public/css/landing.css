@@ -27,9 +27,8 @@ section#desafio {
     text-align: center;
 }
 
-section#desafio p {
-    margin: auto;
-    margin-top: 2rem;
+section#desafio>p {
+    margin-top: 3rem;
 }
 
 section#desafio>div {
@@ -42,11 +41,17 @@ section#desafio>div {
 }
 
 section#desafio .float {
-    width: 15.3rem;
+    width: 20rem;
+    height: 22.1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
 }
 
 section#desafio .float>img {
-    width: 11.5rem;
+    height: 11.5rem;
 }
 
 section#desafio .float>p {
@@ -87,7 +92,7 @@ section#solucao .card>h4 {
 }
 
 section#solucao .card>img {
-    width: 10.5rem;
+    height: 10.5rem;
 }
 
 section#solucao .card p {

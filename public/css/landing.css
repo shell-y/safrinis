@@ -1,5 +1,10 @@
 @import url(main.css);
 
+:root {
+    --transicao-banners: 300ms ease-in-out 250ms;
+    --transicao-banners-delay: 0ms: 
+}
+
 h1,h2,h3,h4:not(footer h4) {
     text-transform: uppercase;
 }
@@ -12,7 +17,9 @@ h2 {
     font-size: 3.2rem;
     text-transform: uppercase;
 
-    color: var(--cor-azul);
+    color: transparent;
+    background-image: linear-gradient(to right, var(--cor-verde-claro), var(--cor-verde));
+    background-clip: text;
 }
 
 p {
@@ -23,7 +30,13 @@ section {
     padding: 9rem 0;
 }
 
+/* Seção desafio */
 section#desafio {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     text-align: center;
 }
 
@@ -57,7 +70,9 @@ section#desafio .float>img {
 section#desafio .float>p {
     font-weight: 600;
 }
+/* Fim seção desafio */
 
+/* Seção solução */
 section#solucao {
     display: flex;
     justify-content: center;
@@ -68,7 +83,12 @@ section#solucao {
 section#solucao h3 {
     width: 22rem;
     margin-right: 5rem;
+    
     font-size: 3.2rem;
+    color: transparent;
+
+    background-image: linear-gradient(to right, #808BFF 0%, #87DED7 90%);
+    background-clip: text;
 }
 
 section#solucao .card {
@@ -97,4 +117,77 @@ section#solucao .card>img {
 
 section#solucao .card p {
     font-size: 1.8rem;
+}
+/* Fim seção solução */
+
+/* Seção relatos */
+section#relatos>h3 {
+    padding-bottom: .7rem;
+    margin-bottom: 3rem;
+
+    border-bottom: .3rem solid white;
+    border-image: linear-gradient(to right, var(--cor-azul) 0%, var(--cor-verde-claro) 70%, black 70%) 1;
+
+    text-align: center;
+    font-size: 3.2rem;
+    font-weight: 500;
+}
+
+section#relatos>div {
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+
+    color: transparent;
+}
+
+section#relatos>div .banner {
+    position: relative;
+    transition: var(--transicao-banners);
+    
+    aspect-ratio: 1;
+    background-position: center;
+    background-size: cover;
+
+    font-size: 2rem;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+section#relatos>div .banner::after {
+    transition: var(--transicao-banners);
+
+    content: '';
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+}
+section#relatos>div .banner:hover::after {
+    background-color: rgba(0, 0, 0, 0.55);
+    transition-delay: var(--transicao-banners-delay);
+}
+
+section#relatos>div .banner>* {
+    z-index: 1;
+    transition: var(--transicao-banners)
+}
+
+section#relatos>div .banner:hover > * {
+    color: white;
+    transition-delay: var(--transicao-banners-delay);
+}
+
+section#relatos> div .banner blockquote {
+    width: 70%;
+
+    text-align: justify;
+    font-style: italic;
 }

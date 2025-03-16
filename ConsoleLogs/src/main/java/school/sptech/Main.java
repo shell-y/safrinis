@@ -43,11 +43,11 @@
                     if (contadorErro > 2) {
                         // Exibindo a mensagem de aviso [2] após 3 falhas
                         if (mensagemAleatoria.equals(listaMensagens[2])) {
-                            mensagemAleatoria = listaMensagens[2] +
-                            "\n[" + horario + "] [FALHA #" + contadorErro + "] \033[0;31m[WARNING]\033[0m Múltiplas falhas detectadas!";
+                            mensagemAleatoria = listaMensagens[2] + "\n[" + horario +
+                            "] [FALHA #" + contadorErro + "] \033[0;31m[WARNING]\033[0m Múltiplas falhas detectadas!";
                             /* Código ANSI para mudar a cor:
-                               \033[0;31m -> para iniciar o vermelho. 31 é o cód do vermelho
-                               \033[0m -> para finalizar o vermelho/voltar para o cód 0 */
+                            \033[0;31m -> para iniciar o vermelho. 31 é o cód do vermelho
+                            \033[0m -> para finalizar o vermelho/voltar para o cód 0 */
                         }
                     }
 

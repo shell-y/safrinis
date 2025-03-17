@@ -31,6 +31,45 @@ section {
     padding: 9rem 0;
 }
 
+/* Seção carrosel */
+section#carrossel {
+  height: 30rem;
+}
+
+section#carrossel #painel1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-size: 2.6rem;
+  text-align: center;
+}
+
+section#carrossel #painel2 {
+  margin-left: 5rem;
+  display: flex;
+  align-items: center;
+}
+
+section#carrossel #painel2>div {
+  width: 39rem;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+}
+
+section#carrossel #painel2>div h1 {
+  font-size: 2.6rem;
+  font-weight: 500;
+}
+
+section#carrossel #painel2>div button {
+  
+}
+/* Fim seção carrosel */
+
 /* Seção desafio */
 section#desafio {
     display: flex;

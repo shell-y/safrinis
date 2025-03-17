@@ -18,11 +18,11 @@ h2 {
     text-transform: uppercase;
 
     color: transparent;
-    background-image: linear-gradient(to right, var(--cor-verde-claro), var(--cor-verde));
+    background-image: linear-gradient(to right, var(--cor-verde-claro), var(--cor-azul-claro));
     background-clip: text;
 }
 
-p {
+p:not(footer p) {
     font-size: 2.3rem;
 }
 
@@ -190,4 +190,20 @@ section#relatos> div .banner blockquote {
 
     text-align: justify;
     font-style: italic;
+}
+/* Fim seção relatos */
+
+/* Seção ação */
+section#acao {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4.5rem;
+
+    text-align: center;
+}
+
+section#acao button {
+    margin: 0 2.5rem;
 }

@@ -1,4 +1,5 @@
 @import url(main.css);
+@import url(carrossel.css);
 
 :root {
     --transicao-banners: 300ms ease-in-out 250ms;

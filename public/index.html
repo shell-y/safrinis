@@ -27,26 +27,26 @@
   </header>
 
   <main>
-    <section id="carrossel"> 
-      <div class="painel-carrosel" id="1">
-        <span>Dados, na velocidade do som</span>
+    <section id="carrossel">
+
+      <input type="radio" name="radio-carrosel" id="radio1" checked>
+      <div id="painel1" class="painel-carrossel" style="background-image: url(./assets/imgs/fundo_carrosel1.jpg);">
+        <h1>Dados, na velocidade do som</h1>
       </div>
 
-      <div class="painel-carrosel" id="2">
+      <input type="radio" name="radio-carrosel" id="radio2">
+      <div id="painel2" class="painel-carrossel" style="background-image: url(./assets/imgs/fundo_carrosel2.jpg);">
         <!-- grupo de itens alinhado à esquerda... ou faz um flex pra todos os elementos ficarem à esquerda, vou faz uma caixa onde só ela vai ser colocada na esquerda... vou testar o primeiro método -->
-
         <h1>A escolha perfeita para seu evento começa aqui!</h1>
         <p>Descubra as tendências, analise o público e contrate os artistas certos</p>
-
         <button class="degrade">
           Comece agora
         </button>
-
       </div>
 
       <nav>
-        <input type="radio" class="radio-carrosel" id="1">
-        <input type="radio" class="radio-carrosel" id="2">
+        <label for="radio1" class="radio-painel"></label>
+        <label for="radio2" class="radio-painel"></label>
       </nav>
     </section>
 
@@ -135,7 +135,7 @@
     </section>
 
     <section id="acao">
-      <h2>Leve seu evento para o próximo nível!</h2>
+      <h2>Leve seu evento para o próximo nível</h2>
       <p>Comece agora a planejar suas atrações com dados reais e insights valiosos.</p>
 
       <div>

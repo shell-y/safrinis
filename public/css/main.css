@@ -4,12 +4,13 @@
 */
 
 /* Variáveis e fontes */
-:root { /* representa a raiz do documento HTML. pode definir globalmente alguma propriedade ou servir para criar variáveis de estilo */
+:root {
+  /* representa a raiz do documento HTML. pode definir globalmente alguma propriedade ou servir para criar variáveis de estilo */
   color: white;
   font-family: 'Raleway', sans-serif;
 
   --area-segura-lateral: 4rem;
-  
+
   --cor-body: #030303;
   --cor-desaturada: #A2A2A2;
 
@@ -25,6 +26,7 @@
   src: url('../assets/fonts/raleway.ttf') format('truetype');
   font-weight: 100 900;
 }
+
 /* Fim variáveis e fontes */
 
 /* Responsividade */
@@ -38,6 +40,7 @@ html {
     * os tamanhos definidos em REM não precisarão ser alterados, pois os cálculos de escala serão feitos automaticamente
   */
 }
+
 /* Fim responsividade */
 
 
@@ -57,7 +60,8 @@ button {
   outline: none;
   border: none;
   text-transform: uppercase;
-  white-space: nowrap; /* negar quebra de linha */
+  white-space: nowrap;
+  /* negar quebra de linha */
 
   padding: 1.5rem 1.3rem;
 
@@ -82,7 +86,7 @@ button.degrade {
   
   font-weight: 300;
   font-size: 2rem;
-  
+
   background-color: var(--cor-body);
   cursor: pointer;
 }
@@ -92,7 +96,8 @@ button:hover{
   opacity: 80%;
 }
 
-button.degrade::before { /* borda */
+button.degrade::before {
+  /* borda */
   content: '';
   position: absolute;
 
@@ -100,13 +105,13 @@ button.degrade::before { /* borda */
   top: var(--btn-degrade-pos);
   left: var(--btn-degrade-pos);
   z-index: -1;
-  
+
   --btn-degrade-borda: .1rem;
   padding: var(--btn-degrade-borda);
-  
+
   width: 100%;
   height: 100%;
-  
+
   background-image: linear-gradient(to right, var(--cor-verde), var(--cor-azul-claro));
   border-radius: .7rem;
 
@@ -116,10 +121,11 @@ button.degrade::before { /* borda */
   opacity: 60%;
 }
 
-button.degrade::after { /* texto interno */
+button.degrade::after {
+  /* texto interno */
   content: attr(inner-text);
   color: transparent;
-  
+
   width: 100%;
 
   position: absolute;
@@ -132,6 +138,7 @@ button.degrade::after { /* texto interno */
 
   opacity: 90%;
 }
+
 /* Fim padronização */
 
 
@@ -158,7 +165,7 @@ header ul {
   display: flex;
   justify-content: end;
   align-items: center;
-  gap: 4rem;
+  gap: 2rem;
 }
 
 footer {
@@ -228,4 +235,95 @@ footer aside>div>input:focus {
   accent-color: none;
   outline: .1rem solid var(--cor-desaturada);
 }
+
 /* Fim elementos */
+
+/* Responsividade para telas menores */
+@media screen and (max-width: 1024px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  header ul {
+    display: flex;
+    flex-direction: row;
+    font-size: 2rem;
+  }
+
+  section {
+    padding: 5rem 2rem;
+  }
+
+  section#solucao {
+    flex-direction: column;
+    gap: 4rem;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --area-segura-lateral: 2rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 2rem;
+  }
+
+  section#carrossel {
+    height: auto;
+  }
+
+  section#desafio>div {
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  section#solucao .card {
+    width: 100%;
+    max-width: 30rem;
+  }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  header img {
+    width: 12rem;
+  }
+
+  header ul {
+    display: flex;
+    flex-direction: row;
+    font-size: 1rem;
+  }
+
+  header button {
+    padding: .7rem .7rem;
+    border-width: .1rem;
+    border-radius: .7rem;
+  }
+
+  button.degrade {
+    width: 100%;
+    max-width: 30rem;
+  }
+
+  footer aside {
+    width: 20rem;
+  }
+
+  .email-footer {
+    display: flex;
+    flex-direction: column;
+  }
+}

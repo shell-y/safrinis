@@ -37,7 +37,7 @@ body::after {
     gap: 20rem;
 }
 
-.logo{
+.logo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -62,7 +62,7 @@ body::after {
     height: 20rem;
 }
 
-.inputs{
+.inputs {
     display: flex;
     flex-direction: row;
     width: 90%;
@@ -89,12 +89,12 @@ h2 {
     text-align: center;
 }
 
-.box input:focus{
+.box input:focus {
     outline: none;
     border: none;
 }
 
-.box input::placeholder{
+.box input::placeholder {
     color: black;
     font-size: 14px;
     text-align: center;
@@ -131,7 +131,7 @@ a:hover {
     opacity: 50%;
 }
 
-p{
+p {
     color: #7F958C;
     font-size: 2.5rem;
     text-align: center;
@@ -150,4 +150,34 @@ p{
     color: #000000;
     font-size: 16px;
     text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+
+}
+
+@media screen and (max-width: 480px) {
+    body::after{
+        display: none;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+    }
+
+    .logo img {
+        width: 2rem;
+    }
+
+    .box {
+        width: 90%;
+        height: 25rem;
+    }
+
+    .inputs {
+        flex-direction: column;
+    }
 }

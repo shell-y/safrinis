@@ -10,17 +10,17 @@
 </head>
 <body>
   <header>
-    <img src="./assets/logo_sonora.svg" class="logo">
+    <a href="#"><img src="./assets/logo_sonora.svg" class="logo"></a>
 
     <nav>
       <ul>
-        <li class="sec-atual">Home
-        <li>Line-up
-        <li>Dashboard
-        <li>Sobre
+        <li class="link-nav sec-atual"><a href="#">Home</a>
+        <li><a class="link-nav" href="login.html">Line-up</a>
+        <li><a class="link-nav" href="login.html">Dashboard</a>
+        <!-- <li><a class="link-nav" href="">Sobre</a> -->
         <li>
           <button>
-            Entrar
+            <a href="login.html">Entrar</a>
           </button>
       </ul>
     </nav>
@@ -30,16 +30,16 @@
     <section id="carrossel">
 
       <input type="radio" name="radio-carrosel" id="radio1" checked>
-      <div id="painel1" class="painel-carrossel" style="background-image: url(./assets/imgs/fundo_carrosel1.jpg);">
+      <div id="painel1" class="painel-carrossel" style="background-image: url(assets/imgs/data-fast.png);">
         <h1>Dados, na velocidade do som</h1>
       </div>
 
       <input type="radio" name="radio-carrosel" id="radio2">
-      <div id="painel2" class="painel-carrossel" style="background-image: url(./assets/imgs/fundo_carrosel2.jpg);">
+      <div id="painel2" class="painel-carrossel" style="background-image: url(./assets/imgs/show.png);">
         <div>
           <h1>A escolha perfeita para seu evento começa aqui!</h1>
           <p>Descubra as tendências, analise o público e contrate os artistas certos.</p>
-          <button class="degrade">
+          <button class="degrade" style="max-width: 30%; height: auto; padding: 3%; font-size: 1.2rem;">
             Comece agora
           </button>
         </div>
@@ -157,7 +157,7 @@
 
       <address>
         <strong>Sonora</strong><br>
-        Haddock Lobo, 595<br>
+        Haddock Lobo, 595 - Cerqueira César<br>
         São Paulo, SP - Brasil
       </address>
 

@@ -1,6 +1,22 @@
 @import url(main.css);
 @import url(carrossel.css);
 
+.link-nav {
+    text-decoration: none;
+    color: #fff;
+    transition-duration: 0.2s;
+}
+
+.link-nav:hover{
+    background: -webkit-linear-gradient(#80FFB3, #87AADE);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.sec-atual{
+    font-weight: bold;
+}
+
 :root {
     --transicao-banners: 300ms ease-in-out 250ms;
     --transicao-banners-delay: 0ms: 
@@ -28,7 +44,7 @@ p:not(footer p) {
 }
 
 section {
-    padding: 9rem 0;
+    padding: 3rem 0;
 }
 
 /* Seção carrosel */
@@ -46,7 +62,7 @@ section#carrossel #painel1 {
 }
 
 section#carrossel #painel2 {
-  margin-left: 5rem;
+  padding-left: 5rem;
   display: flex;
   align-items: center;
 }
@@ -228,7 +244,7 @@ section#relatos>div .banner:hover > * {
 section#relatos> div .banner blockquote {
     width: 70%;
 
-    text-align: justify;
+    text-align: center;
     font-style: italic;
 }
 /* Fim seção relatos */

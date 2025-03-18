@@ -64,10 +64,6 @@ section#carrossel #painel2>div h1 {
   font-size: 2.6rem;
   font-weight: 500;
 }
-
-section#carrossel #painel2>div button {
-  
-}
 /* Fim seção carrosel */
 
 /* Seção desafio */
@@ -247,3 +243,18 @@ section#acao {
 section#acao button {
     margin: 0 2.5rem;
 }
+
+@media screen and (max-width: 480px) {
+    .container-banner {
+        display: flex;
+        flex-direction: column;
+    }
+
+    section#acao button {
+        margin-top: 4rem;
+    }
+
+    section#solucao h3 {
+        margin-right: 0;
+      }
+  }

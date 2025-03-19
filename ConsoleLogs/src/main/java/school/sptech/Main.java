@@ -74,7 +74,7 @@
                 }
             };
             // Executa a TimerTask "criarTimer" a cada 1.5 segundos
-            exibirHora.scheduleAtFixedRate(criarTimer, 0, 1500);
+            exibirHora.scheduleAtFixedRate(criarTimer, 0, 1000);
 
 
         } // FIM MAIN

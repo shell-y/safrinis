@@ -20,8 +20,16 @@
     <div class="box cadastro-box">
       <h2>CADASTRO</h2>
       <div class="inputs inputs-cadastro">
-        <input type="email" placeholder="E-MAIL">
+        <input type="text" placeholder="EMPRESA">
         <input type="text" id="cnpj" placeholder="CNPJ" maxlength="18">
+      </div>
+      <div class="inputs inputs-cadastro">
+        <input type="text" placeholder="NOME">
+        <input type="text" id="celular" placeholder="CELULAR" maxlength="15">
+      </div>
+      <div class="inputs inputs-cadastro">
+        <input type="text" placeholder="USUÁRIO">
+        <input type="text" placeholder="EMAIL">
       </div>
       <div class="inputs inputs-cadastro">
         <input type="password" placeholder="SENHA">
@@ -45,6 +53,17 @@
     document.getElementById("cnpj").addEventListener("input", function (e) {
       e.target.value = formatCNPJ(e.target.value);
     });
+
+    function formatCelular(value) {
+      value = value.replace(/\D/g, "");
+      value = value.replace(/^(\d{2})(\d)/, "($1) $2");
+      value = value.replace(/(\d{5})(\d)/, "$1-$2");
+      return value
+    }
+
+    document.getElementById("celular").addEventListener("input", function (e) {
+      e.target.value = formatCelular(e.target.value);
+    })
   </script>
 </body>
 

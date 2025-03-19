@@ -27,6 +27,52 @@
   font-weight: 100 900;
 }
 
+/* 
+  Para poder usar somente font-weight e não ter que trocar a propriedade font-family para cada declaração,
+  é preciso repetir a @font-face para todos os arquivos 
+*/
+@font-face {
+  font-family: 'Kodchasan';
+  src: url(../assets/fonts/kodchasan_extralight.ttf) format('truetype');    
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Kodchasan';
+  src: url(../assets/fonts/kodchasan_light.ttf) format('truetype');    
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Kodchasan';
+  src: url(../assets/fonts/kodchasan_regular.ttf) format('truetype');    
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Kodchasan';
+  src: url(../assets/fonts/kodchasan_medium.ttf) format('truetype');    
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Kodchasan';
+  src: url(../assets/fonts/kodchasan_semibold.ttf) format('truetype');    
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Kodchasan';
+  src: url(../assets/fonts/kodchasan_bold.ttf) format('truetype');    
+  font-weight: 700;
+  font-style: normal;
+}
+
 /* Fim variáveis e fontes */
 
 /* Responsividade */

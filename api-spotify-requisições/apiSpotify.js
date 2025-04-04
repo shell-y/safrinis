@@ -71,22 +71,6 @@ async function searchArtistId(artistName, accessToken) {
     }
 }
 
-async function getTopTracks(artistId, accessToken) {
-    console.log(`[TOP TRACKS] Buscando top músicas para artista ID: ${artistId}`);
-    try {
-        const response = await axios.get(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
-            headers: { 'Authorization': `Bearer ${accessToken}` },
-            params: { market: 'US' }
-        });
-        const tracks = response.data.tracks.map(track => track.name).join(', ');
-        console.log(`[TOP TRACKS] ${response.data.tracks.length} músicas encontradas para artista ID: ${artistId}`);
-        return tracks;
-    } catch (error) {
-        console.error(`[TOP TRACKS] Erro ao buscar top tracks do artista ${artistId}:`, error.message);
-        return '';
-    }
-}
-
 async function getFeaturedArtists(artistId, accessToken) {
     console.log(`[RELATED ARTISTS] Buscando artistas relacionados para ID: ${artistId}`);
     try {
@@ -134,7 +118,6 @@ async function saveToExcel(artistsData) {
         { header: 'Seguidores', key: 'followers', width: 15 },
         { header: 'Gêneros', key: 'genres', width: 30 },
         { header: 'URL Spotify', key: 'spotify_url', width: 50 },
-        { header: 'Top Músicas', key: 'top_tracks', width: 50 },
         { header: 'ID Artista Relacionado', key: 'related_artist_id', width: 30 },
         { header: 'Data da Requisição', key: 'data_requisicao', width: 20 }
     ];
@@ -147,7 +130,6 @@ async function saveToExcel(artistsData) {
             followers: artist.followers,
             genres: artist.genres,
             spotify_url: artist.spotify_url,
-            top_tracks: artist.top_tracks,
             related_artist_id: artist.related_artist_id || '',
             data_requisicao: currentDate
         });
@@ -177,9 +159,6 @@ async function main() {
             console.log(`[MAIN] Obtendo detalhes para artista ID: ${artistInfo.id}`);
             const artistDetails = await getArtistInfo(artistInfo.id, accessToken);
             if (!artistDetails) continue;
-
-            console.log(`[MAIN] Obtendo top músicas para artista ID: ${artistInfo.id}`);
-            const topTracks = await getTopTracks(artistInfo.id, accessToken);
             
             console.log(`[MAIN] Buscando artistas relacionados para ID: ${artistInfo.id}`);
             const relatedArtists = await getFeaturedArtists(artistInfo.id, accessToken);
@@ -191,7 +170,6 @@ async function main() {
                 followers: artistDetails.followers ? artistDetails.followers.total : 0,
                 genres: artistDetails.genres ? artistDetails.genres.join(', ') : '',
                 spotify_url: artistDetails.external_urls.spotify,
-                top_tracks: topTracks,
                 related_artist_id: null
             });
 
@@ -208,7 +186,6 @@ async function main() {
                             followers: relatedDetails.followers ? relatedDetails.followers.total : 0,
                             genres: relatedDetails.genres ? relatedDetails.genres.join(', ') : '',
                             spotify_url: relatedDetails.external_urls ? relatedDetails.external_urls.spotify : '',
-                            top_tracks: '',
                             related_artist_id: artistDetails.id
                         });
                     }

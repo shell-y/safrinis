@@ -95,6 +95,7 @@ body {
   background-color: var(--cor-body);
   margin: 0;
   padding: 0;
+  padding-top: 6.6rem;
 }
 
 a{
@@ -192,9 +193,18 @@ button.degrade::after {
 header {
   padding: 1rem var(--area-segura-lateral);
   background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  position: fixed;
+  z-index: 3;
+  transform: translate(0,-100%);
+
+  display: flex;  
   justify-content: space-between;
   align-items: center;
+
   font-size: 1.5rem;
   text-transform: uppercase;
 }

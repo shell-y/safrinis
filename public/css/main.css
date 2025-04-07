@@ -76,15 +76,24 @@
 /* Fim variáveis e fontes */
 
 /* Responsividade */
-html {
-  font-size: 62.5%;
 
-  /* 
-    essa configuração faz com que o valor de REM seja exatamente 10px. ou seja, se quero definir uma letra com 25px eu uso 2.5rem
-    isso facilita na hora de definir tamanhos e também descomplica a responsividade: 
-    * dependendo da necessidade, basta diminuir essa porcentagem que o site já se encaixa melhor no dispositvo
-    * os tamanhos definidos em REM não precisarão ser alterados, pois os cálculos de escala serão feitos automaticamente
-  */
+@media (min-width: 1030px) {
+  html {
+    font-size: 62.5%;
+  
+    /* 
+      essa configuração faz com que o valor de REM seja exatamente 10px. ou seja, se quero definir uma letra com 25px eu uso 2.5rem
+      isso facilita na hora de definir tamanhos e também descomplica a responsividade: 
+      * dependendo da necessidade, basta diminuir essa porcentagem que o site já se encaixa melhor no dispositvo
+      * os tamanhos definidos em REM não precisarão ser alterados, pois os cálculos de escala serão feitos automaticamente
+    */
+  }
+}
+
+@media (max-width: 1029px) {
+  html {
+    font-size: 55%;
+  }
 }
 
 /* Fim responsividade */
@@ -98,9 +107,13 @@ body {
   padding-top: 6.6rem;
 }
 
-a{
+a {
   text-decoration: none;
-  color: #fff;
+  color: white;
+}
+
+a:visited {
+  color: unset;
 }
 
 button {
@@ -191,22 +204,22 @@ button.degrade::after {
 
 /* Elementos presentes em todas as páginas do site */
 header {
-  padding: 1rem var(--area-segura-lateral);
-  background-color: rgba(0, 0, 0, 0.4);
-
-  width: 100%;
+  width: 100vw;
   box-sizing: border-box;
-
+  padding: 1rem var(--area-segura-lateral);
+  
   position: fixed;
   z-index: 3;
-  transform: translate(0,-100%);
-
+  transform: translate(0, -100%);
+  
   display: flex;  
   justify-content: space-between;
   align-items: center;
-
+  
   font-size: 1.5rem;
   text-transform: uppercase;
+
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 header img {
@@ -222,6 +235,17 @@ header ul {
   justify-content: end;
   align-items: center;
   gap: 2rem;
+}
+
+header nav a {
+  transition: background-image 0.3s;
+  transition: color 0.3s;
+}
+
+header nav a:hover {
+  color: transparent;
+  background-image: linear-gradient(#80FFB3, #87AADE);
+  background-clip: text;
 }
 
 footer {
@@ -295,7 +319,7 @@ footer aside>div>input:focus {
 /* Fim elementos */
 
 /* Responsividade para telas menores */
-@media screen and (max-width: 1024px) {
+/* @media screen and (max-width: 1024px) {
   header {
     flex-direction: column;
     align-items: center;
@@ -317,7 +341,7 @@ footer aside>div>input:focus {
     gap: 4rem;
     text-align: center;
   }
-}
+} 
 
 @media screen and (max-width: 768px) {
   :root {

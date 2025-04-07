@@ -1,25 +1,14 @@
 @import url(main.css);
 @import url(carrossel.css);
 
-.link-nav {
-    text-decoration: none;
-    color: #fff;
-    transition-duration: 0.2s;
-}
-
-.link-nav:hover{
-    background: -webkit-linear-gradient(#80FFB3, #87AADE);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.sec-atual{
-    font-weight: bold;
-}
 
 :root {
     --transicao-banners: 300ms ease-in-out 250ms;
     --transicao-banners-delay: 0ms: 
+}
+
+.sec-atual{
+    font-weight: bold;
 }
 
 h1,h2,h3,h4:not(footer h4) {
@@ -44,7 +33,7 @@ p:not(footer p) {
 }
 
 section {
-    padding: 3rem 0;
+    padding: 3rem 1rem;
 }
 
 /* Seção carrosel */
@@ -100,9 +89,11 @@ section#desafio>div {
     margin: 8rem 0;
 
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 15rem;
+    align-content: center;
+    gap: 7rem;
 }
 
 section#desafio .float {
@@ -122,19 +113,43 @@ section#desafio .float>img {
 section#desafio .float>p {
     font-weight: 600;
 }
+
+@media (max-width: 889px) {
+    section#desafio>h2 {
+        width: 100%;
+        max-width: 50rem;
+    }
+
+    section#desafio>p {
+        width: 100%;
+        max-width: 60rem;
+    }
+}
 /* Fim seção desafio */
 
 /* Seção solução */
 section#solucao {
+    --p: 1.5em;
+    padding-left: var(--p);
+    padding-right: var(--p);
+
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 7rem;
+    gap: 5rem;
+}
+
+section#solucao>div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 2rem;
 }
 
 section#solucao h3 {
     width: 22rem;
-    margin-right: 5rem;
     
     font-size: 3.2rem;
     color: transparent;
@@ -170,9 +185,31 @@ section#solucao .card>img {
 section#solucao .card p {
     font-size: 1.8rem;
 }
+
+@media (max-width: 932px) {
+    section#solucao {
+        flex-direction: column;
+    }
+    
+    section#solucao h3 {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 700px) {
+    section#solucao h3 {
+        max-width: 50rem;
+    }
+}
 /* Fim seção solução */
 
 /* Seção relatos */
+section#relatos {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 section#relatos>h3 {
     padding-bottom: .7rem;
     margin-bottom: 3rem;
@@ -194,6 +231,8 @@ section#relatos>div {
 }
 
 section#relatos>div .banner {
+    padding: 2rem;
+
     position: relative;
     transition: var(--transicao-banners);
     
@@ -243,6 +282,31 @@ section#relatos> div .banner blockquote {
     text-align: center;
     font-style: italic;
 }
+
+@media (max-width: 830px) and (min-width: 633px) {
+    section#relatos>div .banner {
+        aspect-ratio: unset;
+        height: 40rem;
+    }
+}
+
+@media (max-width: 632px) {
+    section#relatos>div {
+        flex-direction: column;
+    }
+
+    section#relatos>div .banner {
+        aspect-ratio: unset;
+        height: 20rem;
+    }
+}
+
+@media (max-width: 360px) {
+    section#relatos>div .banner {
+        aspect-ratio: 1;
+        height: fit-content;
+    }
+}
 /* Fim seção relatos */
 
 /* Seção ação */
@@ -256,21 +320,27 @@ section#acao {
     text-align: center;
 }
 
-section#acao button {
-    margin: 0 2.5rem;
+section#acao>div {
+    width: 100%;
+    max-width: 75rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
 }
 
-@media screen and (max-width: 480px) {
-    .container-banner {
-        display: flex;
+@media (max-width: 649px) {
+    section#acao>div {
         flex-direction: column;
+        gap: 3rem;
     }
+}
+/* Fim seção ação */
 
-    section#acao button {
-        margin-top: 4rem;
+/* Responsividade geral */
+@media (max-width: 339px) {
+    button.degrade {
+        width: 90vw;
     }
-
-    section#solucao h3 {
-        margin-right: 0;
-      }
-  }
+}

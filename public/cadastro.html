@@ -11,34 +11,41 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="logo">
-      <a href="index.html">
-        <img src="assets/Logo finalizada.svg" alt="Sonora Logo">
-        <p>SONORA</p></a>
-    </div>
-    <div class="box cadastro-box">
-      <h2>CADASTRO</h2>
-      <div class="inputs inputs-cadastro">
+
+  <a id="logo" href="index.html">
+    <img src="assets/Logo finalizada.svg" alt="Sonora Logo">
+    <p>SONORA</p>
+  </a>
+
+  <main>
+    <h2>CADASTRO</h2>
+
+    <form>
+      <div>
         <input type="text" placeholder="Empresa">
         <input type="text" id="cnpj" placeholder="CNPJ" maxlength="18">
       </div>
-      <div class="inputs inputs-cadastro">
+      
+      <div>
         <input type="text" placeholder="Nome">
         <input type="text" id="celular" placeholder="Celular" maxlength="15">
       </div>
-      <div class="inputs inputs-cadastro">
+
+      <div>
         <input type="text" placeholder="Usuário">
         <input type="text" placeholder="E-mail">
       </div>
-      <div class="inputs inputs-cadastro">
+
+      <div>
         <input type="password" placeholder="Senha">
         <input type="password" placeholder="Confirmar senha">
       </div>
+
       <button>CADASTRAR</button>
-      <a href="login.html">Já tem conta? Faça o seu login</a>
-    </div>
-  </div>
+    </form>
+    
+    <a href="login.html">Já tem conta? Faça o seu login</a>
+  </main>
 
   <script>
     function formatCNPJ(value) {

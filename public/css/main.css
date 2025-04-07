@@ -96,6 +96,11 @@
   }
 }
 
+@media (max-width: 490px) {
+  html {
+    font-size: 48%;
+  }
+}
 /* Fim responsividade */
 
 
@@ -250,7 +255,7 @@ header nav a:hover {
   background-clip: text;
 }
 
-@media (max-width: 525px) {
+@media (max-width: 540px) {
   body {
     padding-top: 11.7rem;
   }
@@ -341,93 +346,3 @@ footer aside>div>input:focus {
   }
 }
 /* Fim elementos */
-
-/* Responsividade para telas menores */
-/* @media screen and (max-width: 1024px) {
-  header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  header ul {
-    display: flex;
-    flex-direction: row;
-    font-size: 2rem;
-  }
-
-  section {
-    padding: 5rem 2rem;
-  }
-
-  section#solucao {
-    flex-direction: column;
-    gap: 4rem;
-    text-align: center;
-  }
-} 
-
-@media screen and (max-width: 768px) {
-  :root {
-    --area-segura-lateral: 2rem;
-  }
-
-  h2 {
-    font-size: 2.5rem;
-  }
-
-  p {
-    font-size: 2rem;
-  }
-
-  section#carrossel {
-    height: auto;
-  }
-
-  section#desafio>div {
-    flex-direction: column;
-    gap: 5rem;
-  }
-
-  section#solucao .card {
-    width: 100%;
-    max-width: 30rem;
-  }
-
-  footer {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  header img {
-    width: 12rem;
-  }
-
-  header ul {
-    display: flex;
-    flex-direction: row;
-    font-size: 1rem;
-  }
-
-  header button {
-    padding: .7rem .7rem;
-    border-width: .1rem;
-    border-radius: .7rem;
-  }
-
-  button.degrade {
-    width: 100%;
-    max-width: 30rem;
-  }
-
-  footer aside {
-    width: 20rem;
-  }
-
-  .email-footer {
-    display: flex;
-    flex-direction: column;
-  }
-}

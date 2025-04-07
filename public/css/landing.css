@@ -51,13 +51,13 @@ section#carrossel #painel1 {
 }
 
 section#carrossel #painel2 {
-  padding-left: 5rem;
   display: flex;
   align-items: center;
 }
 
 section#carrossel #painel2>div {
-  width: 39rem;
+  width: 100%;
+  max-width: 39rem;
   
   display: flex;
   flex-direction: column;
@@ -337,10 +337,3 @@ section#acao>div {
     }
 }
 /* Fim seção ação */
-
-/* Responsividade geral */
-@media (max-width: 339px) {
-    button.degrade {
-        width: 90vw;
-    }
-}

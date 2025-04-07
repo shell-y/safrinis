@@ -221,7 +221,7 @@ header {
   font-size: 1.5rem;
   text-transform: uppercase;
 
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 header img {
@@ -262,7 +262,7 @@ header nav a:hover {
 }
 
 footer {
-  padding-inline: 3rem var(--area-segura-lateral);
+  padding: 3rem var(--area-segura-lateral);
 
   display: flex;
   justify-content: space-between;
@@ -294,7 +294,8 @@ footer section>div img {
 }
 
 footer aside {
-  width: 40rem;
+  width: 100%;
+  max-width: 40rem;
 }
 
 footer aside h4 {
@@ -329,6 +330,16 @@ footer aside>div>input:focus {
   outline: .1rem solid var(--cor-desaturada);
 }
 
+@media (max-width: 530px) {
+  footer {
+    flex-direction: column;
+  }
+
+  footer section,
+  footer aside {
+    text-align: center;
+  }
+}
 /* Fim elementos */
 
 /* Responsividade para telas menores */

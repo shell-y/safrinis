@@ -21,11 +21,11 @@
 
         <form>
             <div>
-                <input type="email" placeholder="E-mail">
-                <input type="password" placeholder="Senha">
+                <input type="email" id="email" placeholder="E-mail">
+                <input type="password" id="senha" placeholder="Senha">
             </div>
 
-            <button>CONECTAR</button>
+            <button type="submit">CONECTAR</button>
         </form>
 
         <a href="cadastro.html">Não tem conta? Cadastre-se</a>
@@ -34,27 +34,15 @@
 
 </html>
 
-<!-- <script>
-
-
+<script>
     function entrar() {
-        aguardar();
+        let email = document.getElementById("email").value
+        let senha = document.getElementById("senha").value
 
-        var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
-
-        if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-            finalizarAguardar();
-            return false;
+        if (email == "" || senha == "") {
+            alert("Campos em branco")
+            return false
         }
-        else {
-            setInterval(sumirMensagem, 5000)
-        }
-
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
 
         fetch("/usuarios/autenticar", {
             method: "POST",
@@ -62,8 +50,8 @@
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
+                emailServer: email,
+                senhaServer: senha
             })
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
@@ -74,14 +62,16 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
+                    sessionStorage.ID_USUARIO = json.id;
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+                    sessionStorage.USUARIO = json.usuario;
+                    sessionStorage.EMPRESA = json.empresa;
+
 
                     setTimeout(function () {
                         window.location = "./dashboard/cards.html";
-                    }, 1000); // apenas para exibir o loading
+                    }, 1000);
 
                 });
 
@@ -99,11 +89,11 @@
             console.log(erro);
         })
 
-        return false;
+
     }
 
-    function sumirMensagem() {
-        cardErro.style.display = "none"
-    }
-
-</script> -->
+    document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault()
+        entrar()
+    })
+</script>

@@ -1,4 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
+var lineupModel = require("../models/lineupModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -19,13 +20,21 @@ function autenticar(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                        res.json({
-                            id: resultadoAutenticar[0].id,
-                            email: resultadoAutenticar[0].email,
-                            nome: resultadoAutenticar[0].nome,
-                            usuario: resultadoAutenticar[0].usuario,
-                            empresa: resultadoAutenticar[0].empresa
-                        });
+                        lineupModel.buscarLineupPorUsuario(resultadoAutenticar[0].id)
+                            .then((resultadoLineup) => {
+                                if(resultadoLineup.length > 0){
+                                    res.json({
+                                        id: resultadoAutenticar[0].id,
+                                        email: resultadoAutenticar[0].email,
+                                        nome: resultadoAutenticar[0].nome,
+                                        usuario: resultadoAutenticar[0].usuario,
+                                        empresa: resultadoAutenticar[0].empresa,
+                                        lineup: resultadoLineup
+                                    });
+                                } else {
+                                    res.status(204).json({ lineup: [] });
+                                }
+                            })
                         
 
                     } else if (resultadoAutenticar.length == 0) {

@@ -12,7 +12,7 @@ function autenticar(email, senha) {
             return bcrypt.compare(senha, usuario.senha).then(match => {
                 if (match) {
                     return [{
-                        id: usuario.id,
+                        id: usuario.idUsuario,
                         nome: usuario.nome,
                         usuario: usuario.usuario,
                         email: usuario.email,

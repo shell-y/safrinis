@@ -1,0 +1,49 @@
+#nome {
+    padding: 0px var(--area-segura-lateral);
+}
+
+.section-cards {
+    padding: var(--area-segura-lateral);
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 20px;
+    gap: 25px;
+}
+
+.card{
+    width: calc((100% / 3) - 25rem);
+    min-width: 200px;
+    height: 20rem;
+
+    background-image: linear-gradient(#38C871, #389F8A 58%, #388897 90%);
+    border-radius: 5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 2rem;
+
+    cursor: pointer;
+}
+
+.card-adicionar{
+    width: 10rem;
+    height: 10rem;
+
+    background: #ffffff2f;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 10rem;
+
+    cursor: pointer;
+}

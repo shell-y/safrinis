@@ -7,9 +7,11 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/loading.css">
 </head>
 
 <body>
+    <div id="loading"></div>
     <header>
         <a href="#"><img src="../assets/logo_sonora.svg" class="logo"></a>
 
@@ -120,15 +122,14 @@
             const normPop = popularidade / 100;
             const normFollowers = Math.log10(seguidores + 1) / 6;
             const normCrescimento = Math.min(crescimento / 100, 1);
-            return ((normPop * 0.4 + normFollowers * 0.3 + normCrescimento * 0.3) * 100).toFixed(1);
+            return ((normPop * 0.25 + normFollowers * 0.25 + normCrescimento * 0.5) * 100).toFixed(1);
         }
 
         function calcularRisco(popularidade, seguidores) {
             const baseAntiga = seguidores * (0.5 + Math.random() * 0.3);
             const normPopHist = 1 - (popularidade / 100);
             const normFollowersHist = 1 - (Math.log10(baseAntiga + 1) / 6);
-            const inatividade = Math.random() > 0.7 ? 1 : 0;
-            const risco = ((normPopHist * 0.4 + normFollowersHist * 0.4 + inatividade * 0.2) * 100).toFixed(1);
+            const risco = ((normPopHist * 0.6 + normFollowersHist * 0.4) * 100).toFixed(1);
             return risco < 0 ? 0 : risco;
         }
 
@@ -194,7 +195,7 @@
                     x: {
                         title: {
                             display: true,
-                            text: 'IAP (%)',
+                            text: 'Indíce de aprovação (%)',
                             color: '#fff',
                             font: { size: 14, weight: 'bold' }
                         },
@@ -224,13 +225,11 @@
             tbody.innerHTML = '';
 
             // Ordenar artistas por IAP (do maior para o menor)
-            artistas.sort((a, b) => b.iap - a.iap);
+            artistas.sort((b, a) => b.risco - a.risco);
 
             artistas.forEach((artista, index) => {
                 const row = document.createElement('tr');
 
-                // Adicionar classe para linhas pares/ímpares
-                row.className = index % 2 === 0 ? 'even' : 'odd';
 
                 row.innerHTML = `
                     <td>
@@ -256,7 +255,6 @@
         function destacarArtistaNoGrafico(nomeArtista) {
             // Implementação para destacar o ponto correspondente no gráfico
             console.log(`Artista selecionado: ${nomeArtista}`);
-            // Você pode implementar a lógica para destacar o ponto no gráfico Chart.js aqui
         }
 
         // Chamar a função após criar artistasComMetricas

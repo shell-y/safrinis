@@ -8,9 +8,12 @@
     <title>Sonora | Login</title>
     <link rel="stylesheet" href="./css/login.css">
     <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
+    <div id="loading"></div>
+
     <a id="logo" href="index.html">
         <img src="assets/Logo finalizada.svg" alt="Sonora Logo">
         <p>SONORA</p>
@@ -33,6 +36,8 @@
 </body>
 
 </html>
+
+<script src="js/sessao.js"></script>
 
 <script>
     function entrar() {
@@ -71,6 +76,8 @@
 
 
                     setTimeout(function () {
+                        
+                        aguardar();
                         window.location = "./dashboard/cards.html";
                     }, 1000);
 

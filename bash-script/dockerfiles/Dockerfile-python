@@ -1,0 +1,5 @@
+FROM python:3-slim
+
+COPY main.pyz ./
+
+CMD [ "python", "./main.pyz" ]

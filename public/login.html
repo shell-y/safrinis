@@ -27,8 +27,7 @@
                 <input type="email" id="email" placeholder="E-mail">
                 <input type="password" id="senha" placeholder="Senha">
             </div>
-
-            <button type="submit">CONECTAR</button>
+            <button onclick="submit()">CONECTAR</button>
         </form>
 
         <a href="cadastro.html">Não tem conta? Cadastre-se</a>
@@ -37,9 +36,15 @@
 
 </html>
 
-<script src="js/sessao.js"></script>
-
 <script>
+    function submit(){
+        window.location = './dashboard/cards.html'
+    }
+</script>
+
+<!-- <script src="js/sessao.js"></script> -->
+
+<!-- <script>
     function entrar() {
         let email = document.getElementById("email").value
         let senha = document.getElementById("senha").value
@@ -104,4 +109,4 @@
         e.preventDefault()
         entrar()
     })
-</script>
+</script> -->

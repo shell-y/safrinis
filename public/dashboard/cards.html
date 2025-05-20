@@ -7,8 +7,10 @@
     <title>Sonora</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/cards.css">
+    <link rel="stylesheet" href="../css/loading.css">
 </head>
 <body>
+    <div id="loading"></div>
     <header>
         <a href="#"><img src="../assets/logo_sonora.svg" class="logo"></a>
 
@@ -27,11 +29,16 @@
 
     <main>
         <h1 id="nome">Bem vindo</h1>
-        <section id="section-cards" class="section-cards"></section>
+        <section id="section-cards" class="section-cards">
+            <a href="dashboard.html">
+                <div class="card">The town</div>
+            </a>
+            <div class="card-adicionar">+</div>
+        </section>
     </main>
 
     <footer>
-        <section>
+        <section>   
             <img src="../assets/logo_sonora.svg" class="logo">
 
             <address>
@@ -65,8 +72,8 @@
                 Condições.</small>
         </aside>
     </footer>
-    <script src="../js/sessao.js"></script>
-    <script>
+    <!-- <script src="../js/sessao.js"></script> -->
+    <!-- <script>
         // Coloque as funções no escopo global
         window.carregarInfoUsuario = function() {
             let elementoNome = document.getElementById('nome');
@@ -131,7 +138,7 @@
     
         validarSessao();
         carregarInfoUsuario();
-    </script>
+    </script> -->
 </body>
 
 </html>

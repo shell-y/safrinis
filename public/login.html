@@ -8,9 +8,12 @@
     <title>Sonora | Login</title>
     <link rel="stylesheet" href="./css/login.css">
     <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
+    <div id="loading"></div>
+
     <a id="logo" href="index.html">
         <img src="assets/Logo finalizada.svg" alt="Sonora Logo">
         <p>SONORA</p>
@@ -24,8 +27,7 @@
                 <input type="email" id="email" placeholder="E-mail">
                 <input type="password" id="senha" placeholder="Senha">
             </div>
-
-            <button type="submit">CONECTAR</button>
+            <button onclick="submit()">CONECTAR</button>
         </form>
 
         <a href="cadastro.html">Não tem conta? Cadastre-se</a>
@@ -35,6 +37,14 @@
 </html>
 
 <script>
+    function submit(){
+        window.location = './dashboard/cards.html'
+    }
+</script>
+
+<!-- <script src="js/sessao.js"></script> -->
+
+<!-- <script>
     function entrar() {
         let email = document.getElementById("email").value
         let senha = document.getElementById("senha").value
@@ -71,6 +81,8 @@
 
 
                     setTimeout(function () {
+                        
+                        aguardar();
                         window.location = "./dashboard/cards.html";
                     }, 1000);
 
@@ -97,4 +109,4 @@
         e.preventDefault()
         entrar()
     })
-</script>
+</script> -->

@@ -1,0 +1,9 @@
+#loading{
+    display: none;
+    position: absolute;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    background-position: center;
+    background-image: url(../assets/loading.gif);
+    background-repeat: no-repeat;
+}

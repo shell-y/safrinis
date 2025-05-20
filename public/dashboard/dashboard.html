@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sonora</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/loading.css">
 </head>
 
 <body>
+    <div id="loading"></div>
     <header>
         <a href="#"><img src="../assets/logo_sonora.svg" class="logo"></a>
 
@@ -28,12 +30,19 @@
     <main>
         <h1 id="nome">Dashboard/<span id="nome-lineup"></span></h1>
         <section class="section-kpi">
-            <div id="kpi">Índice de Aprovação Potencial<br><span id="iap-value">0%</span></div>
-            <div id="kpi">Risco de Engajamento<br><span id="risco-value">0%</span></div>
+            <div id="kpi">Artista com maior crescimento em Popularidade<br><span id="iap-value">Não encontrado</span>
+            </div>
+            <div id="kpi">Artista com menor crescimento em Popularidade<br><span id="risco-value">Não encontrado</span>
+            </div>
         </section>
+        <div class="grafico-controles">
+            <select id="artista-select" class="artista-select" onchange="atualizarGraficoPorSelect()">
+                <option value="todos">Todos os Artistas</option>
+            </select>
+        </div>
         <section class="grafico-e-tabela">
             <div class="grafico-container">
-                <canvas id="graficoIAPxRisco"></canvas>
+                <canvas id="grafico"></canvas>
             </div>
             <div class="tabela-container">
                 <table id="tabela-artistas">
@@ -41,13 +50,23 @@
                         <tr>
                             <th>Artista</th>
                             <th>Popularidade</th>
-                            <th>IAP</th>
-                            <th>Risco</th>
+                            <th>Seguidores</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
+            </div>
+            <div id="modal-artistas" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div id="sistema-solar">
+                        <div id="artista-central"></div>
+                        <div id="orbitas">
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -87,219 +106,418 @@
                 Condições.</small>
         </aside>
     </footer>
-    <script src="../js/sessao.js"></script>
+    <!-- <script src="../js/sessao.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
-        function identificadorDash() {
-            let elementoNome = document.getElementById('nome');
-            if (elementoNome && sessionStorage.NOME_USUARIO) {
-                elementoNome.innerText += `${sessionStorage.LINEUPSELECIONADA}`;
+        let artistasSelecionados = [];
+        let dadosGrafico = {};
+        let grafico;
+
+        // Função para formatar números de seguidores (ex: 183499 → "183.499")
+        function formatarSeguidores(seguidores) {
+            return seguidores.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Função para obter dados históricos de um artista
+        async function obterDadosHistoricos(artistaId) {
+            try {
+                const response = await fetch('artists_data.json');
+                const data = await response.json();
+
+                // Filtrar todas as entradas deste artista (por ID) ordenadas por data
+                const historico = data.filter(item => item.ID === artistaId)
+                    .sort((a, b) => new Date(a["Data da Requisição"].split('/').reverse().join('-')) -
+                        new Date(b["Data da Requisição"].split('/').reverse().join('-')));
+
+                return historico;
+            } catch (error) {
+                console.error('Erro ao obter dados históricos:', error);
+                return [];
             }
         }
-        validarSessao();
-        identificadorDash()
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Dados brutos da lineup "The Town"
-        const artistas = [
-            { nome: "Green Day", popularidade: 82, seguidores: 16398514 },
-            { nome: "Capital Inicial", popularidade: 64, seguidores: 2941870 },
-            { nome: "Pitty", popularidade: 65, seguidores: 2417709 },
-            { nome: "Kamasi Washington", popularidade: 55, seguidores: 502714 },
-            { nome: "Snarky Puppy", popularidade: 48, seguidores: 736924 },
-            { nome: "Ivete Sangalo", popularidade: 69, seguidores: 2175646 },
-            { nome: "Katy Perry", popularidade: 86, seguidores: 36582482 },
-            { nome: "Camila Cabello", popularidade: 81, seguidores: 34774468 },
-            { nome: "João Bosco", popularidade: 49, seguidores: 381059 },
-            { nome: "Gaby Amarantos", popularidade: 41, seguidores: 58368 }
-        ];
 
-        // Funções para cálculo de IAP e Risco
-        function calcularIAP(popularidade, seguidores) {
-            const crescimento = Math.random() * 50;
-            const normPop = popularidade / 100;
-            const normFollowers = Math.log10(seguidores + 1) / 6;
-            const normCrescimento = Math.min(crescimento / 100, 1);
-            return ((normPop * 0.4 + normFollowers * 0.3 + normCrescimento * 0.3) * 100).toFixed(1);
+        // Função para carregar artistas e tabela
+        async function carregarArtistasETabela() {
+            try {
+                const response = await fetch('artists_data.json');
+                const data = await response.json();
+
+                // Filtra artistas principais (sem artista relacionado) e da data mais recente
+                const dataMaisRecente = "15/04/2025";
+                const artistasFiltrados = data.filter(artista =>
+                    artista["ID Artista Relacionado"] === "" &&
+                    artista["Data da Requisição"] === dataMaisRecente &&
+                    artista["Popularidade"] > 10
+                );
+
+                // Selecionar 10 artistas aleatórios únicos
+                artistasSelecionados = [];
+                const nomesUtilizados = new Set();
+
+                while (artistasSelecionados.length < 5 && artistasFiltrados.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * artistasFiltrados.length);
+                    const artista = artistasFiltrados[randomIndex];
+
+                    if (!nomesUtilizados.has(artista.Nome)) {
+                        nomesUtilizados.add(artista.Nome);
+                        artistasSelecionados.push(artista);
+                        artistasFiltrados.splice(randomIndex, 1);
+                    }
+                }
+
+                artistasSelecionados.sort((a, b) => b.Popularidade - a.Popularidade);
+
+                const tabela = document.getElementById('tabela-artistas').getElementsByTagName('tbody')[0];
+                tabela.innerHTML = '';
+
+                const selectArtista = document.getElementById('artista-select');
+                selectArtista.innerHTML = '<option value="todos">Todos os Artistas</option>';
+
+                // Obter dados históricos para cada artista e preparar dados do gráfico
+                dadosGrafico = {
+                    labels: [], // Será preenchido com as datas
+                    datasets: [] // Será preenchido com os dados de cada artista
+                };
+
+                const todasDatas = new Set();
+
+                for (const artista of artistasSelecionados) {
+                    const historico = await obterDadosHistoricos(artista.ID);
+                    historico.forEach(item => {
+                        todasDatas.add(item["Data da Requisição"]);
+                    });
+                }
+
+                // Ordenar as datas
+                dadosGrafico.labels = Array.from(todasDatas).sort((a, b) => {
+                    return new Date(a.split('/').reverse().join('-')) - new Date(b.split('/').reverse().join('-'));
+                });
+
+                // Agora para cada artista, criar um dataset
+                for (const artista of artistasSelecionados) {
+                    const historico = await obterDadosHistoricos(artista.ID);
+
+                    // Criar array de popularidade para todas as datas
+                    const popularidades = dadosGrafico.labels.map(data => {
+                        const registro = historico.find(item => item["Data da Requisição"] === data);
+                        return registro ? registro.Popularidade : null;
+                    });
+
+                    // Gerar cor aleatória para o artista no gráfico
+                    const cor = `hsl(${Math.random() * 360}, 70%, 50%)`;
+
+                    // Adicionar ao gráfico
+                    dadosGrafico.datasets.push({
+                        label: artista.Nome,
+                        data: popularidades,
+                        borderColor: cor,
+                        backgroundColor: cor,
+                        tension: 0.3,
+                        fill: false,
+                        hidden: artistasSelecionados.indexOf(artista) < 0
+                    });
+
+                    // Adicionar linha na tabela
+                    const row = tabela.insertRow();
+                    const cellNome = row.insertCell(0);
+                    cellNome.innerHTML = `<strong>${artistasSelecionados.indexOf(artista) + 1}.</strong> ${artista.Nome}`;
+
+                    const cellPopularidade = row.insertCell(1);
+                    cellPopularidade.textContent = artista.Popularidade;
+
+                    const cellSeguidores = row.insertCell(2);
+                    cellSeguidores.textContent = formatarSeguidores(artista.Seguidores);
+
+                    const cellAcoes = row.insertCell(3);
+                    cellAcoes.innerHTML = `<button class="buttonTabela" onclick="mostrarArtistaNoGrafico('${artista.Nome}')">Gráfico</button>
+                                           <button class="buttonTabela" onclick="mostrarArtistaRelacionado('${artista.Nome}')">Artistas Relacionados</button>`;
+
+                    row.classList.add('artista-row');
+
+                    // Adicionar opção no select
+                    const option = document.createElement('option');
+                    option.value = artista.Nome;
+                    option.textContent = artista.Nome;
+                    selectArtista.appendChild(option);
+                }
+
+                // Adicionar opção de dados mockados
+                const optionMock = document.createElement('option');
+                optionMock.value = 'mock';
+                optionMock.textContent = 'Dados Mockados';
+                selectArtista.appendChild(optionMock);
+
+
+                criarGrafico();
+                atualizarKPIs();
+
+            } catch (error) {
+                console.error('Erro ao carregar os dados:', error);
+            }
         }
 
-        function calcularRisco(popularidade, seguidores) {
-            const baseAntiga = seguidores * (0.5 + Math.random() * 0.3);
-            const normPopHist = 1 - (popularidade / 100);
-            const normFollowersHist = 1 - (Math.log10(baseAntiga + 1) / 6);
-            const inatividade = Math.random() > 0.7 ? 1 : 0;
-            const risco = ((normPopHist * 0.4 + normFollowersHist * 0.4 + inatividade * 0.2) * 100).toFixed(1);
-            return risco < 0 ? 0 : risco;
-        }
+        function criarGrafico() {
+            const ctx = document.getElementById('grafico').getContext('2d');
 
-        // Calcular métricas para todos os artistas
-        const artistasComMetricas = artistas.map(artista => {
-            return {
-                ...artista,
-                iap: parseFloat(calcularIAP(artista.popularidade, artista.seguidores)),
-                risco: parseFloat(calcularRisco(artista.popularidade, artista.seguidores))
-            };
-        });
+            if (grafico) {
+                grafico.destroy();
+            }
 
-        // Preparar dados para o gráfico
-        const data = {
-            datasets: [{
-                label: 'Artistas na lineup The Town',
-                data: artistasComMetricas.map(a => ({
-                    x: a.iap,
-                    y: a.risco,
-                    label: a.nome
-                })),
-                backgroundColor: 'rgba(87, 168, 222, 0.8)',
-                borderColor: 'rgba(255, 255, 255, 0.8)',
-                borderWidth: 1,
-                pointRadius: 6,
-                pointHoverRadius: 10
-            }]
-        };
-
-        // Configuração do gráfico
-        const config = {
-            type: 'scatter',
-            data: data,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        titleFont: { size: 16, weight: 'bold' },
-                        bodyFont: { size: 14 },
-                        callbacks: {
-                            label: function (ctx) {
-                                const artista = ctx.raw;
-                                return [
-                                    artista.label,
-                                    `IAP: ${artista.x}%`,
-                                    `Risco: ${artista.y}%`
-                                ];
+            grafico = new Chart(ctx, {
+                type: 'line',
+                data: dadosGrafico,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Evolução da Popularidade dos Artistas',
+                            font: {
+                                size: 16,
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 20
                             }
                         }
                     },
-                    title: {
-                        display: true,
-                        text: 'Matriz IAP x Risco - Line-up ' + sessionStorage.LINEUPSELECIONADA,
-                        font: { size: 20, weight: 'bold' },
-                        color: '#fff',
-                        padding: { top: 20, bottom: 20 }
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'IAP (%)',
-                            color: '#fff',
-                            font: { size: 14, weight: 'bold' }
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Popularidade'
+                            }
                         },
-                        min: 0,
-                        max: 100,
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#fff' }
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Data'
+                            }
+                        }
                     },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Risco de Engajamento (%)',
-                            color: '#fff',
-                            font: { size: 14, weight: 'bold' }
-                        },
-                        min: 0,
-                        max: 50,
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#fff' }
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+        }
+
+        // Função para mostrar apenas um artista no gráfico
+        function mostrarArtistaNoGrafico(nomeArtista) {
+            document.getElementById('artista-select').value = nomeArtista;
+
+            dadosGrafico.datasets.forEach(dataset => {
+                dataset.hidden = dataset.label !== nomeArtista;
+            });
+
+            grafico.update();
+        }
+
+        function gerarDadosMockados() {
+            const nomesFicticios = ["Artista A", "Artista B", "Artista C", "Artista D", "Artista E"];
+            const cores = ["#e6194b", "#3cb44b", "#ffe119", "#4363d8", "#f58231"];
+
+            const meses = [
+                "01/2025", "02/2025", "03/2025", "04/2025", "05/2025", "06/2025",
+                "07/2025", "08/2025", "09/2025", "10/2025", "11/2025", "12/2025"
+            ];
+
+            dadosGrafico = {
+                labels: meses,
+                datasets: nomesFicticios.map((nome, i) => {
+                    let valorBase = Math.floor(Math.random() * 60) + 20; // popularidade base entre 20 e 80
+                    const variacao = () => Math.floor(Math.random() * 7 - 3); // variação -3 a +3
+                    let dados = meses.map((_, index) => {
+                        valorBase += variacao();
+                        if (valorBase < 0) valorBase = 0;
+                        if (valorBase > 100) valorBase = 100;
+                        return valorBase;
+                    });
+
+                    return {
+                        label: nome,
+                        data: dados,
+                        borderColor: cores[i % cores.length],
+                        backgroundColor: cores[i % cores.length],
+                        tension: 0.3,
+                        fill: false,
+                        hidden: false
+                    };
+                })
+            };
+        }
+
+        // Função para atualizar o gráfico quando o select muda
+        function atualizarGraficoPorSelect() {
+            const artistaSelecionado = document.getElementById('artista-select').value;
+
+            if (artistaSelecionado === 'todos') {
+                dadosGrafico.datasets.forEach(dataset => dataset.hidden = false);
+                grafico.update();
+            } else if (artistaSelecionado === 'mock') {
+                gerarDadosMockados();
+                criarGrafico();
+                atualizarKPIs();
+            } else {
+                mostrarArtistaNoGrafico(artistaSelecionado);
+                grafico.update();
+            }
+        }
+
+
+        // Função para atualizar os KPIs
+        function atualizarKPIs() {
+            if (artistasSelecionados.length === 0) return;
+
+            let maiorCrescimento = { nome: "", crescimento: 0 };
+            let menorCrescimento = { nome: "", crescimento: 100 };
+
+            for (const artista of artistasSelecionados) {
+                const historico = dadosGrafico.datasets.find(d => d.label === artista.Nome).data;
+                const primeiroValor = historico.find(val => val !== null);
+                const ultimoValor = historico[historico.length - 1];
+
+                if (primeiroValor !== undefined && ultimoValor !== null) {
+                    const crescimento = ultimoValor - primeiroValor;
+
+                    if (crescimento > maiorCrescimento.crescimento) {
+                        maiorCrescimento = { nome: artista.Nome, crescimento };
+                    }
+
+                    if (crescimento < menorCrescimento.crescimento) {
+                        menorCrescimento = { nome: artista.Nome, crescimento };
                     }
                 }
             }
-        };
 
-        function preencherTabela(artistas) {
-            const tbody = document.querySelector('#tabela-artistas tbody');
-            tbody.innerHTML = '';
+            document.getElementById('iap-value').textContent = maiorCrescimento.nome ?
+                `${maiorCrescimento.nome} (+${maiorCrescimento.crescimento})` : "Não encontrado";
 
-            // Ordenar artistas por IAP (do maior para o menor)
-            artistas.sort((a, b) => b.iap - a.iap);
+            document.getElementById('risco-value').textContent = menorCrescimento.nome ?
+                `${menorCrescimento.nome} (${menorCrescimento.crescimento >= 0 ? '+' : ''}${menorCrescimento.crescimento})` : "Não encontrado";
+        }
 
-            artistas.forEach((artista, index) => {
-                const row = document.createElement('tr');
+        function identificadorDash() {
+            let elementoNome = document.getElementById('nome');
+            if (elementoNome && sessionStorage.NOME_USUARIO) {
+                elementoNome.innerText += `The Town`;
+            }
+        }
 
-                // Adicionar classe para linhas pares/ímpares
-                row.className = index % 2 === 0 ? 'even' : 'odd';
+        let modalArtistas = null;
 
-                row.innerHTML = `
-                    <td>
-                        <div class="artista-info">
-                            <span class="artista-pos">${index + 1}</span>
-                            <span class="artista-nome">${artista.nome}</span>
-                        </div>
-                    </td>
-                    <td>${artista.popularidade}%</td>
-                    <td>${artista.iap}%</td>
-                    <td>${artista.risco}%</td>
-                `;
+        async function mostrarArtistaRelacionado(nomeArtista) {
+            const artistaPrincipal = artistasSelecionados.find(a => a.Nome === nomeArtista);
+            if (!artistaPrincipal) return;
 
-                // Adicionar evento de clique para destacar no gráfico
-                row.addEventListener('click', () => {
-                    destacarArtistaNoGrafico(artista.nome);
+            const response = await fetch('artists_data.json');
+            const todosArtistas = await response.json();
+
+            const relacionados = todosArtistas.filter(a => a["ID Artista Relacionado"] === artistaPrincipal.ID)
+                .sort((a, b) => b.Popularidade - a.Popularidade);
+
+            if (!modalArtistas) {
+                modalArtistas = document.getElementById('modal-artistas');
+                document.querySelector('.close').addEventListener('click', () => {
+                    modalArtistas.style.display = 'none';
                 });
-
-                tbody.appendChild(row);
-            });
-        }
-
-        function destacarArtistaNoGrafico(nomeArtista) {
-            // Implementação para destacar o ponto correspondente no gráfico
-            console.log(`Artista selecionado: ${nomeArtista}`);
-            // Você pode implementar a lógica para destacar o ponto no gráfico Chart.js aqui
-        }
-
-        // Chamar a função após criar artistasComMetricas
-        preencherTabela(artistasComMetricas);
-
-
-        // Atualizar KPIs
-        function calcularMedia(lista, chave) {
-            const soma = lista.reduce((acc, item) => acc + item[chave], 0);
-            return (soma / lista.length).toFixed(1);
-        }
-
-        function updateKPIs() {
-            const mediaIAP = calcularMedia(artistasComMetricas, 'iap');
-            const mediaRisco = calcularMedia(artistasComMetricas, 'risco');
-
-            document.getElementById('iap-value').textContent = `${mediaIAP}%`;
-            document.getElementById('risco-value').textContent = `${mediaRisco}%`;
-            const nomeLineupSpan = document.getElementById('nome-lineup');
-            if (nomeLineupSpan && sessionStorage.LINEUPSELECIONADA) {
-                nomeLineupSpan.textContent = sessionStorage.LINEUPSELECIONADA;
             }
 
+            document.getElementById('artista-central').textContent = artistaPrincipal.Nome;
 
-            // Animar os KPIs
-            const kpis = document.querySelectorAll('#kpi');
-            kpis.forEach((kpi, index) => {
-                kpi.style.opacity = 0;
-                setTimeout(() => {
-                    kpi.style.transition = 'opacity 0.6s ease-out';
-                    kpi.style.opacity = 1;
-                }, index * 200);
-            });
+            const orbitasContainer = document.getElementById('orbitas');
+            orbitasContainer.innerHTML = '';
+
+            const numOrbitas = Math.min(5, Math.ceil(relacionados.length / 5));
+            const planetasPorOrbita = Math.ceil(relacionados.length / numOrbitas);
+
+            for (let i = 0; i < numOrbitas; i++) {
+                const orbita = document.createElement('div');
+                orbita.className = 'orbita';
+
+                const tamanho = 210 + (i * 120);
+                orbita.style.width = `${tamanho}px`;
+                orbita.style.height = `${tamanho}px`;
+                orbita.style.marginLeft = `-${tamanho / 2}px`;
+                orbita.style.marginTop = `-${tamanho / 2}px`;
+
+
+                orbitasContainer.appendChild(orbita);
+
+                const nomesUsados = new Set();
+                const artistasNaOrbita = relacionados.slice(i * planetasPorOrbita, (i + 1) * planetasPorOrbita)
+                    .filter(artista => {
+                        if (nomesUsados.has(artista.Nome)) return false;
+                        nomesUsados.add(artista.Nome);
+                        return true;
+                    });
+
+                const angulos = gerarAngulosEspacados(artistasNaOrbita.length);
+
+                artistasNaOrbita.forEach((artista, j) => {
+                    const planeta = document.createElement('div');
+                    planeta.className = 'planeta';
+                    planeta.textContent = artista.Nome;
+
+                    const angulo = angulos[j];
+                    const rad = angulo * Math.PI / 180;
+                    const x = Math.cos(angulo * Math.PI / 180) * (tamanho / 2);
+                    const y = Math.sin(angulo * Math.PI / 180) * (tamanho / 2);
+
+                    planeta.style.left = `calc(50% + ${x}px - 30px)`;
+                    planeta.style.top = `calc(50% + ${y}px - 30px)`;
+
+                    // Adicionar tooltip com informações
+                    planeta.title = `${artista.Nome}\nPopularidade: ${artista.Popularidade}\nSeguidores: ${formatarSeguidores(artista.Seguidores)}`;
+
+                    orbitasContainer.appendChild(planeta)
+                });
+            }
+
+            // Mostrar o modal
+            modalArtistas.style.display = 'block';
         }
 
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', () => {
-            validarSessao();
-            updateKPIs();
+        function gerarAngulosEspacados(qtd, minDistanciaGraus = 30) {
+            const angulos = [];
 
-            const canvas = document.getElementById('graficoIAPxRisco');
-            console.log("Canvas encontrado?", !!canvas); // Deve imprimir true
-            new Chart(canvas, config);
+            while (angulos.length < qtd && minDistanciaGraus > 0) {
+                const novo = Math.floor(Math.random() * 360);
+                const distanciaOk = angulos.every(a => Math.abs(novo - a) >= minDistanciaGraus && Math.abs(novo - a) <= 360 - minDistanciaGraus);
+
+                if (distanciaOk) {
+                    angulos.push(novo);
+                }
+            }
+
+            return angulos;
+        }
+
+
+        // Fechar o modal ao clicar fora do conteúdo
+        window.addEventListener('click', (event) => {
+            if (modalArtistas && event.target === modalArtistas) {
+                modalArtistas.style.display = 'none';
+            }
+        });
+
+        document.getElementById('artista-select').addEventListener('change', atualizarGraficoPorSelect);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            identificadorDash();
+            carregarArtistasETabela();
         });
 
     </script>

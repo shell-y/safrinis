@@ -28,7 +28,7 @@
     </header>
 
     <main>
-        <h1 id="nome">Bem vindo</h1>
+        <h1 id="nome">Bem vindo(a), <span id="span_nome_usuario"></span></h1>
         <section id="section-cards" class="section-cards">
             <a href="dashboard.html">
                 <div class="card">The town</div>
@@ -72,7 +72,10 @@
                 Condições.</small>
         </aside>
     </footer>
-    <!-- <script src="../js/sessao.js"></script> -->
+    <script src="../js/sessao.js"></script>
+    <script>
+        span_nome_usuario.innerText = sessionStorage.NOME_USUARIO
+    </script>
     <!-- <script>
         // Coloque as funções no escopo global
         window.carregarInfoUsuario = function() {

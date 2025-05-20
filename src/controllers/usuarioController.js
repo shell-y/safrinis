@@ -17,6 +17,14 @@ function autenticar(req, res) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
                     console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
 
+                    res.json({
+                        id: resultadoAutenticar[0].idUsuario,
+                        email: resultadoAutenticar[0].email,
+                        nome: resultadoAutenticar[0].nome,
+                        // usuario: resultadoAutenticar[0].usuario,
+                        empresa: resultadoAutenticar[0].empresa
+                    });
+                    /*
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
@@ -27,7 +35,7 @@ function autenticar(req, res) {
                                         id: resultadoAutenticar[0].id,
                                         email: resultadoAutenticar[0].email,
                                         nome: resultadoAutenticar[0].nome,
-                                        usuario: resultadoAutenticar[0].usuario,
+                                        // usuario: resultadoAutenticar[0].usuario,
                                         empresa: resultadoAutenticar[0].empresa,
                                         lineup: resultadoLineup
                                     });
@@ -41,7 +49,7 @@ function autenticar(req, res) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
                         res.status(403).send("Mais de um usuário com o mesmo login e senha!");
-                    }
+                    }*/
                 }
             ).catch(
                 function (erro) {
@@ -60,7 +68,7 @@ function cadastrar(req, res) {
         cnpj: req.body.cnpjServer,
         nome: req.body.nomeServer,
         celular: req.body.celularServer,
-        usuario: req.body.usuarioServer,
+        // usuario: req.body.usuarioServer,
         email: req.body.emailServer,
         senha: req.body.senhaServer
     };
@@ -72,7 +80,7 @@ function cadastrar(req, res) {
         }
     }
 
-    usuarioModel.verificarExistente(campos.email, campos.usuario)
+    usuarioModel.verificarExistente(campos.cnpj)
         .then((resultado) => {
             if (resultado.length > 0) {
                 res.status(409).send("E-mail ou usuário já cadastrado");
@@ -82,7 +90,7 @@ function cadastrar(req, res) {
                     campos.cnpj,
                     campos.nome,
                     campos.celular,
-                    campos.usuario,
+                    // campos.usuario,
                     campos.email,
                     campos.senha
                 )

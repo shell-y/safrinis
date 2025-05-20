@@ -1,53 +1,45 @@
 var database = require("../database/config")
+const bcrypt = require("bcrypt");
 
 function autenticar(email, senha) {
     const instrucaoSql = `
-        SELECT * FROM usuario WHERE email = '${email}';
+        SELECT * FROM Usuario WHERE email = '${email}' AND senha = '${senha}';
     `;
     console.log("Executando a instrução SQL: " + instrucaoSql);
 
-    return database.executar(instrucaoSql).then(resultado => {
-        if (resultado.length === 1) {
-            const usuario = resultado[0];
-            return bcrypt.compare(senha, usuario.senha).then(match => {
-                if (match) {
-                    return [{
-                        id: usuario.idUsuario,
-                        nome: usuario.nome,
-                        usuario: usuario.usuario,
-                        email: usuario.email,
-                        empresa: usuario.empresa
-                    }];
-                } else {
-                    return [];
-                }
-            });
-        } else {
-            return [];
-        }
-    });
+    return database.executar(instrucaoSql)
+
+            // return bcrypt.compare(senha, usuario.senha).then(match => {
+            //     if (match) {
+            //         return [{
+            //             id: usuario.idUsuario,
+            //             nome: usuario.nome,
+            //             email: usuario.email,
+            //             empresa: usuario.empresa
+            //         }];
+            //     } else {
+            //         return [];
+            //     }
+            // });
+}
+
+function cadastrar(empresa, cnpj, nome, celular, email, senha) {
+    const instrucaoSql = `
+    INSERT INTO Usuario (empresa, cnpj, nome, celular, email, senha)
+    VALUES ('${empresa}', '${cnpj}', '${nome}', '${celular}', '${email}', '${hash}');
+    `;
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
+    
+    //const saltRounds = 5;
+    // return bcrypt.hash(senha, saltRounds).then(hash => {
+    // });
 }
 
 
-const bcrypt = require("bcrypt");
-
-function cadastrar(empresa, cnpj, nome, celular, usuario, email, senha) {
-    const saltRounds = 10;
-
-    return bcrypt.hash(senha, saltRounds).then(hash => {
-        const instrucaoSql = `
-            INSERT INTO usuario (empresa, cnpj, nome, celular, usuario, email, senha)
-            VALUES ('${empresa}', '${cnpj}', '${nome}', '${celular}', '${usuario}', '${email}', '${hash}');
-        `;
-        console.log("Executando a instrução SQL: " + instrucaoSql);
-        return database.executar(instrucaoSql);
-    });
-}
-
-
-function verificarExistente(email, usuario) {
+function verificarExistente(cnpj) {
     var instrucaoSql = `
-        SELECT * FROM usuario WHERE email = '${email}' OR usuario = '${usuario}';
+        SELECT * FROM Usuario WHERE cnpj = '${cnpj}';
     `;
     console.log("Executando a instrução SQL: " + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS sonora;
-USE sonora;
+CREATE DATABASE IF NOT EXISTS Sonora;
+USE Sonora;
 
 CREATE TABLE IF NOT EXISTS Usuario(
 idUsuario int primary key auto_increment,
@@ -8,7 +8,7 @@ cnpj char(18),
 nome varchar(45),
 celular char(15),
 email varchar(200),
-senha varchar(35)
+senha varchar(100)
 );
 
 /*

@@ -1,5 +1,5 @@
-var database = require("../database/config")
-const bcrypt = require("bcrypt");
+const database = require("../database/config")
+// const bcrypt = require("bcrypt");
 
 function autenticar(email, senha) {
     const instrucaoSql = `
@@ -26,7 +26,7 @@ function autenticar(email, senha) {
 function cadastrar(empresa, cnpj, nome, celular, email, senha) {
     const instrucaoSql = `
     INSERT INTO Usuario (empresa, cnpj, nome, celular, email, senha)
-    VALUES ('${empresa}', '${cnpj}', '${nome}', '${celular}', '${email}', '${hash}');
+    VALUES ('${empresa}', '${cnpj}', '${nome}', '${celular}', '${email}', '${senha}');
     `;
     console.log("Executando a instrução SQL: " + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -102,8 +102,8 @@ function cadastrar(req, res) {
             }
         })
         .catch((erro) => {
-            console.error("Erro ao verificar se o usuário existe:", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
+            console.error("Erro ao verificar se o usuário existe:", erro);
+            res.status(500).json(erro);
         });
 }
 

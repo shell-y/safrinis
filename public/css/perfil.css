@@ -1,0 +1,94 @@
+@import url(main.css);
+
+main {
+    padding: 4rem var(--area-segura-lateral);
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h1>span {
+    margin-left: .5rem;
+
+    font-size: 1.3rem;
+    font-weight: normal;
+    text-decoration: underline;
+
+    cursor: pointer;
+}
+
+form {
+    width: 50rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    gap: 2rem;
+}
+
+form section {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+form>section>div {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-size: 1.35rem;
+}
+
+form input {
+    outline: none;
+    border: 0;
+    
+    padding: .2rem .5rem;
+    border-radius: .5rem;
+
+    font-size: 1.6rem;
+}
+
+#div_senha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#div_senha input {
+    width: 86%;
+}
+
+#div_senha button {
+    padding: 0;
+    background: transparent;
+}
+
+#div_senha button>img {
+    width: 2rem;
+}
+
+form input[disabled] {
+    border: none;
+    padding: 0;
+
+    color: unset;
+    background-color: transparent;
+}
+
+form>button {
+    width: 7rem;
+    padding: .7rem 0;
+    margin-top: 1.5rem;
+
+    text-transform: capitalize;
+}

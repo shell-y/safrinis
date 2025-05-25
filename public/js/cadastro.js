@@ -1,26 +1,4 @@
-function formatCNPJ(value) {
-    value = value.replace(/\D/g, "")
-    value = value.replace(/(\d{2})(\d)/, "$1.$2")
-    value = value.replace(/(\d{3})(\d)/, "$1.$2")
-    value = value.replace(/(\d{3})(\d)/, "$1/$2")
-    value = value.replace(/(\d{4})(\d)/, "$1-$2")
-    return value
-  }
-
-  document.getElementById("cnpj").addEventListener("input", function (e) {
-    e.target.value = formatCNPJ(e.target.value)
-  })
-
-  function formatCelular(value) {
-    value = value.replace(/\D/g, "")
-    value = value.replace(/^(\d{2})(\d)/, "($1) $2")
-    value = value.replace(/(\d{5})(\d)/, "$1-$2")
-    return value
-  }
-
-  document.getElementById("celular").addEventListener("input", function (e) {
-    e.target.value = formatCelular(e.target.value)
-  })
+import * as format from "./formatar_campos.js"
 
   function validarCamposVazios(campos) {
     for (let campo in campos) {
@@ -91,8 +69,8 @@ function formatCNPJ(value) {
       return false
     }
 
-    campos.cnpj = formatarParaEnvio(campos.cnpj)
-    campos.celular = formatarParaEnvio(campos.celular)
+    campos.cnpj = format.formatarParaEnvio(campos.cnpj)
+    campos.celular = format.formatarParaEnvio(campos.celular)
 
     fetch("/usuarios/cadastrar", {
       method: "POST",
@@ -130,16 +108,3 @@ function formatCNPJ(value) {
     e.preventDefault()
     cadastrar()
   })
-
-  function formatarParaEnvio(str) {
-    var novaStr = "";
-    const caracteresIndesejados = "./-() "
-
-    for (let char of str) {
-        if (!caracteresIndesejados.includes(char)) {
-            novaStr += char;
-        }
-    }
-
-    return novaStr;
-  }

@@ -107,9 +107,32 @@ function cadastrar(req, res) {
         });
 }
 
+function editar(req, res) {
+    const cadastroUsuario = {
+        id: req.params.idUsuario,
+        nome: req.body.nomeUsuario,
+        senha: req.body.senha,
+        email: req.body.email,
+        celular: req.body.celular
+    };
 
+    console.log(`Executando edição de cadastro para o usuário id ${cadastroUsuario.id}, ${cadastroUsuario.nome}...\n`);
+
+    usuarioModel
+        .editar(cadastroUsuario)
+        .then(resposta => {
+            res.status(200).send();
+        })
+        .catch(erro => {
+            console.log("Ocorreu um erro!");
+            console.log(erro);
+            res.status(500).send();
+        })
+    ;
+}
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    editar
 }

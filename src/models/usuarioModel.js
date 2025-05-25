@@ -45,9 +45,23 @@ function verificarExistente(cnpj) {
     return database.executar(instrucaoSql);
 }
 
+function editar(usuario) {
+    const instrucaoSql = `
+        UPDATE Usuario SET
+            nomeUsuario = "${usuario.nome}",
+            senha = "${usuario.senha}",
+            celular = "${usuario.celular}",
+            email = "${usuario.email}"
+                WHERE idUsuario = ${usuario.id}
+    `;
+
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 module.exports = {
     autenticar,
     cadastrar,
-    verificarExistente
+    verificarExistente,
+    editar
 };

@@ -27,56 +27,6 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Tabela */
-#tabela-artistas {
-    width: 100%;
-    border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 1rem;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-#tabela-artistas th, 
-#tabela-artistas td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    color: #fff;
-    font-size: 1.4rem;
-}
-
-#tabela-artistas th {
-    background-color: rgba(87, 168, 222, 0.15);
-    font-weight: 500;
-    text-transform: uppercase;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-}
-
-#tabela-artistas tr:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-#tabela-artistas td:nth-child(3) {
-    color: var(--cor-verde-claro);
-    font-weight: 500;
-    font-size: 1.4rem;
-}
-
-#tabela-artistas td:nth-child(4) {
-    color: #ff6b6b;
-    font-weight: 500;
-    font-size: 1.4rem;
-}
-
-.buttonTabela{
-    height: 4rem;
-    font-size: 1rem;
-}
-
 .grafico-controles {
     margin-bottom: 2rem;
     display: flex;
@@ -125,7 +75,7 @@
     margin: 3rem 0;
 }
 
-#kpi {
+.kpi {
     width: 35rem;
     height: 5rem;
     background: linear-gradient(135deg, 
@@ -145,7 +95,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-#kpi::before {
+.kpi::before {
     content: '';
     position: absolute;
     top: 0;
@@ -159,16 +109,16 @@
     transition: opacity 0.3s ease;
 }
 
-#kpi:hover {
+.kpi:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-#kpi:hover::before {
+.kpi:hover::before {
     opacity: 1;
 }
 
-#kpi span {
+.kpi .span {
     font-size: 2rem;
     font-weight: 600;
     margin-top: 0.5rem;
@@ -193,59 +143,53 @@
 }
 
 /* Estilos para o modal sonar*/
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    overflow: auto;
-  }
-  
-  .modal-content {
-    position: relative;
-    margin: auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 800px;
-    height: 90vh;
+/* Adicionar novos estilos */
+.grafico-e-sonar {
+    display: flex;
+    gap: 3rem;
+    padding: 0 var(--area-segura-lateral);
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.grafico-container, 
+.sonar-container {
+    flex: 1 1 45%;
+    min-width: 300px;
+}
+
+.sonar-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-  }
-  
-  .close {
-    position: absolute;
-    right: 25px;
-    top: 10px;
-    color: #fff;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .close:hover {
-    color: var(--cor-azul-claro);
-  }
-  
-  /* Estilos para o sistema solar */
-  #sistema-solar {
+}
+
+.sonar-container h3 {
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    color: white;
+}
+
+#sistema-solar {
     position: relative;
     width: 100%;
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #artista-central {
+    height: 400px;
+    margin: 0 auto;
+}
+
+#artista-central {
     position: absolute;
-    width: 120px;
-    height: 120px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     background: var(--cor-azul);
     display: flex;
@@ -253,121 +197,44 @@
     align-items: center;
     color: white;
     font-weight: bold;
-    text-align: center;
-    z-index: 10;
     box-shadow: 0 0 20px rgba(87, 168, 222, 0.7);
-    font-size: 1.4rem;
-    padding: 10px;
-  }
-  
-  .orbita {
-    z-index: 1;
-    position: absolute;
-    width: 200px; /* substituído dinamicamente pelo JS */
-    height: 200px; /* substituído dinamicamente pelo JS */
-    top: 50%;
-    left: 50%;
-    margin-left: -100px; /* metade do width */
-    margin-top: -100px;  /* metade do height */
-    border: 1px solid rgba(255, 255, 255, 0.700);
-    border-radius: 50%;
-    transform-origin: center;
+    font-size: 1.2rem;
 }
 
-  .planeta {
-    z-index: 5;
-    pointer-events: auto;
+.planeta {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: var(--cor-verde);
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-    font-weight: bold;
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-align: center;
+    transform: translate(-50%, -50%);
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 107, 107, 0.7);
-  }
-  
-  .planeta:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(255, 107, 107, 0.9);
-  }
-  
-  /* Animações para as órbitas */
-  @keyframes orbit {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-/* Responsividade */
-@media (max-width: 1024px) {
-    .grafico-container,
-    .tabela-container {
-        flex: 1 1 100%;
-    }
-    
-    .grafico-e-tabela {
-        flex-direction: column;
-    }
-    
-    #grafico {
-        min-height: 350px;
-    }
 }
 
+.planeta:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 15px rgba(56, 200, 113, 0.7);
+}
+
+/* Ajustar responsividade */
 @media (max-width: 768px) {
-    .section-kpi {
+    .grafico-e-sonar {
         flex-direction: column;
-        align-items: stretch;
     }
     
-    #kpi {
+    .grafico-container,
+    .sonar-container {
         width: 100%;
-        margin-bottom: 1.5rem;
     }
     
-    #nome {
-        font-size: 2rem;
+    #sistema-solar {
+        height: 300px;
     }
-    
-    #tabela-artistas th, 
-    #tabela-artistas td {
-        padding: 0.8rem 1rem;
-        font-size: 1.4rem;
-    }
-}
-
-/* Animações */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.section-kpi > div,
-.grafico-e-tabela > div {
-    animation: fadeIn 0.6s ease-out forwards;
-}
-
-.section-kpi > div:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.grafico-container {
-    animation-delay: 0.3s;
-}
-
-.tabela-container {
-    animation-delay: 0.4s;
 }

@@ -11,6 +11,10 @@ email varchar(200),
 senha varchar(100)
 );
 
+
+
+
+
 /*
 CREATE TABLE Artista (
     idArtista INT PRIMARY KEY auto_increment,

@@ -1,4 +1,4 @@
-let artistaSelecionado = "Bruno Mars";
+const artistaSelecionado = "Bruno Mars";
 let dadosGrafico = {};
 let grafico;
 let graficoPlays;
@@ -32,7 +32,7 @@ async function atualizarKPIs() {
 
         const kpis = await response.json();
 
-        document.getElementById('periodo-plays').textContent = `${periodo} dias`;
+        document.getElementById('periodo-plays').textContent = ` ${periodo} dias`;
         document.getElementById('crescimento-plays').textContent = `${kpis.crescimentoPlays}%`;
         document.getElementById('crescimento-ouvintes').textContent = `${kpis.crescimentoOuvintes}%`;
         document.getElementById('popularidade').textContent = `${kpis.popularidade}%`;
@@ -97,13 +97,25 @@ function prepararDadosGraficoPlays(dados) {
     });
 }
 
-async function carregarArtistasRelacionados(artistaId) {
+async function carregarArtistasRelacionados(artistaSelecionado) {
     try {
-        const response = await fetch('artists_data.json');
-        const data = await response.json();
+        const response = await fetch("/dashboard/getArtistaRelacionado", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                artistaServer: artistaSelecionado
+            })
+        });
 
-        const relacionados = data.filter(item => item["ID Artista Relacionado"] === artistaId).slice(0, 8);
-        renderizarSonar(relacionados);
+        if (!response.ok) throw new Error('Erro na requisição');
+
+        const artistasRelacionados = await response.json();
+
+        const NomesRelacionados = artistasRelacionados.map(item => item.nome);
+
+        renderizarSonar(NomesRelacionados);
     } catch (error) {
         console.error('Erro ao carregar artistas relacionados:', error);
     }
@@ -116,23 +128,42 @@ function renderizarSonar(artistas) {
     artistaCentral.textContent = artistaSelecionado;
     orbitas.innerHTML = '';
 
+    function criarOrbita(tamanho) {
+        const orbita = document.createElement('div');
+        orbita.className = 'orbita';
+        orbita.style.width = `${tamanho}px`;
+        orbita.style.height = `${tamanho}px`;
+        return orbita;
+    }
+
+    orbitas.appendChild(criarOrbita(240));
+    orbitas.appendChild(criarOrbita(400));
+
     artistas.forEach((artista, index) => {
-        const angulo = (index * (360 / artistas.length)) % 360;
-        const distancia = 150 + (Math.floor(index / 4) * 100);
+        const distancia = index < 5 ? 120 : 200;
+
+        let angulo;
+        if (index < 5) {
+            angulo = index * (360 / 5);
+        } else {
+            angulo = (index - 5) * (360 / 5) + 36;
+        }
 
         const x = Math.cos(angulo * Math.PI / 180) * distancia;
         const y = Math.sin(angulo * Math.PI / 180) * distancia;
 
         const planeta = document.createElement('div');
         planeta.className = 'planeta';
-        planeta.textContent = artista.Nome;
+        planeta.textContent = artista;
         planeta.style.left = `calc(50% + ${x}px)`;
         planeta.style.top = `calc(50% + ${y}px)`;
-        planeta.title = `${artista.Nome}\nPopularidade: ${artista.Popularidade}`;
+        planeta.title = artista;
 
         orbitas.appendChild(planeta);
     });
 }
+
+
 
 function atualizarGraficoPorSelect() {
     const select = document.getElementById('artista-select');
@@ -146,6 +177,7 @@ function atualizarGraficoPorSelect() {
 document.addEventListener('DOMContentLoaded', () => {
     identificadorDash();
     atualizarKPIs();
+    carregarArtistasRelacionados(artistaSelecionado);
 
     const periodoSelect = document.getElementById('periodo-select');
     if (periodoSelect) {

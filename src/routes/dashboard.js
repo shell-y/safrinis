@@ -5,6 +5,10 @@ var dashboardController = require("../controllers/dashboardController");
 
 router.post("/getKpi", function (req, res) {
     dashboardController.getKpi(req, res);
-})
+});
+
+router.post("/getArtistaRelacionado", function (req, res) {
+    dashboardController.getArtistaRelacionado(req, res);
+});
 
 module.exports = router;

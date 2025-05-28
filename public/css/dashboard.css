@@ -143,7 +143,6 @@
 }
 
 /* Estilos para o modal sonar*/
-/* Adicionar novos estilos */
 .grafico-e-sonar {
     display: flex;
     gap: 3rem;
@@ -161,7 +160,7 @@
 .sonar-container {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 3rem;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -171,7 +170,7 @@
 }
 
 .sonar-container h3 {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     font-size: 1.8rem;
     color: white;
 }
@@ -188,30 +187,32 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     background: var(--cor-azul);
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
+    text-shadow: 0px 0px 5px black;
     font-weight: bold;
     box-shadow: 0 0 20px rgba(87, 168, 222, 0.7);
-    font-size: 1.2rem;
+    font-size: 1.7rem;
 }
 
 .planeta {
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background: var(--cor-verde);
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-    font-size: 0.9rem;
+    font-size: 1.5rem;
+    text-shadow: 0px 0px 5px black;
     text-align: center;
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -222,6 +223,16 @@
     transform: translate(-50%, -50%) scale(1.1);
     box-shadow: 0 0 15px rgba(56, 200, 113, 0.7);
 }
+
+.orbita {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.600);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 
 /* Ajustar responsividade */
 @media (max-width: 768px) {

@@ -8,7 +8,17 @@
         console.log("Executando a instrução SQL: " + instrucaoSql);
         return database.executar(instrucaoSql);
     }
+    
+    function buscarRelacionados(artistaId){
+        const instrucaoSql = `
+        SELECT * FROM ARTISTA WHERE FKRELACIONADOA = ${artistaId};
+        `
+
+        console.log("Executando a instrução SQL: " + instrucaoSql);
+        return database.executar(instrucaoSql);
+    }
 
     module.exports = {
-        buscarPorNome
+        buscarPorNome,
+        buscarRelacionados
     };

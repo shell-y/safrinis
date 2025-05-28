@@ -51,11 +51,9 @@ import * as format from "./formatar_campos.js"
 
   function cadastrar() {
     const campos = {
-      empresa: document.getElementById("empresa").value,
       cnpj: document.getElementById("cnpj").value,
       nome: document.getElementById("nome").value,
       celular: document.getElementById("celular").value,
-      // usuario: document.getElementById("usuario").value,
       email: document.getElementById("email").value,
       senha: document.getElementById("senha").value,
       confirmarSenha: document.getElementById("confirmarSenha").value
@@ -78,11 +76,9 @@ import * as format from "./formatar_campos.js"
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        empresaServer: campos.empresa,
         cnpjServer: campos.cnpj,
         nomeServer: campos.nome,
         celularServer: campos.celular,
-        // usuarioServer: campos.usuario,
         emailServer: campos.email,
         senhaServer: campos.senha
       }),

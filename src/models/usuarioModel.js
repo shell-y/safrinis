@@ -1,5 +1,4 @@
 const database = require("../database/config")
-// const bcrypt = require("bcrypt");
 
 function autenticar(email, senha) {
     const instrucaoSql = `
@@ -8,38 +7,29 @@ function autenticar(email, senha) {
     console.log("Executando a instrução SQL: " + instrucaoSql);
 
     return database.executar(instrucaoSql)
-
-            // return bcrypt.compare(senha, usuario.senha).then(match => {
-            //     if (match) {
-            //         return [{
-            //             id: usuario.idUsuario,
-            //             nome: usuario.nome,
-            //             email: usuario.email,
-            //             empresa: usuario.empresa
-            //         }];
-            //     } else {
-            //         return [];
-            //     }
-            // });
 }
 
-function cadastrar(empresa, cnpj, nome, celular, email, senha) {
+function cadastrar(fkempresa, nome, celular, email, senha) {
     const instrucaoSql = `
-    INSERT INTO Usuario (empresa, cnpj, nome, celular, email, senha)
-    VALUES ('${empresa}', '${cnpj}', '${nome}', '${celular}', '${email}', '${senha}');
+    INSERT INTO     Usuario (fkEmpresa, nomeUsuario, celular, email, senha)
+    VALUES (${fkempresa}, '${nome}', '${celular}', '${email}', '${senha}');
     `;
     console.log("Executando a instrução SQL: " + instrucaoSql);
     return database.executar(instrucaoSql);
-    
-    //const saltRounds = 5;
-    // return bcrypt.hash(senha, saltRounds).then(hash => {
-    // });
+}
+
+function verificarUsuarioExiste(email){
+    const instrucaoSql = `
+    SELECT * FROM usuario WHERE email = '${email}';
+    `
+    console.log("Executando a instruçaõ SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
 
-function verificarExistente(cnpj) {
-    var instrucaoSql = `
-        SELECT * FROM Usuario WHERE cnpj = '${cnpj}';
+function verificarEmpresaExiste(cnpj) {
+    const instrucaoSql = `
+        SELECT * FROM empresa WHERE cnpj = '${cnpj}';
     `;
     console.log("Executando a instrução SQL: " + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -62,6 +52,8 @@ function editar(usuario) {
 module.exports = {
     autenticar,
     cadastrar,
-    verificarExistente,
+    editar,
+    verificarUsuarioExiste,
+    verificarEmpresaExiste,
     editar
 };

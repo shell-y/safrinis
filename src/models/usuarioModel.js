@@ -35,6 +35,21 @@ function verificarEmpresaExiste(cnpj) {
     return database.executar(instrucaoSql);
 }
 
+function perfil(idUsuario) {
+    const instrucaoSql = `
+        SELECT 
+            u.senha, u.celular, 
+            e.nomeFantasia as nomeEmpresa, e.cnpj as cnpjEmpresa 
+                from Usuario as u 
+                join Empresa as e 
+                    where u.fkEmpresa = e.idEmpresa
+                    and u.idUsuario = ${idUsuario};
+    `;
+
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function editar(usuario) {
     const instrucaoSql = `
         UPDATE Usuario SET
@@ -55,5 +70,6 @@ module.exports = {
     editar,
     verificarUsuarioExiste,
     verificarEmpresaExiste,
+    perfil,
     editar
 };

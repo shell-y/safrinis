@@ -15,4 +15,8 @@ router.put("/editar/:idUsuario", function (req, res) {
     usuarioController.editar(req, res);
 })
 
+router.get("/perfil/:idUsuario", function (req, res) {
+    usuarioController.coletarPerfil(req, res);
+})
+
 module.exports = router;

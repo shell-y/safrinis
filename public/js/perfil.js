@@ -1,21 +1,28 @@
 import * as f from "./formatar_campos.js";
+import * as v from "./validar_campos.js"
 
 const inputsPerfil = document.querySelectorAll("form input");
-var infosCliente = sessionStorage.NOME_USUARIO != undefined ?
-    [
-        sessionStorage.NOME_USUARIO, sessionStorage.SENHA,
-        sessionStorage.EMAIL_USUARIO, sessionStorage.CELULAR,
-        sessionStorage.EMPRESA.nomeFantasia, sessionStorage.EMPRESA.cnpj
-    ]
-        :
-    [
-        "Roberto", "@Rodape123",
-        "roberto@email.com", "11912341234",
-        "Rodapé Festivais", "12345678000114"
-    ]
-;
+var infosCliente = []
 
-inserirValoresPerfil();
+fetch(`/usuarios/perfil/${sessionStorage.ID_USUARIO}`, {
+    method: "GET"
+}).then(resposta => {
+    if (resposta.ok) {
+        resposta.json().then(json => {
+            infosCliente = [
+                sessionStorage.NOME_USUARIO, json.senha,
+                sessionStorage.EMAIL_USUARIO, json.celular,
+                json.nomeEmpresa, json.cnpjEmpresa
+            ];
+    
+            inserirValoresPerfil();
+        });
+        
+    } else {
+        alert("Não foi possível obter as informações do seu perfil. Recarregando a página...")
+        location.reload();
+    }
+})
 
 function inserirValoresPerfil() {
     for (let i = 0; i < infosCliente.length; i++) {
@@ -28,31 +35,38 @@ function inserirValoresPerfil() {
 }
 
 document.querySelector("h1 span").addEventListener("click", e => {
-    habilitarEdicao(e.target);
+    e.target.style.display = "none"
+    document.querySelector("form>div").style.display = "flex"
+
+    for (let i = 0; i <= 3; i++) {
+        inputsPerfil[i].removeAttribute("disabled");
+    }
 });
 
-function habilitarEdicao(elemento) {
-    if (elemento.innerText == "Editar") {
-        elemento.innerText = "Cancelar";
-
-        for (let i = 0; i <= 3; i++) {    
-            inputsPerfil[i].removeAttribute("disabled");
-        }
-        
-    } else {
-        elemento.innerText = "Editar";
-        inserirValoresPerfil();
-    }
-}
-
-document.querySelector("form>button").addEventListener("click", e => {
+document.querySelector("#btn_cancelar_form").addEventListener("click", e => {
     e.preventDefault();
+
+    document.querySelector("form>div").style.display = "none"
+    inserirValoresPerfil();
+
+    document.querySelector("h1 span").style.display = "inline"
+})
+
+document.querySelector("#btn_salvar_form").addEventListener("click", e => {
+    e.preventDefault();
+
     const novoCadastro = {
         nomeUsuario: inputsPerfil[0].value,
         senha: inputsPerfil[1].value,
-        email: f.formatarParaEnvio(inputsPerfil[2].value),
-        celular: f.formatarParaEnvio(inputsPerfil[3].value)
+        confirmarSenha: inputsPerfil[1].value,
+        email: inputsPerfil[2].value,
+        celular: inputsPerfil[3].value
     }
+
+    if(!v.camposValidos(novoCadastro)
+    ) { return false; }
+
+    novoCadastro.celular = f.formatarParaEnvio(novoCadastro.celular)
 
     fetch(`/usuarios/editar/${sessionStorage.ID_USUARIO}`, {
         method: "PUT",
@@ -61,24 +75,22 @@ document.querySelector("form>button").addEventListener("click", e => {
         },
         body: JSON.stringify(novoCadastro)
     }).then(resposta => {
-        console.log(resposta)
-        
         if (!resposta.ok) {
             alert("A edição do cadastro não teve sucesso...");
         } else {
-            alert("Edição bem-sucedida! Recarregando a página...")
-            
-            sessionStorage.NOME_USUARIO = novoCadastro.nomeUsuario; 
-            sessionStorage.SENHA_USUARIO = novoCadastro.senha;
-            sessionStorage.EMAIL_USUARIO = novoCadastro.email;
-            sessionStorage.CELULAR = novoCadastro.celular;
-
-            location.reload();
+            resposta.json().then(json => {
+                alert("Edição bem-sucedida! Recarregando a página...")
+                
+                sessionStorage.EMAIL_USUARIO = json.email;
+                sessionStorage.NOME_USUARIO = json.nome;
+    
+                location.reload();
+            });
         }
-    })
+    });
+
 });
 
-// visibilidade do campo da senha
 document.querySelector("#div_senha button").addEventListener("click", e => {
     e.preventDefault();
     const inputSenha = document.querySelector("#div_senha input");

@@ -81,6 +81,30 @@ function cadastrar(req, res) {
         });
 }
 
+function coletarPerfil(req, res) {
+    const idUsuario = req.params.idUsuario;
+
+    console.log(`O usuário de id ${idUsuario} requeriu suas informações...`)
+
+    usuarioModel.perfil(idUsuario)
+    .then(resposta => {
+        if(resposta.length == 0) {
+            res.status(404).send()
+        } else {
+            res.json({
+                senha: resposta[0].senha,
+                celular: resposta[0].celular,
+                nomeEmpresa: resposta[0].nomeEmpresa, 
+                cnpjEmpresa: resposta[0].cnpjEmpresa
+            });
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).send();
+    }) 
+}
+
 function editar(req, res) {
     const cadastroUsuario = {
         id: req.params.idUsuario,
@@ -94,8 +118,17 @@ function editar(req, res) {
 
     usuarioModel
         .editar(cadastroUsuario)
-        .then(resposta => {
-            res.status(200).send();
+        .then(resultado => {
+            if (resultado.serverStatus == 2) {
+                usuarioModel
+                .autenticar(cadastroUsuario.email, cadastroUsuario.senha)
+                .then(resultado => {
+                    res.json({
+                        email: resultado[0].email,
+                        nome: resultado[0].nomeUsuario
+                    });
+                })
+            }
         })
         .catch(erro => {
             console.log("Ocorreu um erro!");
@@ -108,5 +141,6 @@ function editar(req, res) {
 module.exports = {
     autenticar,
     cadastrar,
+    coletarPerfil,
     editar
 }

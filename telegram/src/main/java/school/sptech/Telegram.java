@@ -11,7 +11,7 @@ public class Telegram {
 
     private final List<String> mensagens;
     private static final String TOKEN = "7975442972:AAH0eDHTFViQDcBg4eyhZ6lWUo2B6GzXn5w";
-    private static final String CHAT_ID = "7794980695";
+    private static final String CHAT_ID = "-4978342921";
     private static final String BASE_URL = "https://api.telegram.org/bot" + TOKEN + "/sendMessage";
     private static final HttpClient client = HttpClient.newHttpClient();
     private final Random random = new Random();

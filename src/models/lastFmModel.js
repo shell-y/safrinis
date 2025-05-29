@@ -1,6 +1,6 @@
 const database = require("../database/config");
 
-function getPlaysPorPeriodo(idArtista, dias, offsetDias = 0) {
+function getSomaPlaysPorPeriodo(idArtista, dias, offsetDias = 0) {
     const dataAtual = new Date();
     const dataInicio = new Date();
     dataInicio.setDate(dataAtual.getDate() - dias - offsetDias);
@@ -19,7 +19,7 @@ function getPlaysPorPeriodo(idArtista, dias, offsetDias = 0) {
     return database.executar(instrucaoSql);
 }
 
-function getOuvintesPorPeriodo(idArtista, dias, offsetDias = 0) {
+function getSomaOuvintesPorPeriodo(idArtista, dias, offsetDias = 0) {
     const dataAtual = new Date();
     const dataInicio = new Date();
     dataInicio.setDate(dataAtual.getDate() - dias - offsetDias);
@@ -47,8 +47,27 @@ function getOnTour(idArtista) {
     return database.executar(instrucaoSql);
 }
 
+function getPlaysPorPeriodo(idArtista, dias){
+    const dataAtual = new Date();
+    const dataInicio = new Date();
+    dataInicio.setDate(dataAtual.getDate() - dias);
+    const dataFim = new Date();
+
+    const instrucaoSql = `
+    SELECT DATACOLETA, TOTALPLAYS
+    FROM LASTFM 
+        WHERE FKARTISTA = ${idArtista} 
+            AND DATE(DATACOLETA) >= '${dataInicio.toISOString().slice(0,10)}'
+            AND DATE(DATACOLETA) <= '${dataFim.toISOString().slice(0,10)}'
+        ORDER BY DATACOLETA;`
+
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
+    getSomaPlaysPorPeriodo,
+    getSomaOuvintesPorPeriodo,
     getPlaysPorPeriodo,
-    getOuvintesPorPeriodo,
     getOnTour
 };

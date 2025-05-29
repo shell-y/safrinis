@@ -24,10 +24,10 @@ function getKpi(req, res) {
             const dias = parseInt(periodo);
 
             return Promise.all([
-                lastFmModel.getPlaysPorPeriodo(idArtista, dias),
-                lastFmModel.getPlaysPorPeriodo(idArtista, dias, dias),
-                lastFmModel.getOuvintesPorPeriodo(idArtista, 7),
-                lastFmModel.getOuvintesPorPeriodo(idArtista, 14, 7),
+                lastFmModel.getSomaPlaysPorPeriodo(idArtista, dias),
+                lastFmModel.getSomaPlaysPorPeriodo(idArtista, dias, dias),
+                lastFmModel.getSomaOuvintesPorPeriodo(idArtista, 7),
+                lastFmModel.getSomaOuvintesPorPeriodo(idArtista, 14, 7),
                 spotifyModel.getPopularidade(idArtista),
                 lastFmModel.getOnTour(idArtista)
             ])
@@ -90,7 +90,48 @@ function getArtistaRelacionado(req, res) {
         });
 }
 
+function getPlays(req, res){
+    const artista = req.body.artistaServer;
+    const periodo = req.body.periodoServer;
+
+    if (!artista) {
+        return res.status(400).send("O campo 'artista' está undefined!");
+    }
+
+    if (!periodo) {
+        return res.status(400).send("O campo 'periodo' está undefined!");
+    }
+
+    artistaModel.buscarPorNome(artista)
+        .then((resultadoArtista) => {
+            if(!resultadoArtista || resultadoArtista.length === 0){
+                return res.status(404).json({ erro: "Artista não encontrado" });
+            }
+
+            const idArtista = resultadoArtista[0].idArtista;
+            const dias = parseInt(periodo);
+
+            lastFmModel.getPlaysPorPeriodo(idArtista, dias)
+                .then((playsDiarios) =>{
+                    if(!playsDiarios || playsDiarios.length === 0){
+                        return res.status(404).json({ erro: `Plays do artista ${artista} não encontrados` });
+                    }
+
+                    res.status(200).json(playsDiarios); 
+                })
+                .catch((erro) => {
+                    console.error("Erro ao buscar plays do artista em (getPLays()):", erro);
+                    res.status(500).json({erro: "Erro interno ao buscar plays do artista em (getPlays())"})
+                });
+        })
+        .catch((erro) => {
+            console.error("Erro ao buscar dados de Artista em (getPlays()):", erro);
+            res.status(500).json({erro: "Erro interno ao buscar artista em (getPlays())"});
+        });
+}
+
 module.exports = {
     getKpi,
-    getArtistaRelacionado
+    getArtistaRelacionado,
+    getPlays
 };

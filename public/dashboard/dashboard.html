@@ -30,33 +30,43 @@
     <main>
         <h1 id="nome">Página do artista<span id="nome-artista"></span></h1>
         <section class="section-kpi">
-            <div id="kpi-plays" class="kpi"><span>Crescimento de Plays nos últimos<span id="periodo-plays"></span></span><span class="span" id="crescimento-plays">Não encontrado</span>
+            <div id="kpi-plays" class="kpi">
+                <span>Crescimento de Plays nos últimos<span id="periodo-plays"></span></span>
+                <span class="span" id="crescimento-plays">Não encontrado</span>
             </div>
-            <div id="kpi" class="kpi">Crescimento de ouvintes nos últimos 7 dias<br><span class="span" id="crescimento-ouvintes">Nãoencontrado</span>
+
+            <div class="kpi">Crescimento de ouvintes nos últimos 7 dias<br>
+                <span class="span" id="crescimento-ouvintes">Não encontrado</span>
             </div>
-            <div id="kpi" class="kpi">Popularidade do Artista no Spotify<br><span class="span" id="popularidade">Não encontrado</span>
+
+            <div class="kpi">Popularidade do Artista no Spotify<br>
+                <span class="span" id="popularidade">Não encontrado</span>
             </div>
-            <div id="kpi" class="kpi">ON TOUR<br><span class="span" id="ontour">Não encontrado</span>
+
+            <div class="kpi">ON TOUR<br>
+                <span class="span" id="ontour">Não encontrado</span>
             </div>
         </section>
-        <div class="grafico-controles">
-            <select id="periodo-select" class="artista-select" onchange="atualizarGraficoPeriodo()">
-                <option value="7">Última semana</option>
-                <option value="30">Último mês</option>
-            </select>
-        </div>
-        <section class="grafico-e-sonar">
-            <div class="grafico-container">
-                <canvas id="grafico-plays"></canvas>
+        <div class="container">
+            <div class="grafico-controles">
+                <select id="periodo-select" class="artista-select" onchange="atualizarGraficoPeriodo()">
+                    <option value="7">Última semana</option>
+                    <option value="30">Último mês</option>
+                </select>
             </div>
-            <div class="sonar-container">
-                <h3>SONAR ARTISTAS RELACIONADOS</h3>
-                <div id="sistema-solar">
-                    <div id="artista-central"></div>
-                    <div id="orbitas"></div>
+            <section class="grafico-e-sonar">
+                <div class="grafico-container">
+                    <canvas id="grafico-plays"></canvas>
                 </div>
-            </div>
-        </section>
+                <div class="sonar-container">
+                    <h3>SONAR ARTISTAS RELACIONADOS</h3>
+                    <div id="sistema-solar">
+                        <div id="artista-central"></div>
+                        <div id="orbitas"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer>

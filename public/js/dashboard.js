@@ -10,7 +10,6 @@ function identificadorDash() {
     }
 }
 
-// Atualiza os KPIs consultando a API
 async function atualizarKPIs() {
     console.log("Atualizando KPIS");
     const periodoSelect = document.getElementById('periodo-select');
@@ -28,7 +27,7 @@ async function atualizarKPIs() {
             })
         });
 
-        if (!response.ok) throw new Error('Erro na requisição');
+        if (!response.ok) throw new Error('Erro na requisição (/dashboard/getKpi)');
 
         const kpis = await response.json();
 
@@ -50,51 +49,98 @@ async function atualizarKPIs() {
     }
 }
 
-function prepararDadosGraficoPlays(dados) {
-    dados.sort((a, b) => new Date(a["Data da Requisição"]) - new Date(b["Data da Requisição"]));
+async function prepararDadosGraficoPlays(artistaSelecionado) {
+    console.log("Atualizando KPIS");
+    const periodo = document.getElementById('periodo-select').value;
 
-    const labels = dados.map(item => new Date(item["Data da Requisição"]).toLocaleDateString('pt-BR'));
-    const playsData = dados.map(item => item.Plays || 0);
-
-    const ctx = document.getElementById('grafico-plays').getContext('2d');
-
-    if (graficoPlays) {
-        graficoPlays.destroy();
-    }
-
-    graficoPlays = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Plays Diários',
-                data: playsData,
-                borderColor: '#38c871',
-                backgroundColor: 'rgba(56, 200, 113, 0.1)',
-                tension: 0.4,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Plays Diários do Artista',
-                    font: { size: 16 }
-                }
+    try {
+        const response = await fetch("/dashboard/getPlays", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: { display: true, text: 'Número de Plays' }
+            body: JSON.stringify({
+                artistaServer: artistaSelecionado,
+                periodoServer: periodo
+            })
+        });
+
+        if (!response.ok) throw new Error('Erro na requisição (/dashboard/getPlays)');
+
+        const playsArtista = await response.json();
+
+
+        const labels = playsArtista.map(item => {
+            const data = new Date(item.DATACOLETA);
+            return data.toLocaleDateString('pt-BR');
+        });
+
+        const playsData = playsArtista.map(item => item.TOTALPLAYS);
+
+
+        const ctx = document.getElementById('grafico-plays').getContext('2d');
+
+        if (graficoPlays) {
+            graficoPlays.destroy();
+        }
+
+        graficoPlays = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Plays Diários',
+                    data: playsData,
+                    borderColor: '#38c871',
+                    tension: 0.5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Plays do Artista pelo Tempo',
+                        font: { size: 20 },
+                        color: '#ffffff'
+                    },
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
                 },
-                x: {
-                    title: { display: true, text: 'Data' }
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Data',
+                            color: '#ffffff',
+                            font: {
+                                size: 18
+                            }
+                        },
+                        ticks: { color: '#ffffff' }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Número de Plays',
+                            color: '#ffffff',
+                            font: {
+                                size: 18
+                            }
+                        },
+                        ticks: { color: '#ffffff' }
+                    }
                 }
             }
-        }
-    });
+        });
+
+
+    } catch (error) {
+        console.error('Erro ao atualizar gráfico plays/periodo:', error);
+    }
 }
 
 async function carregarArtistasRelacionados(artistaSelecionado) {
@@ -178,9 +224,17 @@ document.addEventListener('DOMContentLoaded', () => {
     identificadorDash();
     atualizarKPIs();
     carregarArtistasRelacionados(artistaSelecionado);
+    prepararDadosGraficoPlays(artistaSelecionado);
 
     const periodoSelect = document.getElementById('periodo-select');
+
+    function atualizarTudo() {
+        atualizarKPIs();
+        prepararDadosGraficoPlays(artistaSelecionado);
+    }
+
     if (periodoSelect) {
-        periodoSelect.addEventListener('change', atualizarKPIs);
+        periodoSelect.addEventListener('change', atualizarTudo);
     }
 });
+

@@ -11,4 +11,9 @@ router.post("/getArtistaRelacionado", function (req, res) {
     dashboardController.getArtistaRelacionado(req, res);
 });
 
+router.post("/getPlays", function (req, res) {
+    dashboardController.getPlays(req, res);
+});
+
+
 module.exports = router;

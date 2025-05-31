@@ -57,9 +57,21 @@ function editar(usuario) {
             senha = "${usuario.senha}",
             celular = "${usuario.celular}",
             email = "${usuario.email}"
-                WHERE idUsuario = ${usuario.id}
+                WHERE idUsuario = ${usuario.id};
     `;
 
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function deletar(idUsuario) {
+    const instrucaoSql = `
+        UPDATE Usuario SET
+            email = null,
+            senha = null
+                WHERE idUsuario = ${idUsuario};
+    `;
+    
     console.log("Executando a instrução SQL: " + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -71,5 +83,6 @@ module.exports = {
     verificarUsuarioExiste,
     verificarEmpresaExiste,
     perfil,
-    editar
+    editar,
+    deletar
 };

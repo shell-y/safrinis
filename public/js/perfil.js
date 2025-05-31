@@ -1,28 +1,34 @@
 import * as f from "./formatar_campos.js";
 import * as v from "./validar_campos.js"
 
+
 const inputsPerfil = document.querySelectorAll("form input");
 var infosCliente = []
 
-fetch(`/usuarios/perfil/${sessionStorage.ID_USUARIO}`, {
-    method: "GET"
-}).then(resposta => {
-    if (resposta.ok) {
-        resposta.json().then(json => {
-            infosCliente = [
-                sessionStorage.NOME_USUARIO, json.senha,
-                sessionStorage.EMAIL_USUARIO, json.celular,
-                json.nomeEmpresa, json.cnpjEmpresa
-            ];
-    
-            inserirValoresPerfil();
-        });
+if (sessionStorage.ID_USUARIO == undefined) {
+    alert("Usuário não autenticado. Redirecionando para a página de login.");
+    location = "../login.html";
+} else {
+    fetch(`/usuarios/perfil/${sessionStorage.ID_USUARIO}`, {
+        method: "GET"
+    }).then(resposta => {
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                infosCliente = [
+                    sessionStorage.NOME_USUARIO, json.senha,
+                    sessionStorage.EMAIL_USUARIO, json.celular,
+                    json.nomeEmpresa, json.cnpjEmpresa
+                ];
         
-    } else {
-        alert("Não foi possível obter as informações do seu perfil. Recarregando a página...")
-        location.reload();
-    }
-})
+                inserirValoresPerfil();
+            });
+            
+        } else {
+            alert("Não foi possível obter as informações do seu perfil. Recarregando a página...")
+            location.reload();
+        }
+    });
+}
 
 function inserirValoresPerfil() {
     for (let i = 0; i < infosCliente.length; i++) {
@@ -36,6 +42,7 @@ function inserirValoresPerfil() {
 
 document.querySelector("h1 span").addEventListener("click", e => {
     e.target.style.display = "none"
+    document.querySelector("#btn_deletar").style.display = "none";
     document.querySelector("form>div").style.display = "flex"
 
     for (let i = 0; i <= 3; i++) {
@@ -50,6 +57,7 @@ document.querySelector("#btn_cancelar_form").addEventListener("click", e => {
     inserirValoresPerfil();
 
     document.querySelector("h1 span").style.display = "inline"
+    document.querySelector("#btn_deletar").style.display = "block";
 })
 
 document.querySelector("#btn_salvar_form").addEventListener("click", e => {
@@ -102,4 +110,38 @@ document.querySelector("#div_senha button").addEventListener("click", e => {
         e.target.setAttribute("src", "../assets/icon/eye.svg");
         inputSenha.setAttribute("type", "password");
     }
+});
+
+document.querySelector("#btn_deletar").addEventListener("click", e => {
+    const modal = document.createElement("section");
+    modal.setAttribute("id", "modal");
+    modal.innerHTML = `
+        <h1>Deletar conta</h1>
+        <p>Deseja realmente deletar seu usuário? Essa ação não poderá ser desfeita.</p>
+        <div>
+          <button id="btn_confirmar_deletar">Sim</button>
+          <button id="btn_cancelar_deletar">Não</button>
+        </div>
+    `
+
+    document.querySelector("main").appendChild(modal)
+
+    document.querySelector("#btn_cancelar_deletar").addEventListener("click", e => {
+        modal.remove();
+    });
+
+    document.querySelector("#btn_confirmar_deletar").addEventListener("click", e => {
+        fetch(`/usuarios/deletar/${sessionStorage.ID_USUARIO}`, {
+            method: 'DELETE'
+        }).then(resposta => {
+            if (resposta.ok) {
+                alert("Usuário deletado com sucesso. Redirecionando para a página inicial...");
+                sessionStorage.clear();
+                location = "../index.html"
+            } else {
+                alert("Houve um erro ao deletar o usuário.");
+                console.log(resposta)
+            }
+        });
+    });
 });

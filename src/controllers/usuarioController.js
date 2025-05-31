@@ -86,23 +86,24 @@ function coletarPerfil(req, res) {
 
     console.log(`O usuário de id ${idUsuario} requeriu suas informações...`)
 
-    usuarioModel.perfil(idUsuario)
-    .then(resposta => {
-        if(resposta.length == 0) {
-            res.status(404).send()
-        } else {
-            res.json({
-                senha: resposta[0].senha,
-                celular: resposta[0].celular,
-                nomeEmpresa: resposta[0].nomeEmpresa, 
-                cnpjEmpresa: resposta[0].cnpjEmpresa
-            });
-        }
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).send();
-    }) 
+    usuarioModel
+        .perfil(idUsuario)
+        .then(resposta => {
+            if(resposta.length == 0) {
+                res.status(404).send()
+            } else {
+                res.json({
+                    senha: resposta[0].senha,
+                    celular: resposta[0].celular,
+                    nomeEmpresa: resposta[0].nomeEmpresa, 
+                    cnpjEmpresa: resposta[0].cnpjEmpresa
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send();
+        });
 }
 
 function editar(req, res) {
@@ -134,13 +135,29 @@ function editar(req, res) {
             console.log("Ocorreu um erro!");
             console.log(erro);
             res.status(500).send();
+        });
+}
+
+function deletar(req, res) {
+    const idUsuario = req.params.idUsuario
+
+    usuarioModel
+        .deletar(idUsuario)
+        .then(resposta => {
+            if (resposta.serverStatus == 2) {
+                res.status(200).send();
+            }
         })
-    ;
+        .catch(err => {
+            console.log(err);
+            res.status(500).send();
+        });
 }
 
 module.exports = {
     autenticar,
     cadastrar,
     coletarPerfil,
-    editar
+    editar,
+    deletar
 }

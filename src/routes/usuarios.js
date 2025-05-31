@@ -19,4 +19,8 @@ router.get("/perfil/:idUsuario", function (req, res) {
     usuarioController.coletarPerfil(req, res);
 })
 
+router.delete("/deletar/:idUsuario", function (req, res) {
+    usuarioController.deletar(req, res);
+})
+
 module.exports = router;

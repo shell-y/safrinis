@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.*;
 import java.sql.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class Telegram {
 
@@ -22,76 +25,125 @@ public class Telegram {
     private static final String DB_USER = "sonora";
     private static final String DB_PASSWORD = "170170aA@";
 
+    static class ArtistaRelatorio {
+        String nome;
+        int ouvintesAtual;
+        int ouvintesPassado;
+        int playsAtual;
+        int playsPassado;
+        int popularidade;
+        double crescimentoOuvintes;
+        double crescimentoPlays;
+
+        public ArtistaRelatorio(String nome, int ouvintesAtual, int ouvintesPassado, int playsAtual, int playsPassado, int popularidade) {
+            this.nome = nome;
+            this.ouvintesAtual = ouvintesAtual;
+            this.ouvintesPassado = ouvintesPassado;
+            this.playsAtual = playsAtual;
+            this.playsPassado = playsPassado;
+            this.popularidade = popularidade;
+            this.crescimentoOuvintes = calcularCrescimentoPercentual(ouvintesPassado, ouvintesAtual);
+            this.crescimentoPlays = calcularCrescimentoPercentual(playsPassado, playsAtual);
+        }
+    }
+
     public static void enviarRelatorioSemanal() {
-        List<String> relatorio = gerarRelatorioSemanal();
+        List<ArtistaRelatorio> relatorio = gerarRelatorioSemanal();
         String mensagem = formatarMensagem(relatorio);
         enviarMensagemTelegram(mensagem);
     }
 
-    private static List<String> gerarRelatorioSemanal() {
-        List<String> linhas = new ArrayList<>();
+    private static List<ArtistaRelatorio> gerarRelatorioSemanal() {
+        List<ArtistaRelatorio> artistas = new ArrayList<>();
         String query = """
-        SELECT
-            a.nome,
-            lf.ouvintes,
-            lf.plays,
-            sp.popularidade
-        FROM
-            Artista a
-            LEFT JOIN LastFm lf ON lf.fkArtista = a.idArtista
-            LEFT JOIN Spotify sp ON sp.fkArtista = a.idArtista
-        WHERE
-            lf.dataColeta = (
-                SELECT MAX(dataColeta) FROM LastFm WHERE fkArtista = a.idArtista
-            )
-            AND sp.dtRequisicao = (
-                SELECT MAX(dtRequisicao) FROM Spotify WHERE fkArtista = a.idArtista
-            )
-        ORDER BY
-            lf.ouvintes DESC
-        LIMIT 3
-        """;
+                SELECT
+                    a.nome,
+                    SUM(CASE WHEN lf.dataColeta BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() THEN lf.ouvintes ELSE 0 END) AS ouvintes_semana_atual,
+                    SUM(CASE WHEN lf.dataColeta BETWEEN DATE_SUB(CURDATE(), INTERVAL 14 DAY) AND DATE_SUB(CURDATE(), INTERVAL 8 DAY) THEN lf.ouvintes ELSE 0 END) AS ouvintes_semana_passada,
+                    SUM(CASE WHEN lf.dataColeta BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() THEN lf.plays ELSE 0 END) AS plays_semana_atual,
+                    SUM(CASE WHEN lf.dataColeta BETWEEN DATE_SUB(CURDATE(), INTERVAL 14 DAY) AND DATE_SUB(CURDATE(), INTERVAL 8 DAY) THEN lf.plays ELSE 0 END) AS plays_semana_passada,
+                    MAX(sp.popularidade) AS popularidade
+                FROM
+                    Artista a
+                LEFT JOIN LastFm lf ON lf.fkArtista = a.idArtista
+                LEFT JOIN Spotify sp ON sp.fkArtista = a.idArtista
+                GROUP BY
+                    a.idArtista, a.nome
+                ORDER BY
+                    ouvintes_semana_atual DESC
+                LIMIT 3
+            """;
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
-            int posicao = 1;
-
             while (rs.next()) {
-                String nome = rs.getString("nome");
-                int ouvintes = rs.getInt("ouvintes");
-                int plays = rs.getInt("plays");
-                int popularidade = rs.getInt("popularidade");
-                //double crescimento = rs.getDouble("crescimento_percentual");
-                // String tendencia = rs.getString("tendencia");
-
-                String linha = String.format("""
-                        %d️⃣ Artista: %s
-                           👥 Ouvintes: %d
-                           🔄 Plays: %d
-                           📊 Popularidade: %d/100
-                        """, posicao, nome, ouvintes, plays, popularidade);
-
-                linhas.add(linha);
-                posicao++;
+                ArtistaRelatorio ar = new ArtistaRelatorio(
+                        rs.getString("nome"),
+                        rs.getInt("ouvintes_semana_atual"),
+                        rs.getInt("ouvintes_semana_passada"),
+                        rs.getInt("plays_semana_atual"),
+                        rs.getInt("plays_semana_passada"),
+                        rs.getInt("popularidade")
+                );
+                artistas.add(ar);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            linhas.add("❌ Erro ao gerar relatório: " + e.getMessage());
         }
 
-        return linhas;
+        return artistas;
     }
 
-    private static String formatarMensagem(List<String> relatorio) {
+    private static double calcularCrescimentoPercentual(int valorAnterior, int valorAtual) {
+        if (valorAnterior == 0) {
+            return valorAtual > 0 ? 100.0 : 0.0; // Evita divisão por zero
+        }
+        return ((double) (valorAtual - valorAnterior) / valorAnterior) * 100;
+    }
+
+    private static String formatarMensagem(List<ArtistaRelatorio> relatorio) {
         StringBuilder sb = new StringBuilder();
         sb.append("🎶 *Relatório Semanal de Artistas*\n\n");
-        for (String linha : relatorio) {
-            sb.append(linha).append("\n");
+
+        ArtistaRelatorio maiorCrescimento = relatorio.stream()
+                .max(Comparator.comparingDouble(a -> a.crescimentoOuvintes))
+                .orElse(null);
+
+        ArtistaRelatorio maisPopular = relatorio.stream()
+                .max(Comparator.comparingInt(a -> a.popularidade))
+                .orElse(null);
+
+        NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+
+        for (ArtistaRelatorio ar : relatorio) {
+            String emojiOuvintes = ar.crescimentoOuvintes > 0 ? "📈" : (ar.crescimentoOuvintes < 0 ? "📉" : "➖");
+            String emojiPlays = ar.crescimentoPlays > 0 ? "📈" : (ar.crescimentoPlays < 0 ? "📉" : "➖");
+
+            sb.append(String.format(
+                    "🎤 Artista: %s\n" +
+                            "   👥 Ouvintes: %s (%+.2f%%) %s\n" +
+                            "   🔄 Plays: %s (%+.2f%%) %s\n" +
+                            "   📊 Popularidade: %d/100\n\n",
+                    ar.nome,
+                    nf.format(ar.ouvintesAtual), ar.crescimentoOuvintes, emojiOuvintes,
+                    nf.format(ar.playsAtual), ar.crescimentoPlays, emojiPlays,
+                    ar.popularidade
+            ));
         }
+
+        if (maiorCrescimento != null) {
+            sb.append(String.format("🏆 *Maior crescimento de ouvintes*: %s (+%.2f%%)\n", maiorCrescimento.nome, maiorCrescimento.crescimentoOuvintes));
+        }
+
+        if (maisPopular != null) {
+            sb.append(String.format("🔥 *Artista mais popular*: %s (%d/100)\n", maisPopular.nome, maisPopular.popularidade));
+        }
+
         sb.append("\n⏰ Próximo relatório: Segunda-feira que vem!");
+
         return sb.toString();
     }
 
@@ -119,5 +171,3 @@ public class Telegram {
         }
     }
 }
-
-

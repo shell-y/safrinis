@@ -63,15 +63,20 @@ input {
         select,
         input {
             background: transparent;
-            color: #fff;
+            color: #767676;
             font-size: 1.8vh;
             border-radius: 8px;
             width: 20vw;
             outline: none;
+            cursor: pointer;
         }
 
         select option {
             background: #000;
+            color: #fff;
+        }
+
+        select:focus{
             color: #fff;
         }
 

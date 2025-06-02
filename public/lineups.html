@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/lineups.css">
+  <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- CSS do Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <!-- jQuery (obrigatório para Select2) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- JS do Select2 -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- JS ARTISTAS -->
+  <script src="js/search_artistas.js"></script>
+
+  <title>Sonora | Line-ups</title>
+</head>
+
+<body>
+  <header>
+    <a href="#"><img src="./assets/logo_sonora.svg" class="logo"></a>
+    <nav>
+      <ul>
+        <li class="link-nav sec-atual"><a href="#">Home</a>
+        <li><a class="link-nav" href="login.html">Line-up</a>
+        <li><a class="link-nav" href="dashboard/cards.html">Dashboard</a>
+        <li>
+          <a href="login.html">
+            <button>Entrar</button>
+          </a>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="topo">
+    <div class="topo-desc">
+      <h2>Line-ups</h2>
+      <h3>Comece já a monitorar seus artistas preferidos!</h3>
+      <p>
+        1. Pesquise pelo artista que quer monitorar<br>
+        2. Adicione-o a sua lista<br>
+        3. Monitore as alterações nos números desse artista<br>
+        4. Adicione outros artistas à mesma line-up e faça comparações!
+      </p>
+    </div><!-- FIM TOPO-DESC -->
+
+    <div class="topo-lineups">
+      <div class="select-lineups">
+        <label for="lineups">Minhas line-ups</label>
+        <select id="lineups">
+          <option value="" disabled selected>Selecione</option>
+          <option value="1">Line-up #1</option>
+          <option value="2">Line-up #2</option>
+        </select>
+      </div>
+      <button type="button">Abrir</button>
+    </div><!-- FIM TOPO-LINEUPS -->
+  </div><!-- FIM TOPO -->
+
+  <div class="title-lineup">
+    <h2>Nome da line-up</h2>
+    <i class="bi bi-pencil-square" onclick=""></i>
+  </div>
+
+  <div class="topo-lineups">
+    <div class="select-lineups">
+      <label for="artistas">Artista</label>
+      <select id="artistas" class="select-artistas">
+        <option value="">Selecione</option>
+        <option value="1">Artista 1</option>
+        <option value="2">Artista 2</option>
+        <option value="3">Artista 3</option>
+        <option value="4">Artista 4</option>
+        <option value="5">Artista 5</option>
+        <option value="6">Artista 6</option>
+      </select>
+    </div>
+    <button type="button">Adicionar</button>
+  </div><!-- FIM ARTISTAS -->
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Artista</th>
+        <th scope="col">Popularidade</th>
+        <th scope="col">Ouvintes</th>
+        <th scope="col">Plays</th>
+        <th scope="col">Data de Atualização</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Artista 1</th>
+        <td>80%</td>
+        <td>22.5k</td>
+        <td>800M</td>
+        <td>[DATA]</td>
+        <td><a href="">Excluir</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Artista 2</th>
+        <td>80%</td>
+        <td>22.5k</td>
+        <td>800M</td>
+        <td>[DATA]</td>
+        <td><a href="">Excluir</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Artista 3</th>
+        <td>80%</td>
+        <td>22.5k</td>
+        <td>800M</td>
+        <td>[DATA]</td>
+        <td><a href="">Excluir</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Artista 4</th>
+        <td>80%</td>
+        <td>22.5k</td>
+        <td>800M</td>
+        <td>[DATA]</td>
+        <td><a href="">Excluir</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Você também pode gostar...</h2>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Artista</th>
+        <th scope="col">Ouvintes</th>
+        <th scope="col">Se relaciona com o artista...</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Artista A</th>
+        <td>80K</td>
+        <td>Artista 1</td>
+        <td><a href="">Adicionar à line-up</a></td>
+        <td><a href="">Pular</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Artista B</th>
+        <td>80K</td>
+        <td>Artista 1</td>
+        <td><a href="">Adicionar à line-up</a></td>
+        <td><a href="">Pular</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Artista C</th>
+        <td>80K</td>
+        <td>Artista 1</td>
+        <td><a href="">Adicionar à line-up</a></td>
+        <td><a href="">Pular</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Artista D</th>
+        <td>80K</td>
+        <td>Artista 1</td>
+        <td><a href="">Adicionar à line-up</a></td>
+        <td><a href="">Pular</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+
+</html>

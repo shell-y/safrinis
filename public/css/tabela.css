@@ -1,0 +1,47 @@
+.table {
+    width: 100%;
+    overflow-x: scroll;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1.8vh;
+    color: #fff;
+    border-collapse: collapse;
+    margin-bottom: 6vh;
+
+    a{
+        text-decoration: underline;
+    }
+    a:hover{
+        color: var(--cor-azul);
+    }
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    /* border-top: 1px solid #dee2e6; */
+    text-align: left;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #dee2e6;
+    text-transform: uppercase;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: rgba(91, 91, 91, 0.3);
+}
+
+.table-hover tbody tr:hover {
+    /* cursor: sw-resize; */
+    border: 1px solid var(--cor-verde-claro);
+    /* background-color: var(--cor-azul); */
+}
+
+@media (max-width: 540px) {
+    .table {
+        max-width: 500px !important;
+        overflow-x: scroll;
+    }
+}

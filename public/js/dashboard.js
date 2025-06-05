@@ -1,4 +1,4 @@
-const artistaSelecionado = "Bruno Mars";
+const artistaSelecionado = 'Bruno Mars';
 let dadosGrafico = {};
 let grafico;
 let graficoPlays;
@@ -69,14 +69,12 @@ async function prepararDadosGraficoPlays(artistaSelecionado) {
 
         const playsArtista = await response.json();
 
-
         const labels = playsArtista.map(item => {
             const data = new Date(item.DATACOLETA);
             return data.toLocaleDateString('pt-BR');
         });
 
         const playsData = playsArtista.map(item => item.TOTALPLAYS);
-
 
         const ctx = document.getElementById('grafico-plays').getContext('2d');
 
@@ -117,10 +115,17 @@ async function prepararDadosGraficoPlays(artistaSelecionado) {
                             text: 'Data',
                             color: '#ffffff',
                             font: {
-                                size: 18
+                                size: 16
                             }
                         },
-                        ticks: { color: '#ffffff' }
+                        ticks: { 
+                            color: '#ffffff', 
+                            font: { size: 13} 
+                        },
+                        grid: {
+                            color: '#404040',
+                            lineWidth: 1
+                        }
                     },
                     y: {
                         title: {
@@ -128,15 +133,21 @@ async function prepararDadosGraficoPlays(artistaSelecionado) {
                             text: 'Número de Plays',
                             color: '#ffffff',
                             font: {
-                                size: 18
+                                size: 16
                             }
                         },
-                        ticks: { color: '#ffffff' }
+                        ticks: { 
+                            color: '#ffffff', 
+                            font: { size: 13 } 
+                        },
+                        grid: {
+                            color: '#404040',
+                            lineWidth: 1
+                        }
                     }
                 }
             }
         });
-
 
     } catch (error) {
         console.error('Erro ao atualizar gráfico plays/periodo:', error);
@@ -204,12 +215,11 @@ function renderizarSonar(artistas) {
         planeta.style.left = `calc(50% + ${x}px)`;
         planeta.style.top = `calc(50% + ${y}px)`;
         planeta.title = artista;
+        planeta.setAttribute('onclick', `trocarArtistaSelecionado('${artista}')`);
 
         orbitas.appendChild(planeta);
     });
 }
-
-
 
 function atualizarGraficoPorSelect() {
     const select = document.getElementById('artista-select');

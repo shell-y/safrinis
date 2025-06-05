@@ -1,10 +1,15 @@
 import * as f from "./formatar_campos.js";
 import * as v from "./validar_campos.js"
 
-
 const inputsPerfil = document.querySelectorAll("form input");
-var infosCliente = []
+var infosCliente = [
+    "Astolfo", "123",
+    "astolfo@email.com", "11912341234",
+    "Alô Marcas", "12345678000114"
+];
+inserirValoresPerfil();
 
+/*
 if (sessionStorage.ID_USUARIO == undefined) {
     alert("Usuário não autenticado. Redirecionando para a página de login.");
     location = "../login.html";
@@ -29,6 +34,7 @@ if (sessionStorage.ID_USUARIO == undefined) {
         }
     });
 }
+*/
 
 function inserirValoresPerfil() {
     for (let i = 0; i < infosCliente.length; i++) {
@@ -48,6 +54,8 @@ document.querySelector("h1 span").addEventListener("click", e => {
     for (let i = 0; i <= 3; i++) {
         inputsPerfil[i].removeAttribute("disabled");
     }
+
+    document.querySelector("svg>path").setAttribute("fill", "#000000");
 });
 
 document.querySelector("#btn_cancelar_form").addEventListener("click", e => {
@@ -55,6 +63,7 @@ document.querySelector("#btn_cancelar_form").addEventListener("click", e => {
 
     document.querySelector("form>div").style.display = "none"
     inserirValoresPerfil();
+    document.querySelector("svg>path").setAttribute("fill", "#FFFFFF");
 
     document.querySelector("h1 span").style.display = "inline"
     document.querySelector("#btn_deletar").style.display = "block";
@@ -102,12 +111,13 @@ document.querySelector("#btn_salvar_form").addEventListener("click", e => {
 document.querySelector("#div_senha button").addEventListener("click", e => {
     e.preventDefault();
     const inputSenha = document.querySelector("#div_senha input");
+    const iconeSenha = document.querySelector("svg>path");
 
     if (inputSenha.getAttribute("type") == "password") {
-        e.target.setAttribute("src", "../assets/icon/eye_closed.svg");
+        iconeSenha.setAttribute("d", "M2.54,4.71L3.25,4L20,20.75L19.29,21.46L15.95,18.11C14.58,18.68 13.08,19 11.5,19C6.94,19 3,16.35 1.14,12.5C2.11,10.5 3.63,8.83 5.5,7.68L2.54,4.71M11.5,18C12.79,18 14.03,17.77 15.17,17.34L14.05,16.21C13.32,16.71 12.45,17 11.5,17C9,17 7,15 7,12.5C7,11.55 7.29,10.68 7.79,9.95L6.24,8.41C4.57,9.38 3.19,10.8 2.26,12.5C4.04,15.78 7.5,18 11.5,18M20.74,12.5C18.96,9.22 15.5,7 11.5,7C10.35,7 9.23,7.19 8.19,7.53L7.41,6.75C8.68,6.26 10.06,6 11.5,6C16.06,6 20,8.65 21.86,12.5C20.95,14.39 19.53,16 17.79,17.13L17.07,16.4C18.6,15.44 19.87,14.1 20.74,12.5M11.5,8C14,8 16,10 16,12.5C16,13.32 15.78,14.08 15.4,14.74L14.66,14C14.88,13.54 15,13.04 15,12.5A3.5,3.5 0 0,0 11.5,9C10.96,9 10.46,9.12 10,9.34L9.26,8.6C9.92,8.22 10.68,8 11.5,8M8,12.5A3.5,3.5 0 0,0 11.5,16C12.17,16 12.79,15.81 13.32,15.5L8.5,10.68C8.19,11.21 8,11.83 8,12.5Z");
         inputSenha.setAttribute("type", "text");
     } else {
-        e.target.setAttribute("src", "../assets/icon/eye.svg");
+        iconeSenha.setAttribute("d", "M11.5,18C15.5,18 18.96,15.78 20.74,12.5C18.96,9.22 15.5,7 11.5,7C7.5,7 4.04,9.22 2.26,12.5C4.04,15.78 7.5,18 11.5,18M11.5,6C16.06,6 20,8.65 21.86,12.5C20,16.35 16.06,19 11.5,19C6.94,19 3,16.35 1.14,12.5C3,8.65 6.94,6 11.5,6M11.5,8C14,8 16,10 16,12.5C16,15 14,17 11.5,17C9,17 7,15 7,12.5C7,10 9,8 11.5,8M11.5,9A3.5,3.5 0 0,0 8,12.5A3.5,3.5 0 0,0 11.5,16A3.5,3.5 0 0,0 15,12.5A3.5,3.5 0 0,0 11.5,9Z");
         inputSenha.setAttribute("type", "password");
     }
 });

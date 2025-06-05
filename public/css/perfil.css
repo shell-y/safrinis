@@ -23,28 +23,27 @@ form {
 
     display: flex;
     flex-direction: column;
-}
-
-form {
+    align-items: flex-start;
     gap: 2rem;
 }
 
-form section {
-    width: 100%;
 
+form section {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
 }
 
-form>section>div {
+form>section>label {
     width: 100%;
 
     display: flex;
+    justify-content: stretch;
     flex-direction: column;
 }
 
-form label {
+form label span {
+    margin-bottom: .2rem;
     font-size: 1.35rem;
 }
 
@@ -59,21 +58,22 @@ form input {
 }
 
 #div_senha {
+    position: relative;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#div_senha input {
-    width: 86%;
-}
-
 #div_senha button {
     padding: 0;
     background: transparent;
+
+    position: absolute;
+    right: .5rem;
 }
 
-#div_senha button>img {
+#div_senha button>svg {
     width: 2rem;
 }
 

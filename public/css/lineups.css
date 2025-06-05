@@ -1,0 +1,167 @@
+@import url(main.css);
+@import url(tabela.css);
+@import url(search_artistas.css);
+
+body {
+    padding: 8vh var(--area-segura-lateral);
+    font-family: 'Raleway', sans-serif;
+}
+
+h2 {
+    font-size: 3.2vh;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 2.5vh;
+    font-weight: 400;
+}
+
+p {
+    font-size: 1.8vh;
+}
+
+select {
+    text-align: center;
+    height: 4vh;
+}
+
+input {
+    border: 0.5px solid #767676;
+    text-align: left;
+    padding-inline: 1.2vh;
+    height: 3.7vh;
+}
+
+
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topo-desc {
+    margin-right: 1.5vw;
+}
+
+.topo-lineups {
+    display: flex;
+    align-items: flex-end;
+    padding-block: 2.7vh;
+
+
+    .select-lineups {
+        display: flex;
+        flex-direction: column;
+        margin-right: 1.2vw;
+
+        label {
+            font-size: 1.8vh;
+            margin-bottom: 1vh;
+        }
+
+        select,
+        input {
+            background: transparent;
+            color: #767676;
+            font-size: 1.8vh;
+            border-radius: 8px;
+            width: 20vw;
+            outline: none;
+            cursor: pointer;
+        }
+
+        select option {
+            background: #000;
+            color: #fff;
+        }
+
+        select:focus{
+            color: #fff;
+        }
+
+        span{
+            background: transparent;
+            color: #fff;
+            font-size: 1.8vh;
+            border-radius: 8px;
+            outline: none;
+        }
+    }
+
+    button {
+        padding: 0.7vh 1.3vw;
+        height: 4vh;
+        font-size: 1.8vh;
+    }
+}
+
+.title-lineup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 5vh;
+    margin-top: 1.7vh;
+
+    .bi {
+        font-size: 2vh;
+        margin-left: .7vw;
+        cursor: pointer;
+        opacity: 80%;
+    }
+
+    i:hover {
+        color: var(--cor-azul-claro);
+        opacity: 100%;
+    }
+}
+
+@media (max-width: 540px) {
+    body {
+        padding-top: 12vh;
+    }
+
+    .topo {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .topo-lineups {
+        padding-block: 2.7vh;
+
+        .select-lineups {
+            margin-right: 2.7vw;
+
+            select {
+                width: 60vw !important;
+            }
+
+            input {
+                width: 55vw !important;
+            }
+            /* span{
+                width: 55vw !important;
+            } */
+        }
+
+        button {
+            padding: 0.7vh 3vw;
+            height: 4vh;
+            font-size: 1.8vh;
+        }
+    }
+
+    .title-lineup {
+        align-items: baseline;
+
+        h2 {
+            margin-block: 0;
+        }
+
+        .bi {
+            font-size: 2vh;
+            margin-left: 2vw;
+        }
+    }
+
+}

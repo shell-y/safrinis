@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonora | Perfil</title>
+    <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/acesso_sonora.css">
+  </head>
+  <body>
+    <header>
+        <a href="../index.html"><img src="../assets/logo_sonora.svg" class="logo"></a>
+    
+        <nav>
+          <ul>
+            <li class="link-nav sec-atual"><a href="#">Home</a>
+            <li><a class="link-nav" href="login.html">Line-up</a>
+            <li><a class="link-nav" href="dashboard/cards.html">Dashboard</a>
+            <!-- <li><a class="link-nav" href="">Sobre</a> -->
+            <li>
+              <a href="../index.html">
+                <button onclick="limparSessao()">Sair</button>
+              </a>
+          </ul>
+        </nav>
+    </header>
+
+      <main>
+        <h1>ACESSO SONORA</h1>
+        <h2>Acesso exclusivo da equipe Sonora</h2>
+        <p>
+            ATENÇÃO! Não alterar ou excluir artistas presentes em mais de 100 mil line-ups. <br>
+            Em caso de dúvidas, contate o setor do gerenciamento de line-ups.
+        </p>
+
+        <section>
+            <div id="legenda_tabela">
+                <h1>Artistas</h1>
+                <button>Adicionar novo</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Artista</td>
+                        <td>Line-ups</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </section>
+      </main>
+
+      <footer>
+        <section>
+          <img src="../assets/logo_sonora.svg" class="logo">
+  
+          <address>
+            <strong>Sonora</strong><br>
+            Haddock Lobo, 595 - Cerqueira César<br>
+            São Paulo, SP - Brasil
+          </address>
+  
+          <div>
+            <img src="../assets/icon/redes/instagram.svg" class="icone-rede">
+            <img src="../assets/icon/redes/facebook.svg" class="icone-rede">
+            <img src="../assets/icon/redes/whatsapp.svg" class="icone-rede">
+          </div>
+      
+          <small>© 2025 Sonora. Todos o direitos reservados.</small>
+        </section>
+  
+        <aside>
+          <h4>Newsletters</h4>
+          <p>Fique por dentro das últimas novidades da música</p>
+  
+          <div>
+            <input placeholder="seu@email.com">
+            
+            <button>
+              Inscreva-se
+            </button>
+          </div>
+  
+          <small>Ao se inscrever, você concorda em receber nossos e-mails e está de acordo com os nossos Termos e Condições.</small>
+        </aside>
+      </footer>
+  </body>
+  <script type="module" src="../js/acesso_sonora.js"></script>
+</html>

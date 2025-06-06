@@ -1,0 +1,44 @@
+@import url(main.css);
+
+main {
+    padding: 0 var(--area-segura-lateral);
+}
+
+main>section {
+    width: 100%;   
+    margin-top: 5rem;
+}
+
+main>section>div {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#legenda_tabela h1{
+    font-size: 2.5rem;
+}
+
+#legenda_tabela button {
+    height: fit-content;
+}
+
+table {
+    width: 100%;
+}
+
+thead {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+thead td:first-child {
+    width: 6rem;
+}
+
+thead td:first-child>input {
+    margin: 0 auto;
+}

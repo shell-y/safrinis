@@ -12,7 +12,7 @@
 
 <body>
     <div id="loading"></div>
-    
+
     <header>
         <a href="#" aria-label="Página inicial Sonora">
             <img src="../assets/logo_sonora.svg" class="logo" alt="Logo Sonora">
@@ -83,12 +83,14 @@
                     <option value="7">Última semana</option>
                     <option value="30">Último mês</option>
                 </select>
+                <button onclick="voltarParaSonar()" id="btn-voltar" class="btn-voltar">Voltar ao Sonar</button>
             </div>
 
             <div class="charts-container">
                 <div class="chart-section" role="region" aria-labelledby="chart-title">
                     <h2 id="chart-title" class="visually-hidden">Gráfico de Plays do Artista</h2>
-                    <canvas id="grafico-plays" aria-label="Gráfico mostrando evolução de plays ao longo do tempo"></canvas>
+                    <canvas id="grafico-plays"
+                        aria-label="Gráfico mostrando evolução de plays ao longo do tempo"></canvas>
                 </div>
 
                 <div class="sonar-section" role="region" aria-labelledby="sonar-title">
@@ -100,6 +102,23 @@
                 </div>
             </div>
         </section>
+
+        <section id="secao-comparacao" class="charts-container comparacao-oculta">
+            <!-- Gráfico de ranking dos artistas relacionados -->
+            <div class="chart-section" role="region" aria-labelledby="ranking-title">
+                <h2 id="ranking-title" class="visually-hidden">Ranking de Artistas Relacionados</h2>
+                <canvas id="grafico-ranking"
+                    aria-label="Ranking dos artistas relacionados por número de plays"></canvas>
+            </div>
+
+            <!-- Gráfico comparativo entre dois artistas -->
+            <div class="chart-section" role="region" aria-labelledby="comparativo-title">
+                <h2 id="comparativo-title" class="visually-hidden">Comparativo entre dois artistas</h2>
+                <canvas id="grafico-comparativo"
+                    aria-label="Comparação entre dois artistas em plays, seguidores e popularidade"></canvas>
+            </div>
+        </section>
+
     </main>
 
     <footer>
@@ -133,18 +152,13 @@
 
             <form class="newsletter-form">
                 <label for="email-input" class="visually-hidden">Seu endereço de email</label>
-                <input 
-                    id="email-input" 
-                    type="email" 
-                    placeholder="seu@email.com"
-                    required
-                    aria-describedby="newsletter-terms"
-                >
+                <input id="email-input" type="email" placeholder="seu@email.com" required
+                    aria-describedby="newsletter-terms">
                 <button type="submit">Inscreva-se</button>
             </form>
 
             <small id="newsletter-terms">
-                Ao se inscrever, você concorda em receber nossos e-mails e está de acordo com os nossos 
+                Ao se inscrever, você concorda em receber nossos e-mails e está de acordo com os nossos
                 Termos e Condições.
             </small>
         </aside>

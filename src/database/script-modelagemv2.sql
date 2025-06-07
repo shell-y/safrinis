@@ -50,7 +50,7 @@ CREATE TABLE Notificacao (
     mensagem TEXT,
     dataEnvio DATETIME,
     fkLineup INT,
-    FOREIGN KEY (fkLineup) REFERENCES Lineup(fkArtista) -- Referência ao artista (ajuste conforme necessidade)
+    FOREIGN KEY (fkLineup) REFERENCES Lineup(fkArtista)
 );
 
 -- Tabela Spotify

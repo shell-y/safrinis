@@ -15,5 +15,8 @@ router.post("/getPlays", function (req, res) {
     dashboardController.getPlays(req, res);
 });
 
+router.post("/compararArtistas", function (req, res) {
+    dashboardController.compararArtistas(req, res);
+});
 
 module.exports = router;

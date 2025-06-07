@@ -118,9 +118,9 @@ async function prepararDadosGraficoPlays(artistaSelecionado) {
                                 size: 16
                             }
                         },
-                        ticks: { 
-                            color: '#ffffff', 
-                            font: { size: 13} 
+                        ticks: {
+                            color: '#ffffff',
+                            font: { size: 13 }
                         },
                         grid: {
                             color: '#404040',
@@ -136,9 +136,9 @@ async function prepararDadosGraficoPlays(artistaSelecionado) {
                                 size: 16
                             }
                         },
-                        ticks: { 
-                            color: '#ffffff', 
-                            font: { size: 13 } 
+                        ticks: {
+                            color: '#ffffff',
+                            font: { size: 13 }
                         },
                         grid: {
                             color: '#404040',
@@ -228,6 +228,165 @@ function atualizarGraficoPorSelect() {
         carregarDadosArtista();
     }
 }
+
+let graficoRanking = null;
+let graficoComparativo = null;
+
+async function trocarArtistaSelecionado(nomeArtistaRelacionada) {
+    const artistaCentralNome = artistaSelecionado;
+
+    // Esconde sonar, gráfico de plays
+    document.querySelector(".charts-container").style.display = "none";
+    document.getElementById("secao-comparacao").classList.add("mostrar");
+
+    document.getElementById("periodo-select").style.display = "none";
+    document.getElementById("btn-voltar").style.display = "grid";
+
+    try {
+        // Pega ID dos artistas no banco
+        const [resCentral, resRelacionado] = await Promise.all([
+            fetch("/dashboard/getArtistaRelacionado", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ artistaServer: artistaCentralNome })
+            }),
+            fetch("/dashboard/getArtistaRelacionado", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ artistaServer: nomeArtistaRelacionada })
+            })
+        ]);
+
+        const listaRelacionados = await resCentral.json();
+        const artistaComparado = listaRelacionados.find(a => a.nome === nomeArtistaRelacionada);
+        if (!artistaComparado) throw new Error("Artista relacionado não encontrado na lista.");
+
+        gerarGraficoRanking(listaRelacionados);
+        gerarGraficoComparativo(artistaCentralNome, nomeArtistaRelacionada);
+
+    } catch (error) {
+        console.error("Erro ao trocar artista:", error);
+    }
+}
+
+function gerarGraficoRanking(artistas) {
+    const nomes = artistas.map(a => a.nome);
+    const plays = artistas.map(a => a.totalPlays);
+
+    const ctx = document.getElementById('grafico-ranking').getContext('2d');
+    if (graficoRanking) graficoRanking.destroy();
+
+    graficoRanking = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: nomes,
+            datasets: [{
+                label: 'Total de Plays (últimos 90 dias)',
+                data: plays,
+                backgroundColor: '#38c871'
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Ranking de Artistas Relacionados por Total de Plays',
+                    color: '#ffffff',
+                    font: { size: 18 }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#ffffff' },
+                    grid: { color: '#333' }
+                },
+                y: {
+                    ticks: { color: '#ffffff' },
+                    grid: { color: '#333' }
+                }
+            }
+        }
+    });
+}
+
+
+async function gerarGraficoComparativo(central, comparado) {
+    try {
+        const response = await fetch("/dashboard/compararArtistas", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ artistaA: central, artistaB: comparado })
+        });
+
+        if (!response.ok) throw new Error("Erro na API /compararArtistas");
+
+        const dados = await response.json();
+        const labels = Object.keys(dados[central]);
+
+        const ctx = document.getElementById('grafico-comparativo').getContext('2d');
+        if (graficoComparativo) graficoComparativo.destroy();
+
+        graficoComparativo = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: central,
+                        data: labels.map(k => dados[central][k]),
+                        backgroundColor: '#579edc'
+                    },
+                    {
+                        label: comparado,
+                        data: labels.map(k => dados[comparado][k]),
+                        backgroundColor: '#38c871'
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `Comparativo: ${central} vs ${comparado}`,
+                        color: '#ffffff',
+                        font: { size: 18 }
+                    },
+                    legend: {
+                        labels: { color: '#ffffff' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#ffffff' },
+                        grid: { color: '#333' }
+                    },
+                    y: {
+                        ticks: { color: '#ffffff' },
+                        grid: { color: '#333' }
+                    }
+                }
+            }
+        });
+
+    } catch (erro) {
+        console.error("Erro ao gerar gráfico comparativo:", erro);
+    }
+}
+
+
+function voltarParaSonar() {
+    document.querySelector(".charts-container").style.display = "grid";
+    document.getElementById("secao-comparacao").classList.remove("mostrar");
+
+    document.getElementById("periodo-select").style.display = "grid";
+    document.getElementById("btn-voltar").style.display = "none";
+}
+
 
 // Eventos
 document.addEventListener('DOMContentLoaded', () => {

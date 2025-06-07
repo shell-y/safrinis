@@ -345,6 +345,31 @@ footer {
     transform: translateY(-1px);
 }
 
+/* ===== COMPARAÇÃO ENTRE ARTISTAS ===== */
+
+#secao-comparacao {
+    display: none; /* Inicia oculta */
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    height: clamp(400px, 50vh, 600px);
+    width: 100%;
+}
+
+#secao-comparacao.mostrar {
+    display: grid;
+}
+
+#grafico-ranking,
+#grafico-comparativo {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100%;
+}
+
+.btn-voltar{
+    display: none;
+}
+
 /* ===== MEDIA QUERIES ===== */
 @media (max-width: 1024px) {
     .charts-container {

@@ -47,9 +47,15 @@ function atualizar(infos = {}) {
 
 function listarPais() {
     const instrucaoSql = `
-        SELECT * FROM Artista
-        WHERE idArtista = idArtista;
+        SELECT * FROM Artista WHERE idArtista = idArtista;
     `
+
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function deletar(idArtista = 0) {
+    const instrucaoSql = `DELETE FROM Artista WHERE idArtista = ${idArtista};`
 
     console.log("Executando a instrução SQL: " + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -59,5 +65,6 @@ module.exports = {
     buscarPorNome,
     listarRelacioadosQtdLineups,
     atualizar,
-    listarPais
+    listarPais,
+    deletar
 };

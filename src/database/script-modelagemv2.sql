@@ -9,7 +9,8 @@ CREATE TABLE Empresa (
     emailCorporativo VARCHAR(200)
 );
 
-INSERT INTO Empresa VALUES (DEFAULT, "Sonora", "00000000000000", "sonora@sonora.com");
+INSERT INTO Empresa VALUES 
+    (DEFAULT, "Empresa", "00000000000000", "empresa@empresa.com");
 
 -- Tabela Usuario
 CREATE TABLE Usuario (
@@ -22,26 +23,48 @@ CREATE TABLE Usuario (
     FOREIGN KEY (fkEmpresa) REFERENCES Empresa(idEmpresa)
 );
 
+INSERT INTO Usuario VALUE 
+    (DEFAULT, "João", "11912341234", "joao@empresa.com", "Empresa@123", 1);
+
 -- Tabela Artista
 CREATE TABLE Artista (
     idArtista INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
-    foto MEDIUMBLOB,
     fkRelacionadoA INT,
     FOREIGN KEY (fkRelacionadoA) REFERENCES Artista(idArtista)
 );
 
+INSERT INTO Artista VALUE 
+    (DEFAULT, "Artista", 1);
+
 -- Tabela Lineup
 CREATE TABLE Lineup (
-    fkArtista INT,
-    nomeLineup VARCHAR(45),
-    generos VARCHAR(45),
-    favorito TINYINT,
+    idLineup INT AUTO_INCREMENT,
     fkUsuario INT,
-    PRIMARY KEY (fkArtista, fkUsuario),
-    FOREIGN KEY (fkArtista) REFERENCES Artista(idArtista),
+    nomeLineup VARCHAR(45),
+    favorito TINYINT,
+    PRIMARY KEY (idLineup, fkUsuario),
     FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario)
 );
+
+INSERT INTO Lineup VALUES
+    (DEFAULT, 1, "LineUp 1", 1),
+    (DEFAULT, 1, "LineUp 2", 0);
+
+-- Tabela LineupArtista
+CREATE TABLE LineupArtista (
+    fkLineup INT,
+    fkUsuario INT,
+    fkArtista INT,
+    PRIMARY KEY (fkLineup, fkUsuario, fkArtista),
+    FOREIGN KEY (fkLineup) REFERENCES Lineup(idLineup),
+    FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario),
+    FOREIGN KEY (fkArtista) REFERENCES Artista(idArtista)
+);
+
+INSERT INTO LineupArtista VALUES
+    (1, 1, 1),
+    (2, 1, 1);
 
 -- Tabela Notificacao
 CREATE TABLE Notificacao (
@@ -86,3 +109,27 @@ CREATE TABLE LogExecucao (
 );
 
 
+/*
+
+SELECT 
+    idLineup, nomeLineup,
+    l.fkUsuario as idUsuario,
+    a.nome as nomeArtista
+FROM 
+    Lineup as l
+JOIN LineupArtista as la
+    ON  la.fkLineup = l.idLineup AND la.fkUsuario = l.fkUsuario
+JOIN Artista as a
+    ON a.idArtista = la.fkArtista;
+
+
+SELECT
+    idArtista,
+    a.nome as nomeArtista, 
+    count(la.fkArtista) as qtdLineups
+        FROM Artista as a
+        LEFT JOIN LineupArtista as la
+            ON la.fkArtista = a.idArtista
+        GROUP BY
+            idArtista, nomeArtista;
+*/

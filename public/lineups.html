@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/lineups.css">
+  <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- CSS do Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <!-- jQuery (obrigatório para Select2) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- JS do Select2 -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- JS ARTISTAS -->
+  <script src="../js/search_artistas.js"></script>
+  <script src="../js/artistas_table.js"></script>
+  <script src="../js/lineups.js"></script>
+
+  <title>Sonora | Line-ups</title>
+</head>
+
+<body>
+  <header>
+    <a href="#"><img src="../assets/logo_sonora.svg" class="logo"></a>
+    <nav>
+      <ul>
+        <li class="link-nav sec-atual"><a href="#">Home</a>
+        <li><a class="link-nav" href="">Line-up</a>
+        <li><a class="link-nav" href="dashboard/cards.html">Dashboard</a>
+        <li>
+          <a href="../login.html">
+            <button>Entrar</button>
+          </a>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="topo">
+    <div class="topo-desc">
+      <h2>Minhas line-ups</h2>
+    </div><!-- FIM TOPO-DESC -->
+
+    <div class="botoes-lineup" style="margin-bottom: 2vh;">
+      <button><a href="dashboard/lineups.html">Criar nova line-up</a></button>
+    </div>
+  </div>
+
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nome da line-up</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody id="tabela_lineups">
+      <tr id="linha-vazia">
+        <td colspan="6" style="text-align: center; color: #888;">Você ainda não criou nenhuma line-up</td>
+      </tr>
+      <!-- Linhas serão inseridas aqui via JavaScript -->
+    </tbody>
+  </table>
+
+</body>
+
+</html>

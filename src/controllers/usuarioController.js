@@ -81,9 +81,83 @@ function cadastrar(req, res) {
         });
 }
 
+function coletarPerfil(req, res) {
+    const idUsuario = req.params.idUsuario;
 
+    console.log(`O usuário de id ${idUsuario} requeriu suas informações...`)
+
+    usuarioModel
+        .perfil(idUsuario)
+        .then(resposta => {
+            if(resposta.length == 0) {
+                res.status(404).send()
+            } else {
+                res.json({
+                    senha: resposta[0].senha,
+                    celular: resposta[0].celular,
+                    nomeEmpresa: resposta[0].nomeEmpresa, 
+                    cnpjEmpresa: resposta[0].cnpjEmpresa
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send();
+        });
+}
+
+function editar(req, res) {
+    const cadastroUsuario = {
+        id: req.params.idUsuario,
+        nome: req.body.nomeUsuario,
+        senha: req.body.senha,
+        email: req.body.email,
+        celular: req.body.celular
+    };
+
+    console.log(`Executando edição de cadastro para o usuário id ${cadastroUsuario.id}, ${cadastroUsuario.nome}...\n`);
+
+    usuarioModel
+        .editar(cadastroUsuario)
+        .then(resultado => {
+            if (resultado.serverStatus == 2) {
+                usuarioModel
+                .autenticar(cadastroUsuario.email, cadastroUsuario.senha)
+                .then(resultado => {
+                    res.json({
+                        email: resultado[0].email,
+                        nome: resultado[0].nomeUsuario
+                    });
+                })
+            }
+        })
+        .catch(erro => {
+            console.log("Ocorreu um erro!");
+            console.log(erro);
+            res.status(500).send();
+        });
+}
+
+function deletar(req, res) {
+    const idUsuario = req.params.idUsuario
+
+    usuarioModel
+        .deletar(idUsuario)
+        .then(resposta => {
+            if (resposta.serverStatus == 2) {
+                res.status(200).send();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send();
+        });
+}
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    coletarPerfil,
+    editar,
+    deletar
 }

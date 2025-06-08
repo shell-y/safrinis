@@ -1,0 +1,147 @@
+@import url(main.css);
+
+main {
+    padding: 4rem var(--area-segura-lateral);
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h1>span {
+    margin-left: .5rem;
+
+    font-size: 1.3rem;
+    font-weight: normal;
+    text-decoration: underline;
+
+    cursor: pointer;
+}
+
+form {
+    width: 50rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+
+form section {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+form>section>label {
+    width: 100%;
+
+    display: flex;
+    justify-content: stretch;
+    flex-direction: column;
+}
+
+form label span {
+    margin-bottom: .2rem;
+    font-size: 1.35rem;
+}
+
+form input {
+    outline: none;
+    border: 0;
+    
+    padding: .2rem .5rem;
+    border-radius: .5rem;
+
+    font-size: 1.6rem;
+}
+
+#div_senha {
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#div_senha button {
+    padding: 0;
+    background: transparent;
+
+    position: absolute;
+    right: .5rem;
+}
+
+#div_senha button>svg {
+    width: 2rem;
+}
+
+form input[disabled] {
+    border: none;
+    padding: 0;
+
+    color: unset;
+    background-color: transparent;
+}
+
+form>div {
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+}
+
+main button {
+    width: fit-content;
+    padding: .7rem 1.3rem;
+
+    text-transform: capitalize;
+}
+
+#btn_deletar {
+    margin-top: 3rem;
+}
+
+section#modal {
+    width: 35rem;
+    padding: 2.5rem;
+    border-radius: 1.3rem;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: rgb(32, 32, 32);
+}
+
+section#modal::before {
+    content: '';
+
+    width: 100vw;
+    height: 100vh;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+
+    background-color: rgba(0,0,0, 0.6);
+}
+
+section#modal h1 {
+    margin: 0;
+}
+
+section#modal p {
+    margin: 1.2rem 0;
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+section#modal div {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}

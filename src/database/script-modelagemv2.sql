@@ -39,11 +39,9 @@ INSERT INTO Artista VALUE
 
 -- Tabela Lineup
 CREATE TABLE Lineup (
-    idLineup INT AUTO_INCREMENT,
+    idLineup INT PRIMARY KEY AUTO_INCREMENT,
     fkUsuario INT,
     nomeLineup VARCHAR(45),
-    favorito TINYINT,
-    PRIMARY KEY (idLineup, fkUsuario),
     FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario)
 );
 
@@ -54,11 +52,9 @@ INSERT INTO Lineup VALUES
 -- Tabela LineupArtista
 CREATE TABLE LineupArtista (
     fkLineup INT,
-    fkUsuario INT,
     fkArtista INT,
-    PRIMARY KEY (fkLineup, fkUsuario, fkArtista),
+    PRIMARY KEY (fkLineup, fkArtista),
     FOREIGN KEY (fkLineup) REFERENCES Lineup(idLineup),
-    FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario),
     FOREIGN KEY (fkArtista) REFERENCES Artista(idArtista)
 );
 

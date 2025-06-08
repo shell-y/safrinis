@@ -3,7 +3,7 @@ const database = require("../database/config");
 function criar(infos = {}) {
     const instrucaoSql = `
         INSERT INTO Artista VALUE
-            (default, '${infos.nome}', ${infos.fkRelacionadoA});
+            (default, '${infos.nome}', ${infos.idRelacionado});
     `
 
     console.log("Executando a instrução SQL: " + instrucaoSql);
@@ -58,7 +58,7 @@ function editar(infos = {}) {
     const instrucaoSql = `
         UPDATE Artista SET
             nome = '${infos.nome}',
-            fkRelacionaodoA = ${infos.fkRelacionadoA}
+            fkRelacionaodoA = ${infos.idRelacionado}
         WHERE idArtista = ${infos.id};
     `;
 

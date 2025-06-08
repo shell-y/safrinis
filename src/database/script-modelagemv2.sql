@@ -46,8 +46,8 @@ CREATE TABLE Lineup (
 );
 
 INSERT INTO Lineup VALUES
-    (DEFAULT, 1, "LineUp 1", 1),
-    (DEFAULT, 1, "LineUp 2", 0);
+    (DEFAULT, 1, "LineUp 1"),
+    (DEFAULT, 1, "LineUp 2");
 
 -- Tabela LineupArtista
 CREATE TABLE LineupArtista (
@@ -59,8 +59,8 @@ CREATE TABLE LineupArtista (
 );
 
 INSERT INTO LineupArtista VALUES
-    (1, 1, 1),
-    (2, 1, 1);
+    (1, 1),
+    (2, 1);
 
 -- Tabela Notificacao
 CREATE TABLE Notificacao (

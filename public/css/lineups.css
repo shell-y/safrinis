@@ -3,7 +3,7 @@
 @import url(search_artistas.css);
 
 body {
-    padding: 8vh var(--area-segura-lateral);
+    padding: 8vh var(--area-segura-lateral) 8vh var(--area-segura-lateral);
     font-family: 'Raleway', sans-serif;
 }
 
@@ -33,6 +33,14 @@ input {
     height: 3.7vh;
 }
 
+button:disabled {
+    cursor: auto;
+    opacity: 40%;
+}
+
+button:hover:disabled {
+    opacity: 40%;
+}
 
 .topo {
     display: flex;
@@ -44,10 +52,26 @@ input {
     margin-right: 1.5vw;
 }
 
+.topo-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-block: 2.7vh;
+}
+
+.topo-criar {
+    display: flex;
+    flex-direction: column;
+}
+
+.topo-selecionar {
+    margin-bottom: 2.7vh;
+}
+
 .topo-lineups {
     display: flex;
     align-items: flex-end;
-    padding-block: 2.7vh;
+    /* padding-block: 2.7vh; */
 
 
     .select-lineups {
@@ -76,11 +100,11 @@ input {
             color: #fff;
         }
 
-        select:focus{
+        select:focus {
             color: #fff;
         }
 
-        span{
+        span {
             background: transparent;
             color: #fff;
             font-size: 1.8vh;
@@ -89,12 +113,14 @@ input {
         }
     }
 
-    button {
-        padding: 0.7vh 1.3vw;
-        height: 4vh;
-        font-size: 1.8vh;
-    }
 }
+
+button {
+    padding: 0.7vh 1.3vw;
+    height: 4vh;
+    font-size: 1.8vh;
+}
+
 
 .title-lineup {
     display: flex;
@@ -105,7 +131,7 @@ input {
 
     .bi {
         font-size: 2vh;
-        margin-left: .7vw;
+        margin-right: .7vw;
         cursor: pointer;
         opacity: 80%;
     }
@@ -114,11 +140,55 @@ input {
         color: var(--cor-azul-claro);
         opacity: 100%;
     }
+
+    input {
+        background: transparent;
+        font-size: 3.2vh;
+        font-weight: 500;
+        outline: none;
+        border: 0;
+
+        width: auto;
+        max-width: 100%;
+
+        padding-left: 0;
+
+        caret-color: white;
+
+        color: transparent;
+        background-image: linear-gradient(#80FFB3, #87AADE);
+        background-clip: text;
+    }
+
+    #medidor {
+        position: absolute;
+        visibility: hidden;
+        white-space: pre;
+        font-size: 16px;
+        padding: 4px;
+    }
+
+    button {
+        background: transparent;
+        font-size: 1.5vh;
+        border: 1px solid #fff;
+        border-radius: .5rem;
+        padding: 0.7vh 1.3vw;
+        height: auto;
+        text-transform: none;
+    }
 }
 
-@media (max-width: 540px) {
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MOBILE*/
+@media (max-width: 615px) {
+    html {
+        max-width: 100% !important;
+    }
+
     body {
         padding-top: 12vh;
+        padding: 12vh 4vw 8vh 4vw;
+
     }
 
     .topo {
@@ -126,11 +196,18 @@ input {
         flex-direction: column;
     }
 
+    .topo-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 0;
+    }
+
     .topo-lineups {
         padding-block: 2.7vh;
 
         .select-lineups {
-            margin-right: 2.7vw;
+            margin-right: 2vw;
 
             select {
                 width: 60vw !important;
@@ -139,20 +216,36 @@ input {
             input {
                 width: 55vw !important;
             }
-            /* span{
-                width: 55vw !important;
-            } */
         }
+    }
 
-        button {
-            padding: 0.7vh 3vw;
-            height: 4vh;
-            font-size: 1.8vh;
+    .topo-selecionar {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: flex-start;
+        margin-bottom: 0;
+
+        .botoes-select {
+            display: flex;
+            flex-direction: row;
+
+            button {
+                font-size: 1.8vh;
+                padding: 0.5vh 2vw;
+                margin-right: 1vw;
+            }
         }
+    }
+
+    button {
+        padding: 0.7vh 3vw;
+        height: 4vh;
+        font-size: 1.8vh;
     }
 
     .title-lineup {
         align-items: baseline;
+        margin-top: 5vh;
 
         h2 {
             margin-block: 0;
@@ -160,7 +253,7 @@ input {
 
         .bi {
             font-size: 2vh;
-            margin-left: 2vw;
+            margin-right: 2vw;
         }
     }
 

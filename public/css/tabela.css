@@ -38,10 +38,3 @@
     border: 1px solid var(--cor-verde-claro);
     /* background-color: var(--cor-azul); */
 }
-
-@media (max-width: 540px) {
-    .table {
-        max-width: 500px !important;
-        overflow-x: scroll;
-    }
-}

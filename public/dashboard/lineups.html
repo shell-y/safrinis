@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/lineups.css">
+  <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- CSS do Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <!-- jQuery (obrigatório para Select2) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- JS do Select2 -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- JS ARTISTAS -->
+  <script src="../js/search_artistas.js"></script>
+  <script src="../js/artistas_table.js"></script>
+  <script src="../js/lineups.js"></script>
+
+  <title>Sonora | Line-ups</title>
+</head>
+
+<body>
+  <header>
+    <a href="#"><img src="../assets/logo_sonora.svg" class="logo"></a>
+    <nav>
+      <ul>
+        <li class="link-nav sec-atual"><a href="#">Home</a>
+        <li><a class="link-nav" href="">Line-up</a>
+        <li><a class="link-nav" href="dashboard/cards.html">Dashboard</a>
+        <li>
+          <a href="../login.html">
+            <button>Entrar</button>
+          </a>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="topo">
+    <div class="topo-desc">
+      <h2 id="titulo_line">Criar nova line-up</h2>
+      <h3>Comece já a monitorar seus artistas preferidos!</h3>
+      <p>
+        1. Pesquise pelo artista que quer monitorar<br>
+        2. Adicione-o a sua lista<br>
+        3. Monitore as alterações nos números desse artista<br>
+        4. Adicione outros artistas à mesma line-up e faça comparações!
+      </p>
+    </div><!-- FIM TOPO-DESC -->
+
+    <div class="topo-criar">
+      <div class="topo-lineups topo-selecionar">
+        <div class="select-lineups">
+          <label for="lineups">Minhas line-ups</label>
+          <select id="lineups">
+            <option value="" disabled selected>Selecione</option>
+          </select>
+        </div>
+        <div class="botoes-select">
+          <button onclick="abrirLineup()">Abrir</button>
+          <button style="background: transparent; border: 1px solid #fff; margin-left: 0.5vw;"
+            onclick="excluirLineup()">Excluir</button>
+        </div>
+      </div><!-- FIM TOPO-LINEUPS -->
+      <button id="criarNova" onclick="location.reload()" style="display: none;">Criar nova line-up</button>
+    </div><!-- FIM DIV -->
+  </div><!-- FIM TOPO -->
+
+  <div class="title-lineup">
+    <i class="bi bi-pencil-square" style="display: block;" id="icon_renomear" onclick="habilitarInput()"></i>
+    <input type="text" disabled class="nome-lineup" id="nome_lineup" placeholder="Nome da Line-up" value="">
+
+    <span id="medidor"></span>
+
+
+    <button id="btn_renomear" style="display: none; margin-right: 1.2vw;" onclick="renomearLineup()">Renomear</button>
+    <button id="btn_cancelar" style="display: none;" onclick="cancelarRenomear()">Cancelar</button>
+
+  </div>
+
+  <div class="topo-menu">
+    <div class="topo-lineups">
+      <div class="select-lineups">
+        <label for="artistas">Artista</label>
+        <select id="select_artistas" class="select-artistas">
+          <option value="">Selecione</option>
+        </select>
+      </div>
+
+      <button style="margin-inline-end: 1.7vw;"
+        onclick="adicionarArtista(document.getElementById('select_artistas').value)">
+        Adicionar</button>
+
+    </div><!-- FIM SELECT ARTISTAS -->
+    <div class="botoes-lineup">
+      <button style="background: transparent; border: 1px solid #fff; margin-right: 0.5vw;"
+        onclick="limparLineup()">Limpar line-up</button>
+      <button id="salvarLineup" onclick="salvarLineup()" disabled>Criar line-up</button>
+    </div>
+  </div>
+
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Artista</th>
+        <th scope="col">Popularidade</th>
+        <th scope="col">Ouvintes</th>
+        <th scope="col">Plays</th>
+        <th scope="col">Adicionado em</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody id="tabela_artistas">
+      <tr id="linha-vazia">
+        <td colspan="6" style="text-align: center; color: #888;">Selecione algum artista para começar</td>
+      </tr>
+      <!-- Linhas serão inseridas aqui via JavaScript -->
+    </tbody>
+  </table>
+
+  <h2>Você também pode gostar...</h2>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Artista</th>
+        <th scope="col">Ouvintes</th>
+        <th scope="col">Se relaciona com o artista...</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody id="tabela_relacionados">
+      <tr>
+        <td colspan="5" style="text-align: center; color: #888;">Selecione um artista para ver recomendações</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+/* Estiliza o campo de busca do Select2 */
+.select2-container--default .select2-selection--single {
+    background: transparent;
+    color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    height: auto;
+    font-size: 1.8vh;
+}
+
+.select2-container--default .select2-results__option {
+    background: #000;
+    color: #fff;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1.6vh;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #222;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #fff !important;
+    line-height: 1.8 !important;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: #000 !important;
+    border: 1px solid var(--cor-verde) !important;
+    color: var(--cor-verde) !important;
+}
+
+.select2-container--default .select2-results__option--selected {
+    background-color: #000 !important;
+    color: var(--cor-verde-claro) !important;
+}
+
+span .select2-selection__clear {
+    background-image: none !important;
+    font-weight: normal !important;
+    margin-right: 0 !important;
+    margin-left: 1vw !important;
+    padding: 0 !important;
+    float: left !important;
+}
+
+.select2-search__field {
+    background: black;
+    color: #fff;
+    font-size: 1.8vh;
+    border-radius: 8px;
+    width: 20vw;
+    outline: none;
+}
+
+.select2-search {
+    background: black;
+    color: white;
+}

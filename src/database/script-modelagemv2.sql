@@ -103,29 +103,3 @@ CREATE TABLE LogExecucao (
     dataHora DATETIME,
     tipoStatus VARCHAR(45)
 );
-
-
-/*
-
-SELECT 
-    idLineup, nomeLineup,
-    l.fkUsuario as idUsuario,
-    a.nome as nomeArtista
-FROM 
-    Lineup as l
-JOIN LineupArtista as la
-    ON  la.fkLineup = l.idLineup AND la.fkUsuario = l.fkUsuario
-JOIN Artista as a
-    ON a.idArtista = la.fkArtista;
-
-
-SELECT
-    idArtista,
-    a.nome as nomeArtista, 
-    count(la.fkArtista) as qtdLineups
-        FROM Artista as a
-        LEFT JOIN LineupArtista as la
-            ON la.fkArtista = a.idArtista
-        GROUP BY
-            idArtista, nomeArtista;
-*/

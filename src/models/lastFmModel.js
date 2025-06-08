@@ -47,6 +47,10 @@ function getOnTour(idArtista) {
     return database.executar(instrucaoSql);
 }
 
+function deletarRegistrosArtista(idArtista = 0) {
+    
+}
+
 module.exports = {
     getPlaysPorPeriodo,
     getOuvintesPorPeriodo,

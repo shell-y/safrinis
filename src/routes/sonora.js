@@ -7,7 +7,7 @@ router.get("/listar", function (req, res) {
     sonoraController.listar(req, res);
 });
 
-router.get("/listarpais", function (req, res) {
+router.get("/listar/pais", function (req, res) {
     sonoraController.listarPais(req, res);
 });
 

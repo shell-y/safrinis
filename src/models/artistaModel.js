@@ -21,7 +21,7 @@ function buscarPorNome(nome = "") {
 
 function listarPais() {
     const instrucaoSql = `
-        SELECT * FROM Artista WHERE idArtista = idArtista;
+        SELECT * FROM Artista WHERE idArtista = fkRelacionadoA;
     `
 
     console.log("Executando a instrução SQL: " + instrucaoSql);
@@ -35,7 +35,7 @@ function listarQtdDados() {
             a.nome,
             COUNT(DISTINCT r.idArtista) AS qtdRelacionados,
             COUNT(DISTINCT la.fkArtista) AS qtdLineups,
-            COUNT(DISTINCT s.idSpotify) AS qtdDadosSpotifys,
+            COUNT(DISTINCT s.idSpotify) AS qtdDadosSpotify,
             COUNT(DISTINCT ls.idPlays) AS qtdDadosLastFm
         FROM Artista AS a
         LEFT JOIN Artista AS r 
@@ -58,7 +58,7 @@ function editar(infos = {}) {
     const instrucaoSql = `
         UPDATE Artista SET
             nome = '${infos.nome}',
-            fkRelacionaodoA = ${infos.idRelacionado}
+            fkRelacionadoA = ${infos.idRelacionado}
         WHERE idArtista = ${infos.id};
     `;
 

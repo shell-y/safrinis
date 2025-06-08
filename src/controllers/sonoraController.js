@@ -7,50 +7,55 @@ function listar(req, res) {
             if (resultado.length > 0) res.json(resultado);
         })
         .catch(erro => {
+            console.log(erro)
             res.status(500).send();
         });
 }
 
 function listarPais(req, res) {
+    console.log("Listando artistas pais...")
     artistaModel
         .listarPais()
         .then(resultado => {
             if (resultado.length > 0) res.json(resultado);
         })
-        .catch(err => {
+        .catch(erro => {
+            console.log(erro)
             res.status(500).send();
         });
 }
 
 function criar(req, res) {
-    const infos = {
-        nome: req.nome,
-        idRelacionado: req.idRelacionado
-    };
+    console.log("Criando novo artista...")
+
+    if (!req.body) {
+        return res.status(400).send("Body undefined!")
+    }
     
     artistaModel
-        .criar(infos)
+        .criar(req.body)
         .then(resposta => {
             if (resposta.serverStatus == 2) res.status(200).send();
         })
         .catch(erro => {
+            console.log(erro)
             res.status(500).send();
         });
 }
 
 function editar(req, res) {
-    infos = {
-        id: req.id,
-        nome: req.nome,
-        idRelacionado: req.idRelacionado
-    };
+
+    if(!req.body) {
+        return res.status(400).send("Body undefined!")
+    }
 
     artistaModel
-        .editar(infos)
+        .editar(req.body)
         .then(resposta => {
             if (resposta.serverStatus == 2) res.status(200).send();
         })
         .catch(erro => {
+            console.log(erro)
             res.status(500).send();
         });
 }
@@ -59,9 +64,9 @@ async function deletar(req, res) {
     const idArtista = req.params.idArtista;
 
     const models = {
-        la: require("../models/lineupArtistaModel"),
-        ls: require("../models/lastFmModel"),
-        s: require("../models/spotifyModel")
+        LineUpArtista: require("../models/lineupArtistaModel"),
+        LastFm: require("../models/lastFmModel"),
+        Spotify: require("../models/spotifyModel")
     };
     
     try {
@@ -71,6 +76,7 @@ async function deletar(req, res) {
             const remocao = await models[key].deletarRegistrosArtista(idArtista);
             
             if (remocao.serverStatus !== 2) {
+                console.log(`deu ruim no model ${models[key]}:\n${remocao}`)
                 sucesso = false;
                 break
             }
@@ -78,15 +84,19 @@ async function deletar(req, res) {
 
         if (sucesso) {
             const remocao = await artistaModel.deletar(idArtista);
-            if (remocao.serverStatus === 2) req.status(200).send();
+            if (remocao.serverStatus === 2) res.status(200).send();
+            else {
+                console.log(`deu ruim na hora de deletar o artista:\n${remocao}`)
+                res.status(400).send();
+            }
         } else {
             console.log(remocao)
-            req.status(400).send("Não pode deletar um artista pai!");
+            res.status(400).send("");
         }
 
     } catch (erro) {
         console.log(erro);
-        req.status(500).send();
+        res.status(500).send();
     }
         
 }

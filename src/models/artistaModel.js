@@ -2,15 +2,34 @@
 
 var database = require("../database/config");
 
-function listarNomesArtistas() {
-  var instrucaoSql = `SELECT * FROM Artista;`
 
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
+function buscarPorNome(nome) {
+    const instrucaoSql = `
+        SELECT * FROM Artista WHERE nome = '${nome}';
+        `;
+
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarRelacionados(artistaId) {
+    const instrucaoSql = `
+        SELECT * FROM ARTISTA WHERE FKRELACIONADOA = ${artistaId};
+        `
+
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function listarNomesArtistas() {
+    var instrucaoSql = `SELECT * FROM Artista;`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
 function buscarDetalhesDoArtista(idArtista) {
-  const instrucaoSql = `
+    const instrucaoSql = `
         SELECT 
             a.nome,
             s.popularidade,
@@ -23,11 +42,11 @@ function buscarDetalhesDoArtista(idArtista) {
         WHERE a.idArtista = ${idArtista}
         LIMIT 1;
     `;
-  return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
 function listarRelacionados(ids) {
-  const instrucaoSql = `
+    const instrucaoSql = `
     SELECT DISTINCT relacionados.idArtista, relacionados.nome, l.ouvintes
     FROM Artista selecionado
     JOIN Artista relacionados ON selecionado.fkRelacionadoA = relacionados.fkRelacionadoA
@@ -37,7 +56,7 @@ function listarRelacionados(ids) {
     ORDER BY RAND()
     LIMIT 4;
   `;
-  return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
 async function salvarLineup(nomeLineup, idUsuario, artistas, idLineup, onTour) {
@@ -47,21 +66,21 @@ async function salvarLineup(nomeLineup, idUsuario, artistas, idLineup, onTour) {
       UPDATE Lineup SET nomeLineup = '${nomeLineup}' WHERE idLineup = ${idLineup};
     `);
 
-    await database.executar(`
+        await database.executar(`
       DELETE FROM LineupArtista WHERE fkLineup = ${idLineup};
     `);
-  } else {
-    // Nova line-up
-    await database.executar(`
+    } else {
+        // Nova line-up
+        await database.executar(`
       INSERT INTO Lineup (fkUsuario, nomeLineup)
       VALUES (${idUsuario}, '${nomeLineup}');
     `);
-    
-    const resultado = await database.executar(`
+
+        const resultado = await database.executar(`
       SELECT idLineup FROM Lineup WHERE fkUsuario = ${idUsuario} AND nomeLineup = '${nomeLineup}' LIMIT 1;
     `);
-    idLineup = resultado[0].idLineup;
-  }
+        idLineup = resultado[0].idLineup;
+    }
 
   // Insere artistas atualizados
   for (const nome of artistas) {
@@ -73,29 +92,29 @@ async function salvarLineup(nomeLineup, idUsuario, artistas, idLineup, onTour) {
   `);
 }
 
-  return;
+    return;
 }
 
 function renomearLineup(idLineup, novoNome) {
-  const sql = `
+    const sql = `
     UPDATE Lineup
     SET nomeLineup = '${novoNome}'
     WHERE idLineup = ${idLineup};
   `;
-  return database.executar(sql);
+    return database.executar(sql);
 }
 
 function listarLineups(idUsuario) {
-  const sql = `
+    const sql = `
     SELECT idLineup, nomeLineup
     FROM Lineup
     WHERE fkUsuario = ${idUsuario};
   `;
-  return database.executar(sql);
+    return database.executar(sql);
 }
 
 function buscarLineupPorId(idLineup) {
-  const sql = `
+    const sql = `
     SELECT 
       a.idArtista,
       a.nome,
@@ -111,25 +130,27 @@ function buscarLineupPorId(idLineup) {
     JOIN Lineup lu ON lu.idLineup = la.fkLineup
     WHERE la.fkLineup = ${idLineup};
   `;
-  return database.executar(sql);
+    return database.executar(sql);
 }
 
 function excluirLineup(idLineup) {
-  const sql = `
+    const sql = `
     DELETE FROM Lineup WHERE idLineup = ${idLineup};
   `;
-  return database.executar(sql);
+    return database.executar(sql);
 }
 
 
 
 module.exports = {
-  listarNomesArtistas,
-  buscarDetalhesDoArtista,
-  listarRelacionados,
-  salvarLineup,
-  renomearLineup,
-  listarLineups,
-  buscarLineupPorId,
-  excluirLineup
+    buscarPorNome,
+    buscarRelacionados,
+    listarNomesArtistas,
+    buscarDetalhesDoArtista,
+    listarRelacionados,
+    salvarLineup,
+    renomearLineup,
+    listarLineups,
+    buscarLineupPorId,
+    excluirLineup
 };

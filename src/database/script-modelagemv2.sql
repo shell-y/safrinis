@@ -39,32 +39,28 @@ INSERT INTO Artista VALUE
 
 -- Tabela Lineup
 CREATE TABLE Lineup (
-    idLineup INT AUTO_INCREMENT,
+    idLineup INT PRIMARY KEY AUTO_INCREMENT,
     fkUsuario INT,
     nomeLineup VARCHAR(45),
-    favorito TINYINT,
-    PRIMARY KEY (idLineup, fkUsuario),
     FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario)
 );
 
 INSERT INTO Lineup VALUES
-    (DEFAULT, 1, "LineUp 1", 1),
-    (DEFAULT, 1, "LineUp 2", 0);
+    (DEFAULT, 1, "LineUp 1"),
+    (DEFAULT, 1, "LineUp 2");
 
 -- Tabela LineupArtista
 CREATE TABLE LineupArtista (
     fkLineup INT,
-    fkUsuario INT,
     fkArtista INT,
-    PRIMARY KEY (fkLineup, fkUsuario, fkArtista),
+    PRIMARY KEY (fkLineup, fkArtista),
     FOREIGN KEY (fkLineup) REFERENCES Lineup(idLineup),
-    FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario),
     FOREIGN KEY (fkArtista) REFERENCES Artista(idArtista)
 );
 
 INSERT INTO LineupArtista VALUES
-    (1, 1, 1),
-    (2, 1, 1);
+    (1, 1),
+    (2, 1);
 
 -- Tabela Notificacao
 CREATE TABLE Notificacao (
@@ -107,29 +103,3 @@ CREATE TABLE LogExecucao (
     dataHora DATETIME,
     tipoStatus VARCHAR(45)
 );
-
-
-/*
-
-SELECT 
-    idLineup, nomeLineup,
-    l.fkUsuario as idUsuario,
-    a.nome as nomeArtista
-FROM 
-    Lineup as l
-JOIN LineupArtista as la
-    ON  la.fkLineup = l.idLineup AND la.fkUsuario = l.fkUsuario
-JOIN Artista as a
-    ON a.idArtista = la.fkArtista;
-
-
-SELECT
-    idArtista,
-    a.nome as nomeArtista, 
-    count(la.fkArtista) as qtdLineups
-        FROM Artista as a
-        LEFT JOIN LineupArtista as la
-            ON la.fkArtista = a.idArtista
-        GROUP BY
-            idArtista, nomeArtista;
-*/

@@ -2,14 +2,7 @@ import * as f from "./formatar_campos.js";
 import * as v from "./validar_campos.js"
 
 const inputsPerfil = document.querySelectorAll("form input");
-var infosCliente = [
-    "Astolfo", "123",
-    "astolfo@email.com", "11912341234",
-    "Alô Marcas", "12345678000114"
-];
-inserirValoresPerfil();
 
-/*
 if (sessionStorage.ID_USUARIO == undefined) {
     alert("Usuário não autenticado. Redirecionando para a página de login.");
     location = "../login.html";
@@ -34,7 +27,6 @@ if (sessionStorage.ID_USUARIO == undefined) {
         }
     });
 }
-*/
 
 function inserirValoresPerfil() {
     for (let i = 0; i < infosCliente.length; i++) {

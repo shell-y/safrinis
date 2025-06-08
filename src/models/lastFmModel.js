@@ -49,7 +49,7 @@ function getOnTour(idArtista) {
 
 function deletarRegistrosArtista(idArtista = 0) {
     const instrucaoSql = `
-        DELETE from LastFm where idArtista = ${idArtista};
+        DELETE from LastFm where fkArtista = ${idArtista};
     `;
 
     console.log("Executando a instrução SQL: " + instrucaoSql);

@@ -105,3 +105,19 @@ function registrarEditarArtista(infos = {}) {
         console.log(err);
     })
 }
+
+
+document.querySelector("#btn_teste").addEventListener("click", e => { 
+    executarDelete(4);
+});
+
+function executarDelete(idArtista = 0){
+    fetch(`/sonora/deletar/${idArtista}`, {
+        method: "DELETE"
+    }).then(resposta => {
+        if (resposta.ok) alert("deu bom");
+        else alert("deu ruim");
+    }).catch(erro => {
+        console.log(erro);
+    });
+}

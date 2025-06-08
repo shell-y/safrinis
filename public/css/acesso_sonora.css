@@ -27,18 +27,30 @@ main>section>div {
 
 table {
     width: 100%;
+    border-collapse: collapse;
 }
 
+
 thead {
+    border-bottom: .1rem solid white;
+    
     text-transform: uppercase;
     font-size: 1.5rem;
     font-weight: 600;
 }
 
-thead td:first-child {
+thead tr:first-child {
     width: 6rem;
 }
 
 thead td:first-child>input {
     margin: 0 auto;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgba(51, 51, 51, 0.349);
+}
+
+tbody td {
+    font-size: 1.1rem;
 }

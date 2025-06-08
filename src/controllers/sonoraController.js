@@ -63,6 +63,10 @@ function editar(req, res) {
 async function deletar(req, res) {
     const idArtista = req.params.idArtista;
 
+    if(isNaN(idArtista)) {
+        return res.status(400).send("Não foi passado um número!");
+    }
+
     const models = {
         LineUpArtista: require("../models/lineupArtistaModel"),
         LastFm: require("../models/lastFmModel"),

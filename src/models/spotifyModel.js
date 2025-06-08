@@ -11,7 +11,7 @@ function getPopularidade(idArtista){
 
 function deletarRegistrosArtista(idArtista = 0) {
     const instrucaoSql = `
-       DELETE FROM Spotify WHERE idArtista = ${idArtista}; 
+       DELETE FROM Spotify WHERE fkArtista = ${idArtista}; 
     `;
 
     console.log("Executando a instrução SQL: " + instrucaoSql);

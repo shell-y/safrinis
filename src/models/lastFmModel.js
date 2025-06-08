@@ -48,11 +48,17 @@ function getOnTour(idArtista) {
 }
 
 function deletarRegistrosArtista(idArtista = 0) {
-    
+    const instrucaoSql = `
+        DELETE from LastFm where idArtista = ${idArtista};
+    `;
+
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
 module.exports = {
     getPlaysPorPeriodo,
     getOuvintesPorPeriodo,
-    getOnTour
+    getOnTour,
+    deletarRegistrosArtista
 };

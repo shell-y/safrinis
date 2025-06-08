@@ -11,7 +11,7 @@ function deletarRegistro(infos = {}) {
 
     console.log("Eecutando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
-}git 
+}
 
 function deletarRegistrosArtista(idArtista = 0){
     const instrucaoSql = `DELETE FROM LineupArtista WHERE fkArtista = ${idArtista}`;

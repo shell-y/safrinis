@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/lineups.css">
   <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/lineups.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <!-- CSS do Select2 -->
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
   <!-- jQuery (obrigatório para Select2) -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- JS do Select2 -->
@@ -23,16 +23,15 @@
 
 <body>
   <header>
-    <a href="#"><img src="../assets/logo_sonora.svg" class="logo"></a>
+    <a href="../index.html"><img src="../assets/logo_sonora.svg" class="logo"></a>
     <nav>
       <ul>
-        <li class="link-nav sec-atual"><a href="#">Home</a>
-        <li><a class="link-nav" href="">Line-up</a>
-        <li><a class="link-nav" href="dashboard/cards.html">Dashboard</a>
+        <li class="link-nav sec-atual"><a href="../index.html">Home</a>
+        <li><a class="link-nav" href="../dashboard/lineups.html">Line-ups</a>
+        <li><a class="link-nav" href="../dashboard/cards.html">Dashboard</a>
+        <li><a class="link-nav" href="../dashboard/perfil">Perfil</a>
         <li>
-          <a href="../login.html">
-            <button>Entrar</button>
-          </a>
+          <button id="btn-login" onclick="alternarLoginLogout()"></button>
       </ul>
     </nav>
   </header>
@@ -108,7 +107,7 @@
         <th scope="col">Popularidade</th>
         <th scope="col">Ouvintes</th>
         <th scope="col">Plays</th>
-        <th scope="col">Adicionado em</th>
+        <th scope="col">Em turnê?</th>
         <th scope="col"></th>
       </tr>
     </thead>

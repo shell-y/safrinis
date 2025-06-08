@@ -3,12 +3,35 @@ let lineupModificada = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     carregarSelectLineups();
+    const idUsuario = sessionStorage.ID_USUARIO;
+
+    if (idUsuario) {
+        document.getElementById("btn-login").innerText = "Sair";
+    }else{
+        document.getElementById("btn-login").innerText = "Login";
+    }
 });
 
 document.getElementById('lineups').addEventListener('change', function () {
     idLineupAtual = this.value;
     carregarLineup(idLineupAtual);
 });
+
+
+function alternarLoginLogout() {
+  const idUsuario = sessionStorage.ID_USUARIO;
+
+  if (idUsuario) {
+    const confirmacao = confirm("Tem certeza que deseja sair?");
+    if (!confirmacao) return;
+    // Usuário está logado → fazer logout
+    sessionStorage.clear();
+    window.location.href = "../login.html"; // redireciona para a página de login
+  } else {
+    // Usuário não está logado → ir para login
+    window.location.href = "../login.html";
+  }
+}
 
 function atualizarEstadoBotaoSalvar() {
     const tabela = document.getElementById("tabela_artistas");
@@ -36,7 +59,6 @@ function abrirLineup() {
         .then(res => res.json())
         .then(artistas => {
             const tabela = document.getElementById("tabela_artistas");
-
             if (!artistas.length) {
                 alert("Essa line-up está vazia.");
                 tabela.innerHTML = `
@@ -48,13 +70,15 @@ function abrirLineup() {
             tabela.innerHTML = "";
 
             artistas.forEach(a => {
+                            console.log('TABELA',a);
+
                 tabela.innerHTML += `
           <tr>
             <th scope="row">${a.nome}</th>
             <td>${a.popularidade + "%" ?? 'N/A'}</td>
             <td>${formatarNumeroAbreviado(a.ouvintes) ?? 'N/A'}</td>
             <td>${formatarNumeroAbreviado(a.plays) ?? 'N/A'}</td>
-            <td>${a.dataAtualizacao ?? 'N/A'}</td>
+            <td>${a.ontour ? 'Sim' : 'Não'}</td>
             <td><a href="#" onclick="excluirLinha(this)">Excluir</a></td>
           </tr>
         `;
@@ -108,7 +132,7 @@ function habilitarInput() {
 }
 
 
-function cancelarRenomear(){
+function cancelarRenomear() {
     const input = document.getElementById("nome_lineup");
     const btnRenomear = document.getElementById("btn_renomear");
     const btnCancelar = document.getElementById("btn_cancelar");
@@ -203,17 +227,17 @@ function salvarLineup() {
         .then(res => {
             if (res.ok) {
                 alert("Line-up salva com sucesso!");
-                lineupModificada = false;
-                atualizarEstadoBotaoSalvar();
             } else {
                 alert("Erro ao salvar line-up.");
             }
+                lineupModificada = false;
+    atualizarEstadoBotaoSalvar();
+    history.go(0);
         })
         .catch(err => {
             console.error("Erro ao salvar line-up:", err);
             alert("Erro na comunicação com o servidor.");
         });
-
 }
 
 function excluirLineup() {

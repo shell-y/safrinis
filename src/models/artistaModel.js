@@ -15,13 +15,12 @@ function buscarDetalhesDoArtista(idArtista) {
             a.nome,
             s.popularidade,
             l.ouvintes,
-            l.plays,
-            DATE_FORMAT(GREATEST(s.dtRequisicao, l.dataColeta), '%d/%m/%Y') AS dataAtualizacao
+            l.onTour,
+            l.plays
         FROM Artista a
         LEFT JOIN Spotify s ON s.fkArtista = a.idArtista
         LEFT JOIN LastFm l ON l.fkArtista = a.idArtista
         WHERE a.idArtista = ${idArtista}
-        ORDER BY s.dtRequisicao DESC, l.dataColeta DESC
         LIMIT 1;
     `;
   return database.executar(instrucaoSql);
@@ -41,7 +40,7 @@ function listarRelacionados(ids) {
   return database.executar(instrucaoSql);
 }
 
-async function salvarLineup(nomeLineup, idUsuario, artistas, idLineup) {
+async function salvarLineup(nomeLineup, idUsuario, artistas, idLineup, onTour) {
   if (idLineup) {
     // Line-up já existe → atualiza o nome e limpa artistas antigos
     await database.executar(`
@@ -66,11 +65,13 @@ async function salvarLineup(nomeLineup, idUsuario, artistas, idLineup) {
 
   // Insere artistas atualizados
   for (const nome of artistas) {
-    await database.executar(`
-      INSERT INTO LineupArtista (fkLineup, fkArtista)
-      SELECT ${idLineup}, idArtista FROM Artista WHERE nome = '${nome}';
-    `);
-  }
+  await database.executar(`
+    INSERT INTO LineupArtista (fkLineup, fkArtista)
+    SELECT ${idLineup}, idArtista
+    FROM Artista
+    WHERE nome = '${nome}';
+  `);
+}
 
   return;
 }
@@ -101,7 +102,7 @@ function buscarLineupPorId(idLineup) {
       s.popularidade,
       l.ouvintes,
       l.plays,
-      DATE_FORMAT(GREATEST(s.dtRequisicao, l.dataColeta), '%d/%m/%Y') AS dataAtualizacao,
+      l.ontour,
       lu.nomeLineup
     FROM LineupArtista la
     JOIN Artista a ON la.fkArtista = a.idArtista

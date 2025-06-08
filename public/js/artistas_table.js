@@ -17,6 +17,15 @@ function formatarNumeroAbreviado(numero) {
     return n.toString();
 }
 
+function formatarDataHora(dataString) {
+  const data = new Date(dataString);
+  const dia = String(data.getDate()).padStart(2, '0');
+  const mes = String(data.getMonth() + 1).padStart(2, '0');
+  const ano = data.getFullYear();
+  const hora = String(data.getHours()).padStart(2, '0');
+  const min = String(data.getMinutes()).padStart(2, '0');
+  return `${dia}/${mes}/${ano} ${hora}:${min}`;
+}
 
 function adicionarArtista(valueArtista) {
     //Deselecionar o artista no select
@@ -41,15 +50,13 @@ function adicionarArtista(valueArtista) {
                 return;
             }
 
-            const hoje = new Date().toLocaleDateString('pt-BR');
-
             tabela.innerHTML += `
                 <tr>
                     <th scope="row">${dados.nome}</th>
                     <td>${dados.popularidade + "%" ?? 'N/A'}</td>
                     <td>${formatarNumeroAbreviado(dados.ouvintes) ?? 'N/A'}</td>
                     <td>${formatarNumeroAbreviado(dados.plays) ?? 'N/A'}</td>
-                    <td>${hoje}</td>
+                    <td>${dados.onTour ? 'Sim' : 'Não'}</td>
                     <td><a href="#" onclick="excluirLinha(this)">Excluir</a></td>
                 </tr>
             `;
@@ -146,7 +153,7 @@ function carregarRelacionados(idArtista, nomePrincipal) {
         });
 }
 
-function adicionarRelacionado(nome, popularidade, ouvintes, plays) {
+function adicionarRelacionado(nome, popularidade, ouvintes, plays, onTour) {
     const tabela = document.getElementById('tabela_artistas');
     const jaExiste = Array.from(tabela.rows).some(row => row.cells[0]?.innerText === nome);
     if (jaExiste) {
@@ -158,18 +165,17 @@ function adicionarRelacionado(nome, popularidade, ouvintes, plays) {
     const linhaVazia = document.getElementById('linha-vazia');
     if (linhaVazia) linhaVazia.remove();
 
-    const hoje = new Date().toLocaleDateString('pt-BR');
-
     tabela.innerHTML += `
     <tr>
           <th scope="row">${nome}</th>
           <td>${popularidade + "%" ?? 'N/A'}</td>
           <td>${formatarNumeroAbreviado(ouvintes) ?? 'N/A'}</td>
           <td>${formatarNumeroAbreviado(plays) ?? 'N/A'}</td>
-          <td>${hoje}</td>
+          <td>${onTour ? 'Sim' : 'Não'}</td>
           <td><a href="#" onclick="excluirLinha(this)">Excluir</a></td>
-        </tr>
-  `;
+          </tr>
+          `;
+        //   <td>${dtInsercao ? formatarDataHora(dtInsercao) : 'N/A'}</td>
     atualizarEstadoBotaoSalvar();
 }
 

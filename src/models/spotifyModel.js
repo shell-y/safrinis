@@ -9,6 +9,16 @@ function getPopularidade(idArtista){
     return database.executar(instrucaoSql);
 }
 
+function deletarRegistrosArtista(idArtista = 0) {
+    const instrucaoSql = `
+       DELETE FROM Spotify WHERE fkArtista = ${idArtista}; 
+    `;
+
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
-    getPopularidade
+    getPopularidade,
+    deletarRegistrosArtista
 };

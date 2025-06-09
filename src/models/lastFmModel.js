@@ -60,6 +60,12 @@ function getPlaysPorPeriodo(idArtista, dias){
             AND DATE(DATACOLETA) >= '${dataInicio.toISOString().slice(0,10)}'
             AND DATE(DATACOLETA) <= '${dataFim.toISOString().slice(0,10)}'
         ORDER BY DATACOLETA;`
+}
+
+function deletarRegistrosArtista(idArtista = 0) {
+    const instrucaoSql = `
+        DELETE from LastFm where fkArtista = ${idArtista};
+    `;
 
     console.log("Executando a instrução SQL: " + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -69,5 +75,8 @@ module.exports = {
     getSomaPlaysPorPeriodo,
     getSomaOuvintesPorPeriodo,
     getPlaysPorPeriodo,
-    getOnTour
+    getOnTour,
+    getOuvintesPorPeriodo,
+    getOnTour,
+    deletarRegistrosArtista
 };

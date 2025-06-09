@@ -9,7 +9,8 @@ CREATE TABLE Empresa (
     emailCorporativo VARCHAR(200)
 );
 
-INSERT INTO Empresa VALUES (DEFAULT, "Sonora", "00000000000000", "sonora@sonora.com");
+INSERT INTO Empresa VALUES 
+    (DEFAULT, "Empresa", "00000000000000", "empresa@empresa.com");
 
 -- Tabela Usuario
 CREATE TABLE Usuario (
@@ -22,26 +23,44 @@ CREATE TABLE Usuario (
     FOREIGN KEY (fkEmpresa) REFERENCES Empresa(idEmpresa)
 );
 
+INSERT INTO Usuario VALUE 
+    (DEFAULT, "João", "11912341234", "joao@empresa.com", "Empresa@123", 1);
+
 -- Tabela Artista
 CREATE TABLE Artista (
     idArtista INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
-    foto MEDIUMBLOB,
     fkRelacionadoA INT,
     FOREIGN KEY (fkRelacionadoA) REFERENCES Artista(idArtista)
 );
 
+INSERT INTO Artista VALUE 
+    (DEFAULT, "Artista", 1);
+
 -- Tabela Lineup
 CREATE TABLE Lineup (
-    fkArtista INT,
-    nomeLineup VARCHAR(45),
-    generos VARCHAR(45),
-    favorito TINYINT,
+    idLineup INT PRIMARY KEY AUTO_INCREMENT,
     fkUsuario INT,
-    PRIMARY KEY (fkArtista, fkUsuario),
-    FOREIGN KEY (fkArtista) REFERENCES Artista(idArtista),
+    nomeLineup VARCHAR(45),
     FOREIGN KEY (fkUsuario) REFERENCES Usuario(idUsuario)
 );
+
+INSERT INTO Lineup VALUES
+    (DEFAULT, 1, "LineUp 1"),
+    (DEFAULT, 1, "LineUp 2");
+
+-- Tabela LineupArtista
+CREATE TABLE LineupArtista (
+    fkLineup INT,
+    fkArtista INT,
+    PRIMARY KEY (fkLineup, fkArtista),
+    FOREIGN KEY (fkLineup) REFERENCES Lineup(idLineup),
+    FOREIGN KEY (fkArtista) REFERENCES Artista(idArtista)
+);
+
+INSERT INTO LineupArtista VALUES
+    (1, 1),
+    (2, 1);
 
 -- Tabela Notificacao
 CREATE TABLE Notificacao (
@@ -84,5 +103,3 @@ CREATE TABLE LogExecucao (
     dataHora DATETIME,
     tipoStatus VARCHAR(45)
 );
-
-

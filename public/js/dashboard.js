@@ -98,7 +98,7 @@ async function prepararDadosGraficoPlays(artistaSelecionado) {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Plays do Artista pelo Tempo',
+                        text: 'Número Total de Reproduções por Dia',
                         font: { size: 20 },
                         color: '#ffffff'
                     },

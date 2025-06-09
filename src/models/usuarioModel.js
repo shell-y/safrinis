@@ -20,7 +20,7 @@ function cadastrar(fkempresa, nome, celular, email, senha) {
 
 function verificarUsuarioExiste(email){
     const instrucaoSql = `
-    SELECT * FROM usuario WHERE email = '${email}';
+    SELECT * FROM Usuario WHERE email = '${email}';
     `
     console.log("Executando a instruçaõ SQL: " + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -29,7 +29,7 @@ function verificarUsuarioExiste(email){
 
 function verificarEmpresaExiste(cnpj) {
     const instrucaoSql = `
-        SELECT * FROM empresa WHERE cnpj = '${cnpj}';
+        SELECT * FROM Empresa WHERE cnpj = '${cnpj}';
     `;
     console.log("Executando a instrução SQL: " + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -14,27 +14,22 @@
     <div id="loading"></div>
 
     <header>
-        <a href="#" aria-label="Página inicial Sonora">
-            <img src="../assets/logo_sonora.svg" class="logo" alt="Logo Sonora">
-        </a>
-
-        <nav>
-            <ul>
-                <li class="link-nav sec-atual"><a onclick="limparLineup()" href="cards.html">Home</a>
-                <li><a class="link-nav" href="lineups.html">Line-up</a>
-                <li>
-                    <a href="../index.html">
-                        <button onclick="limparSessao()" type="button">Sair</button>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <a href="../index.html"><img src="../assets/logo_sonora.svg" class="logo"></a>
+    <nav>
+      <ul>
+        <li class="link-nav sec-atual"><a href="../index.html">Home</a>
+        <li><a class="link-nav" href="../dashboard/lineups.html">Line-ups</a>
+        <li><a class="link-nav" href="perfil.html">Perfil</a>
+        <li>
+          <button id="btn-login" onclick="alternarLoginLogout()">Sair</button>
+      </ul>
+    </nav>
+  </header>
 
     <main>
         <section class="artist-header">
             <h1 id="nome">
-                Página do artista
+                Insights de Audiência –
                 <span id="nome-artista"></span>
             </h1>
         </section>
@@ -43,7 +38,7 @@
             <div class="kpi-grid">
                 <div id="kpi-plays" class="kpi" role="region" aria-labelledby="kpi-plays-title">
                     <h3 id="kpi-plays-title" class="kpi-title">
-                        Crescimento de Plays nos últimos
+                        Variação no Número de Plays nos Últimos
                         <span id="periodo-plays"></span>
                     </h3>
                     <span class="kpi-value" id="crescimento-plays">Carregando...</span>
@@ -51,20 +46,20 @@
 
                 <div class="kpi" role="region" aria-labelledby="kpi-listeners-title">
                     <h3 id="kpi-listeners-title" class="kpi-title">
-                        Crescimento de ouvintes nos últimos 7 dias
+                        Variação no Número de Ouvintes Únicos nos Últimos 7 Dias (%)
                     </h3>
                     <span class="kpi-value" id="crescimento-ouvintes">Carregando...</span>
                 </div>
 
                 <div class="kpi" role="region" aria-labelledby="kpi-popularity-title">
                     <h3 id="kpi-popularity-title" class="kpi-title">
-                        Popularidade do Artista no Spotify
+                        Popularidade Atual no Spotify (0% a 100%)
                     </h3>
                     <span class="kpi-value" id="popularidade">Carregando...</span>
                 </div>
 
                 <div class="kpi" role="region" aria-labelledby="kpi-tour-title">
-                    <h3 id="kpi-tour-title" class="kpi-title">ON TOUR</h3>
+                    <h3 id="kpi-tour-title" class="kpi-title">Está em Turnê Neste Momento?</h3>
                     <span class="kpi-value" id="ontour">Carregando...</span>
                 </div>
             </div>
@@ -76,8 +71,8 @@
                     Selecionar período do gráfico
                 </label>
                 <select id="periodo-select" class="period-select" onchange="atualizarGraficoPeriodo()">
-                    <option value="7">Última semana</option>
-                    <option value="30">Último mês</option>
+                    <option value="7">Últimos 7 dias</option>
+                    <option value="30">Últimos 30 dias</option>
                 </select>
                 <button onclick="voltarParaSonar()" id="btn-voltar" class="btn-voltar">Voltar ao Sonar</button>
             </div>
@@ -90,7 +85,7 @@
                 </div>
 
                 <div class="sonar-section" role="region" aria-labelledby="sonar-title">
-                    <h2 id="sonar-title" class="sonar-title">SONAR ARTISTAS RELACIONADOS</h2>
+                    <h2 id="sonar-title" class="sonar-title">Artistas com Perfil de Audiência Semelhante ao de Bruno Mars</h2>
                     <div id="sistema-solar" class="solar-system" aria-label="Visualização de artistas relacionados">
                         <div id="artista-central" class="central-artist" role="button" tabindex="0"></div>
                         <div id="orbitas" class="orbits"></div>

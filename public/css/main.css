@@ -347,7 +347,7 @@ footer aside>div>input:focus {
 }
 /* Fim elementos */
 
-section#modal {
+#modal {
   width: 35rem;
   padding: 2.5rem;
   border-radius: 1.3rem;
@@ -360,7 +360,7 @@ section#modal {
   background-color: rgb(32, 32, 32);
 }
 
-section#modal::before {
+#modal::before {
   content: '';
 
   width: 100vw;
@@ -373,4 +373,10 @@ section#modal::before {
   z-index: -1;
 
   background-color: rgba(0,0,0, 0.6);
+}
+
+#modal a {
+  text-align: center;
+  font-weight: 600;
+  text-decoration: underline;
 }

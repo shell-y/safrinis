@@ -27,7 +27,6 @@ form {
     gap: 2rem;
 }
 
-
 form section {
     display: flex;
     justify-content: space-between;
@@ -97,21 +96,41 @@ main button {
     text-transform: capitalize;
 }
 
-#btn_deletar {
-    margin-top: 3rem;
+main>section {
+    margin-top: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
 }
 
-section#modal h1 {
+#btn_telegram {
+    text-transform: none;
+}
+
+#btn_telegram[disabled] {
+    background-image: linear-gradient(#2E8A4A, #2E7A6B 58%, #2D6B7D 90%);
+}
+
+#btn_telegram img {
+    height: 1.5rem;
+}
+
+#div_acoes_editar {
+    gap: 1.3rem;
+}
+
+#modal h1 {
     margin: 0;
 }
 
-section#modal p {
+#modal p {
     margin: 1.2rem 0;
     font-size: 1.5rem;
     line-height: 2rem;
 }
 
-section#modal div {
+#modal div {
     margin-top: 2rem;
     display: flex;
     justify-content: center;

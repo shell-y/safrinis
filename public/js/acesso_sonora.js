@@ -1,3 +1,8 @@
+document.querySelector("#btn-login").addEventListener("click", e =>{
+    sessionStorage.clear();
+    location = "../index.html"
+});
+
 fetch("/sonora/listar", {
     method: "GET"
 }).then(resposta => {

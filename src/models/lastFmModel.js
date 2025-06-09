@@ -76,7 +76,6 @@ module.exports = {
     getSomaOuvintesPorPeriodo,
     getPlaysPorPeriodo,
     getOnTour,
-    getOuvintesPorPeriodo,
     getOnTour,
     deletarRegistrosArtista
 };

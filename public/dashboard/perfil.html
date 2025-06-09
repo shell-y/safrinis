@@ -16,7 +16,7 @@
         <li><a class="link-nav" href="lineups.html">Line-ups</a>
         <li><a class="link-nav" href="perfil.html">Perfil</a>
         <li>
-          <button id="btn-login" onclick="alternarLoginLogout()">Sair</button>
+          <button id="btn-login">Sair</button>
       </ul>
     </nav>
   </header>
@@ -68,26 +68,21 @@
             <input id="cnpj" maxlength="18" disabled>
           </label>
         </section>
+      </form>
+      
+      <section>
+        <button id="btn_telegram">
+          <span>Ativar notificações com Telegram</span>
+          <img src="../assets/icon/telegram.svg">
+        </button>
+  
+        <button id="btn_deletar">Deletar</button>
 
-        <!-- 
-          <label>
-            <span></span>
-            <input type="checkbox" id="">
-          </label>
-
-          <label>
-            <span></span>
-            <input type="checkbox" id="">
-          </label> 
-        -->
-
-        <div style="display: none;">
+        <div id="div_acoes_editar" style="display: none;">
           <button id="btn_salvar_form">Salvar</button>
           <button id="btn_cancelar_form">Cancelar</button>
         </div>
-      </form>
-
-      <button id="btn_deletar">Deletar</button>
+      </section>
     </main>
     <footer>
       <section>

@@ -19,7 +19,7 @@
         <li><a class="link-nav" href="cards.html">Line-ups</a>
         <li><a class="link-nav" href="perfil.html">Perfil</a>
         <li>
-          <button id="btn-login" onclick="alternarLoginLogout()">Sair</button>
+          <button id="btn-login">Sair</button>
       </ul>
     </nav>
   </header>
@@ -72,6 +72,11 @@
     <script src="../js/sessao.js"></script>
     <script>
         span_nome_usuario.innerText = sessionStorage.NOME_USUARIO
+
+        document.querySelector("#btn-login").addEventListener("click", e =>{
+            sessionStorage.clear();
+            location = "../index.html"
+        });
     </script>
 </body>
 </html>

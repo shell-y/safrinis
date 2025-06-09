@@ -1,6 +1,11 @@
 import * as f from "./formatar_campos.js";
 import * as v from "./validar_campos.js"
 
+document.querySelector("#btn-login").addEventListener("click", e =>{
+    sessionStorage.clear();
+    location = "../index.html"
+});
+
 const inputsPerfil = document.querySelectorAll("form input");
 
 if (sessionStorage.ID_USUARIO == undefined) {
@@ -12,13 +17,13 @@ if (sessionStorage.ID_USUARIO == undefined) {
     }).then(resposta => {
         if (resposta.ok) {
             resposta.json().then(json => {
-                infosCliente = [
+                const infosCliente = [
                     sessionStorage.NOME_USUARIO, json.senha,
                     sessionStorage.EMAIL_USUARIO, json.celular,
                     json.nomeEmpresa, json.cnpjEmpresa
                 ];
         
-                inserirValoresPerfil();
+                inserirValoresPerfil(infosCliente);
             });
             
         } else {
@@ -28,7 +33,7 @@ if (sessionStorage.ID_USUARIO == undefined) {
     });
 }
 
-function inserirValoresPerfil() {
+function inserirValoresPerfil(infosCliente) {
     for (let i = 0; i < infosCliente.length; i++) {
         inputsPerfil[i].value = infosCliente[i];
         inputsPerfil[i].setAttribute("disabled", "");
@@ -41,7 +46,7 @@ function inserirValoresPerfil() {
 document.querySelector("h1 span").addEventListener("click", e => {
     e.target.style.display = "none"
     document.querySelector("#btn_deletar").style.display = "none";
-    document.querySelector("form>div").style.display = "flex"
+    document.querySelector("#div_acoes_editar").style.display = "flex"
 
     for (let i = 0; i <= 3; i++) {
         inputsPerfil[i].removeAttribute("disabled");
@@ -147,3 +152,42 @@ document.querySelector("#btn_deletar").addEventListener("click", e => {
         });
     });
 });
+
+document.querySelector("#btn_telegram").addEventListener("click", e => {
+    const confirmacao = confirm("Deseja se conectar no Telegram e receber insights semanais para seus artistas?\n"
+        + "Seu número de celular (" + inputsPerfil[3].value + ") será utilizado para o conectarmos ao nosso bot e ao novo grupo."
+    )
+
+    if (!confirmacao) return
+
+    alert("Ajustando bot e grupo...")
+    document.querySelector("#btn_telegram span").innerText = "Notificações ativadas"
+    document.querySelector("#btn_telegram img").setAttribute("src", "../assets/icon/check.svg");
+    document.querySelector("#btn_telegram").setAttribute("disabled", "")
+    document.querySelector("#btn_telegram").removeEventListener("click", e);
+
+    const modal = document.createElement("div");
+
+    modal.setAttribute("id", "modal");
+    modal.innerHTML = `
+        <h1>Telegram</h1>
+        <p>
+            <strong>Bot e grupo configurado com sucesso!</strong>
+        </p>
+        <p>
+            Clique no link abaixo para entrar no grupo e acompanhar seus artistas!
+        </p>
+
+        <p><a href="https://t.me/+To0VbcE0Qi84YTgx" target="blank">Grupo do Telegram | Sonora - Notificações</a></p>
+        
+        <div>
+          <button id="btn_modal">Fechar</button>
+        </div>
+    `
+
+    document.querySelector("main").appendChild(modal)
+
+    document.querySelector("#btn_modal").addEventListener("click", e => {
+        modal.remove();
+    });
+})

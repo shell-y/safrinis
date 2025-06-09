@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/cards.css">
     <link rel="stylesheet" href="../css/loading.css">
+    <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div id="loading"></div>
@@ -27,10 +28,6 @@
     <main>
         <h1 id="nome">Bem vindo(a), <span id="span_nome_usuario"></span></h1>
         <section id="section-cards" class="section-cards">
-            <a href="lineups.html">
-                <div class="card">The town</div>
-            </a>
-            <div class="card-adicionar">+</div>
         </section>
     </main>
 
@@ -70,13 +67,6 @@
         </aside>
     </footer>
     <script src="../js/sessao.js"></script>
-    <script>
-        span_nome_usuario.innerText = sessionStorage.NOME_USUARIO
-
-        document.querySelector("#btn-login").addEventListener("click", e =>{
-            sessionStorage.clear();
-            location = "../index.html"
-        });
-    </script>
+    <script src="../js/cards.js"></script>
 </body>
 </html>

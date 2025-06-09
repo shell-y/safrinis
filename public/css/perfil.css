@@ -110,6 +110,7 @@ main>section {
 
 #btn_telegram[disabled] {
     background-image: linear-gradient(#2E8A4A, #2E7A6B 58%, #2D6B7D 90%);
+    cursor: not-allowed;
 }
 
 #btn_telegram img {

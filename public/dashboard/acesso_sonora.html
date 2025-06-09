@@ -6,6 +6,12 @@
     <title>Sonora | Perfil</title>
     <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/acesso_sonora.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- jQuery (obrigatório para Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- JS do Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   </head>
   <body>
     <header>
@@ -26,6 +32,20 @@
     </header>
 
       <main>
+        <section id="modal" style="display: none;">
+          <h1><span></span> artista</h1>
+          <section>
+            <label>
+              <span>Nome do artista</span>
+              <input id="inp_nome_artista">
+            </label>
+          </section>
+          <div>
+            <button onclick="cancelarModal()">Cancelar</button>
+            <button onclick="enviarRequisicao()">Confirmar</button>
+          </div>
+        </section>
+
         <h1>ACESSO SONORA</h1>
         <h2>Acesso exclusivo da equipe Sonora</h2>
         <p>
@@ -36,21 +56,23 @@
         <section>
             <div id="legenda_tabela">
                 <h1>Artista</h1>
-                <button>Adicionar novo</button>
+                <button onclick="mostrarModal('Novo', 0)">Adicionar novo</button>
             </div>
 
-            <table>
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <!-- <td class="menor"><input type="checkbox"></td> -->
                         <td class="menor">#</td>
-                        <td>Nome</td>
+                        <td class="celula-texto">Nome</td>
                         <td>Line-ups</td>
                         <td>Dados LastFM</td>
                         <td>Dados Spotify</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
+                  <tr></tr>
                 </tbody>
             </table>
         </section>
@@ -91,5 +113,5 @@
         </aside>
       </footer>
   </body>
-  <script type="module" src="../js/acesso_sonora.js"></script>
+  <script src="../js/acesso_sonora.js"></script>
 </html>

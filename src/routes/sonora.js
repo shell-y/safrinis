@@ -11,6 +11,10 @@ router.get("/listar/pais", function (req, res) {
     sonoraController.listarPais(req, res);
 });
 
+router.get("/listar/relacionados", function (req, res) {
+    sonoraController.listar
+});
+
 router.post("/criar", function (req, res) {
     sonoraController.criar(req, res);
 });

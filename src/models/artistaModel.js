@@ -29,29 +29,41 @@ function listarPais() {
 }
 
 function listarQtdDados() {
-    const instrucaoSql = `
-        SELECT
-            a.idArtista as id,
-            a.nome,
-            COUNT(DISTINCT r.idArtista) AS qtdRelacionados,
-            COUNT(DISTINCT la.fkArtista) AS qtdLineups,
-            COUNT(DISTINCT s.idSpotify) AS qtdDadosSpotify,
-            COUNT(DISTINCT ls.idPlays) AS qtdDadosLastFm
-        FROM Artista AS a
-        LEFT JOIN Artista AS r 
-            ON r.fkRelacionadoA = a.idArtista
-            AND r.idArtista != r.fkRelacionadoA
-        LEFT JOIN LineupArtista AS la 
-            ON la.fkArtista = a.idArtista
-        LEFT JOIN Spotify AS s 
-            ON s.fkArtista = a.idArtista
-        LEFT JOIN LastFm AS ls 
-            ON ls.fkArtista = a.idArtista
-        GROUP BY a.idArtista;
-    `;
+  const instrucaoSql = `
+      SELECT
+          a.idArtista as id,
+          a.nome,
+          COUNT(la.fkArtista) AS qtdLineups,
+          COUNT(DISTINCT s.idSpotify) AS qtdDadosSpotify,
+          COUNT(DISTINCT ls.idPlays) AS qtdDadosLastFm
+      FROM Artista AS a
+      LEFT JOIN LineupArtista AS la 
+          ON la.fkArtista = a.idArtista
+      LEFT JOIN Spotify AS s 
+          ON s.fkArtista = a.idArtista
+      LEFT JOIN LastFm AS ls 
+          ON ls.fkArtista = a.idArtista
+      GROUP BY a.idArtista;
+  `;
 
-    console.log("Executando a instrução SQL: " + instrucaoSql);
-    return database.executar(instrucaoSql);
+  console.log("Executando a instrução SQL: " + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
+
+function listarNomesRelacionados() {
+  const instrucaoSql = `
+    SELECT
+      r.idArtista as idRelacionado,
+      r.nome as nomeRelacionado,
+      a.idArtista as id,
+      a.nome
+    FROM Artista as a
+    JOIN Artista as r
+      ON r.fkRelacionadoA = a.idArtista;
+  `
+
+  console.log("Executando a instrução SQL: " + instrucaoSql);
+  return database.executar(instrucaoSql);
 }
 
 function editar(infos = {}) {
@@ -73,17 +85,8 @@ function deletar(idArtista = 0) {
     return database.executar(instrucaoSql);
 }
 
-module.exports = {
-    criar,
-    buscarPorNome,
-    listarQtdDados,
-    editar,
-    listarPais,
-    deletar
-};
 //routes > controller > MODEL > database
 
-var database = require("../database/config");
 
 function listarNomesArtistas() {
   var instrucaoSql = `SELECT * FROM Artista;`
@@ -204,8 +207,15 @@ function excluirLineup(idLineup) {
 }
 
 
-
 module.exports = {
+  criar,
+  buscarPorNome,
+  listarQtdDados,
+  listarNomesRelacionados,
+  editar,
+  listarPais,
+  deletar,
+
   listarNomesArtistas,
   buscarDetalhesDoArtista,
   listarRelacionados,

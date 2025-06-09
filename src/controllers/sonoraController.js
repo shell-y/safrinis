@@ -25,6 +25,20 @@ function listarPais(req, res) {
         });
 }
 
+function listarRelacionados(req, res) {
+    artistaModel
+        .listarNomesRelacionados()
+        .then(resultado => {
+            if (resultado.serverStatus == 2) {
+                res.json(resultado);
+            } else res.status(400).send();
+        })
+        .catch(erro => {
+            console.log(erro);
+            res.status(500).send();
+        })
+}
+
 function criar(req, res) {
     console.log("Criando novo artista...")
 
@@ -108,6 +122,7 @@ async function deletar(req, res) {
 module.exports = {
     listar,
     listarPais,
+    listarRelacionados,
     criar,
     editar,
     deletar

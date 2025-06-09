@@ -1,35 +1,33 @@
 @import url(main.css);
+@import url(lineups.css);
 
-main {
-    padding: 0 var(--area-segura-lateral);
+main>h1 {
+    font-size: 2.3rem;
 }
 
-main>section {
-    width: 100%;   
-    margin-top: 5rem;
+main>h2 {
+    font-size: 1.8rem;
 }
 
-main>section>div {
-    width: 100%;
-
+#legenda_tabela {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    margin-bottom: 1rem;
 }
 
-#legenda_tabela h1{
-    font-size: 2.5rem;
+#legenda_tabela h1 {
+    font-size: 2rem;
 }
 
-#legenda_tabela button {
-    height: fit-content;
+table td {
+    text-align: right !important;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+.celula-texto {
+    text-align: left !important;
 }
-
 
 thead {
     border-bottom: .1rem solid white;
@@ -39,18 +37,54 @@ thead {
     font-weight: 600;
 }
 
-thead tr:first-child {
-    width: 6rem;
+.celula-acao {
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: center;
 }
 
-thead td:first-child>input {
-    margin: 0 auto;
+section#modal h1 {
+    margin: 0;
+    font-size: 2rem;
 }
 
-tbody tr:nth-child(odd) {
-    background-color: rgba(51, 51, 51, 0.349);
+section#modal section, section#modal label {
+    display: flex;
+    flex-direction: column;
 }
 
-tbody td {
-    font-size: 1.1rem;
+section#modal section {
+    margin: 1.5rem 0;
+    gap: 2rem;
+}
+
+section#modal label>span {
+    margin-bottom: .5rem;
+    font-size: 1.6rem;
+}
+
+section#modal input, section#modal select {
+    outline: none;
+    padding: 1rem;
+    height: fit-content;
+
+    background-color: rgba(68, 68, 68, 0.26);
+    color: white;
+    text-align: left;
+}
+
+section#modal div {
+    margin-top: 2.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    gap: 1.3rem;
+}
+
+section#modal button {
+    height: fit-content;
+    padding: .7rem;
+
+    font-size: 1.7rem;
 }

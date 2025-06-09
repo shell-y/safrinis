@@ -1,0 +1,138 @@
+@import url(main.css);
+
+main {
+    padding: 4rem var(--area-segura-lateral);
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h1>span {
+    margin-left: .5rem;
+
+    font-size: 1.3rem;
+    font-weight: normal;
+    text-decoration: underline;
+
+    cursor: pointer;
+}
+
+form {
+    width: 50rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+form section {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+form>section>label {
+    width: 100%;
+
+    display: flex;
+    justify-content: stretch;
+    flex-direction: column;
+}
+
+form label span {
+    margin-bottom: .2rem;
+    font-size: 1.35rem;
+}
+
+form input {
+    outline: none;
+    border: 0;
+    
+    padding: .2rem .5rem;
+    border-radius: .5rem;
+
+    font-size: 1.6rem;
+}
+
+#div_senha {
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#div_senha button {
+    padding: 0;
+    background: transparent;
+
+    position: absolute;
+    right: .5rem;
+}
+
+#div_senha button>svg {
+    width: 2rem;
+}
+
+form input[disabled] {
+    border: none;
+    padding: 0;
+
+    color: unset;
+    background-color: transparent;
+}
+
+form>div {
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+}
+
+main button {
+    width: fit-content;
+    padding: .7rem 1.3rem;
+
+    text-transform: capitalize;
+}
+
+main>section {
+    margin-top: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+}
+
+#btn_telegram {
+    text-transform: none;
+}
+
+#btn_telegram[disabled] {
+    background-image: linear-gradient(#2E8A4A, #2E7A6B 58%, #2D6B7D 90%);
+}
+
+#btn_telegram img {
+    height: 1.5rem;
+}
+
+#div_acoes_editar {
+    gap: 1.3rem;
+}
+
+#modal h1 {
+    margin: 0;
+}
+
+#modal p {
+    margin: 1.2rem 0;
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+#modal div {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}

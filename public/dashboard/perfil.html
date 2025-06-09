@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonora | Perfil</title>
+    <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/perfil.css">
+  </head>
+  <body>
+    <header>
+    <a href="../index.html"><img src="../assets/logo_sonora.svg" class="logo"></a>
+    <nav>
+      <ul>
+        <li class="link-nav sec-atual"><a href="../index.html">Home</a>
+        <li><a class="link-nav" href="lineups.html">Line-ups</a>
+        <li><a class="link-nav" href="perfil.html">Perfil</a>
+        <li>
+          <button id="btn-login">Sair</button>
+      </ul>
+    </nav>
+  </header>
+
+    <main>
+      <h1>Meu perfil <span>Editar</span></h1>
+
+      <form>
+        <section>
+          <label>
+            <span>Nome de usuário</span>
+            <input disabled>
+          </label>
+
+          <label>
+            <span>Senha</span>
+
+            <div id="div_senha">
+              <input type="password" disabled>
+              <button>
+                <svg xmlns="http://www.w3.org/2000/svg" id="mdil-eye" viewBox="0 0 24 24">
+                  <path fill="#FFFFFF" d="M11.5,18C15.5,18 18.96,15.78 20.74,12.5C18.96,9.22 15.5,7 11.5,7C7.5,7 4.04,9.22 2.26,12.5C4.04,15.78 7.5,18 11.5,18M11.5,6C16.06,6 20,8.65 21.86,12.5C20,16.35 16.06,19 11.5,19C6.94,19 3,16.35 1.14,12.5C3,8.65 6.94,6 11.5,6M11.5,8C14,8 16,10 16,12.5C16,15 14,17 11.5,17C9,17 7,15 7,12.5C7,10 9,8 11.5,8M11.5,9A3.5,3.5 0 0,0 8,12.5A3.5,3.5 0 0,0 11.5,16A3.5,3.5 0 0,0 15,12.5A3.5,3.5 0 0,0 11.5,9Z" />
+                </svg>
+              </button>
+            </div>
+          </label>
+        </section>
+
+        <section>
+          <label>
+            <span>E-mail</span>
+            <input type="email" disabled>
+          </label>
+
+          <label>
+            <span>Celular</span>
+            <input id="celular" maxlength="15" disabled>
+          </label>
+        </section>
+
+        <section>
+          <label>
+            <span>Nome da empresa</span>
+            <input disabled>
+          </label>
+
+          <label>
+            <span>CNPJ</span>
+            <input id="cnpj" maxlength="18" disabled>
+          </label>
+        </section>
+      </form>
+      
+      <section>
+        <button id="btn_telegram">
+          <span>Ativar notificações com Telegram</span>
+          <img src="../assets/icon/telegram.svg">
+        </button>
+  
+        <button id="btn_deletar">Deletar</button>
+
+        <div id="div_acoes_editar" style="display: none;">
+          <button id="btn_salvar_form">Salvar</button>
+          <button id="btn_cancelar_form">Cancelar</button>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <section>
+        <img src="../assets/logo_sonora.svg" class="logo">
+
+        <address>
+          <strong>Sonora</strong><br>
+          Haddock Lobo, 595 - Cerqueira César<br>
+          São Paulo, SP - Brasil
+        </address>
+
+        <div>
+          <img src="../assets/icon/redes/instagram.svg" class="icone-rede">
+          <img src="../assets/icon/redes/facebook.svg" class="icone-rede">
+          <img src="../assets/icon/redes/whatsapp.svg" class="icone-rede">
+        </div>
+    
+        <small>© 2025 Sonora. Todos o direitos reservados.</small>
+      </section>
+
+      <aside>
+        <h4>Newsletters</h4>
+        <p>Fique por dentro das últimas novidades da música</p>
+
+        <div>
+          <input placeholder="seu@email.com">
+          
+          <button>
+            Inscreva-se
+          </button>
+        </div>
+
+        <small>Ao se inscrever, você concorda em receber nossos e-mails e está de acordo com os nossos Termos e Condições.</small>
+      </aside>
+    </footer>
+  </body>
+  <script type="module" src="../js/perfil.js"></script>
+</html>

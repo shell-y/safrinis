@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sonora</title>
+    <title>Sonora - Dashboard do Artista</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/loading.css">
@@ -12,68 +12,109 @@
 
 <body>
     <div id="loading"></div>
-    <header>
-        <a href="#"><img src="../assets/logo_sonora.svg" class="logo"></a>
 
-        <nav>
-            <ul>
-                <li class="link-nav sec-atual"><a onclick="limparLineup()" href="cards.html">Home</a>
-                <li><a class="link-nav" href="lineup.html">Line-up</a>
-                <li>
-                    <a href="../index.html">
-                        <button onclick="limparSessao()">Sair</button>
-                    </a>
-            </ul>
-        </nav>
-    </header>
+    <header>
+    <a href="../index.html"><img src="../assets/logo_sonora.svg" class="logo"></a>
+    <nav>
+      <ul>
+        <li class="link-nav sec-atual"><a href="../index.html">Home</a>
+        <li><a class="link-nav" href="../dashboard/lineups.html">Line-ups</a>
+        <li><a class="link-nav" href="perfil.html">Perfil</a>
+        <li>
+          <button id="btn-login" onclick="alternarLoginLogout()">Sair</button>
+      </ul>
+    </nav>
+  </header>
 
     <main>
-        <h1 id="nome">Dashboard/<span id="nome-lineup"></span></h1>
-        <section class="section-kpi">
-            <div id="kpi">Artista com maior crescimento em Popularidade<br><span id="iap-value">Não encontrado</span>
-            </div>
-            <div id="kpi">Artista com menor crescimento em Popularidade<br><span id="risco-value">Não encontrado</span>
+        <section class="artist-header">
+            <h1 id="nome">
+                Insights de Audiência –
+                <span id="nome-artista"></span>
+            </h1>
+        </section>
+
+        <section class="kpi-section" aria-label="Indicadores de Performance">
+            <div class="kpi-grid">
+                <div id="kpi-plays" class="kpi" role="region" aria-labelledby="kpi-plays-title">
+                    <h3 id="kpi-plays-title" class="kpi-title">
+                        Variação no Número de Plays nos Últimos
+                        <span id="periodo-plays"></span>
+                    </h3>
+                    <span class="kpi-value" id="crescimento-plays">Carregando...</span>
+                </div>
+
+                <div class="kpi" role="region" aria-labelledby="kpi-listeners-title">
+                    <h3 id="kpi-listeners-title" class="kpi-title">
+                        Variação no Número de Ouvintes Únicos nos Últimos 7 Dias (%)
+                    </h3>
+                    <span class="kpi-value" id="crescimento-ouvintes">Carregando...</span>
+                </div>
+
+                <div class="kpi" role="region" aria-labelledby="kpi-popularity-title">
+                    <h3 id="kpi-popularity-title" class="kpi-title">
+                        Popularidade Atual no Spotify (0% a 100%)
+                    </h3>
+                    <span class="kpi-value" id="popularidade">Carregando...</span>
+                </div>
+
+                <div class="kpi" role="region" aria-labelledby="kpi-tour-title">
+                    <h3 id="kpi-tour-title" class="kpi-title">Está em Turnê Neste Momento?</h3>
+                    <span class="kpi-value" id="ontour">Carregando...</span>
+                </div>
             </div>
         </section>
-        <div class="grafico-controles">
-            <select id="artista-select" class="artista-select" onchange="atualizarGraficoPorSelect()">
-                <option value="todos">Todos os Artistas</option>
-            </select>
-        </div>
-        <section class="grafico-e-tabela">
-            <div class="grafico-container">
-                <canvas id="grafico"></canvas>
+
+        <section class="dashboard-content">
+            <div class="dashboard-controls">
+                <label for="periodo-select" class="visually-hidden">
+                    Selecionar período do gráfico
+                </label>
+                <select id="periodo-select" class="period-select" onchange="atualizarGraficoPeriodo()">
+                    <option value="7">Últimos 7 dias</option>
+                    <option value="30">Últimos 30 dias</option>
+                </select>
+                <button onclick="voltarParaSonar()" id="btn-voltar" class="btn-voltar">Voltar ao Sonar</button>
             </div>
-            <div class="tabela-container">
-                <table id="tabela-artistas">
-                    <thead>
-                        <tr>
-                            <th>Artista</th>
-                            <th>Popularidade</th>
-                            <th>Seguidores</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            <div id="modal-artistas" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <div id="sistema-solar">
-                        <div id="artista-central"></div>
-                        <div id="orbitas">
-                        </div>
+
+            <div class="charts-container">
+                <div class="chart-section" role="region" aria-labelledby="chart-title">
+                    <h2 id="chart-title" class="visually-hidden">Gráfico de Plays do Artista</h2>
+                    <canvas id="grafico-plays"
+                        aria-label="Gráfico mostrando evolução de plays ao longo do tempo"></canvas>
+                </div>
+
+                <div class="sonar-section" role="region" aria-labelledby="sonar-title">
+                    <h2 id="sonar-title" class="sonar-title">Artistas com Perfil de Audiência Semelhante ao de Bruno Mars</h2>
+                    <div id="sistema-solar" class="solar-system" aria-label="Visualização de artistas relacionados">
+                        <div id="artista-central" class="central-artist" role="button" tabindex="0"></div>
+                        <div id="orbitas" class="orbits"></div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <section id="secao-comparacao" class="charts-container comparacao-oculta">
+            <!-- Gráfico de ranking dos artistas relacionados -->
+            <div class="chart-section" role="region" aria-labelledby="ranking-title">
+                <h2 id="ranking-title" class="visually-hidden">Ranking de Artistas Relacionados</h2>
+                <canvas id="grafico-ranking"
+                    aria-label="Ranking dos artistas relacionados por número de plays"></canvas>
+            </div>
+
+            <!-- Gráfico comparativo entre dois artistas -->
+            <div class="chart-section" role="region" aria-labelledby="comparativo-title">
+                <h2 id="comparativo-title" class="visually-hidden">Comparativo entre dois artistas</h2>
+                <canvas id="grafico-comparativo"
+                    aria-label="Comparação entre dois artistas em plays, seguidores e popularidade"></canvas>
+            </div>
+        </section>
+
     </main>
 
     <footer>
-        <section>
-            <img src="../assets/logo_sonora.svg" class="logo">
+        <section class="footer-main">
+            <img src="../assets/logo_sonora.svg" class="logo" alt="Logo Sonora">
 
             <address>
                 <strong>Sonora</strong><br>
@@ -81,447 +122,43 @@
                 São Paulo, SP - Brasil
             </address>
 
-            <div>
-                <img src="../assets/icon/redes/instagram.svg" class="icone-rede">
-                <img src="../assets/icon/redes/facebook.svg" class="icone-rede">
-                <img src="../assets/icon/redes/whatsapp.svg" class="icone-rede">
+            <div class="social-links" role="list" aria-label="Redes sociais">
+                <a href="#" aria-label="Instagram Sonora" role="listitem">
+                    <img src="../assets/icon/redes/instagram.svg" class="social-icon" alt="">
+                </a>
+                <a href="#" aria-label="Facebook Sonora" role="listitem">
+                    <img src="../assets/icon/redes/facebook.svg" class="social-icon" alt="">
+                </a>
+                <a href="#" aria-label="WhatsApp Sonora" role="listitem">
+                    <img src="../assets/icon/redes/whatsapp.svg" class="social-icon" alt="">
+                </a>
             </div>
 
-            <small>© 2025 Sonora. Todos o direitos reservados.</small>
+            <small>© 2025 Sonora. Todos os direitos reservados.</small>
         </section>
 
-        <aside>
-            <h4>Newsletters</h4>
+        <aside class="newsletter-section">
+            <h3>Newsletters</h3>
             <p>Fique por dentro das últimas novidades da música</p>
 
-            <div>
-                <input placeholder="seu@email.com">
+            <form class="newsletter-form">
+                <label for="email-input" class="visually-hidden">Seu endereço de email</label>
+                <input id="email-input" type="email" placeholder="seu@email.com" required
+                    aria-describedby="newsletter-terms">
+                <button type="submit">Inscreva-se</button>
+            </form>
 
-                <button>
-                    Inscreva-se
-                </button>
-            </div>
-
-            <small>Ao se inscrever, você concorda em receber nossos e-mails e está de acordo com os nossos Termos e
-                Condições.</small>
+            <small id="newsletter-terms">
+                Ao se inscrever, você concorda em receber nossos e-mails e está de acordo com os nossos
+                Termos e Condições.
+            </small>
         </aside>
     </footer>
-    <!-- <script src="../js/sessao.js"></script> -->
+
+    <!-- Scripts -->
+    <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        let artistasSelecionados = [];
-        let dadosGrafico = {};
-        let grafico;
-
-        // Função para formatar números de seguidores (ex: 183499 → "183.499")
-        function formatarSeguidores(seguidores) {
-            return seguidores.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-
-        // Função para obter dados históricos de um artista
-        async function obterDadosHistoricos(artistaId) {
-            try {
-                const response = await fetch('artists_data.json');
-                const data = await response.json();
-
-                // Filtrar todas as entradas deste artista (por ID) ordenadas por data
-                const historico = data.filter(item => item.ID === artistaId)
-                    .sort((a, b) => new Date(a["Data da Requisição"].split('/').reverse().join('-')) -
-                        new Date(b["Data da Requisição"].split('/').reverse().join('-')));
-
-                return historico;
-            } catch (error) {
-                console.error('Erro ao obter dados históricos:', error);
-                return [];
-            }
-        }
-
-        // Função para carregar artistas e tabela
-        async function carregarArtistasETabela() {
-            try {
-                const response = await fetch('artists_data.json');
-                const data = await response.json();
-
-                // Filtra artistas principais (sem artista relacionado) e da data mais recente
-                const dataMaisRecente = "15/04/2025";
-                const artistasFiltrados = data.filter(artista =>
-                    artista["ID Artista Relacionado"] === "" &&
-                    artista["Data da Requisição"] === dataMaisRecente &&
-                    artista["Popularidade"] > 10
-                );
-
-                // Selecionar 10 artistas aleatórios únicos
-                artistasSelecionados = [];
-                const nomesUtilizados = new Set();
-
-                while (artistasSelecionados.length < 5 && artistasFiltrados.length > 0) {
-                    const randomIndex = Math.floor(Math.random() * artistasFiltrados.length);
-                    const artista = artistasFiltrados[randomIndex];
-
-                    if (!nomesUtilizados.has(artista.Nome)) {
-                        nomesUtilizados.add(artista.Nome);
-                        artistasSelecionados.push(artista);
-                        artistasFiltrados.splice(randomIndex, 1);
-                    }
-                }
-
-                artistasSelecionados.sort((a, b) => b.Popularidade - a.Popularidade);
-
-                const tabela = document.getElementById('tabela-artistas').getElementsByTagName('tbody')[0];
-                tabela.innerHTML = '';
-
-                const selectArtista = document.getElementById('artista-select');
-                selectArtista.innerHTML = '<option value="todos">Todos os Artistas</option>';
-
-                // Obter dados históricos para cada artista e preparar dados do gráfico
-                dadosGrafico = {
-                    labels: [], // Será preenchido com as datas
-                    datasets: [] // Será preenchido com os dados de cada artista
-                };
-
-                const todasDatas = new Set();
-
-                for (const artista of artistasSelecionados) {
-                    const historico = await obterDadosHistoricos(artista.ID);
-                    historico.forEach(item => {
-                        todasDatas.add(item["Data da Requisição"]);
-                    });
-                }
-
-                // Ordenar as datas
-                dadosGrafico.labels = Array.from(todasDatas).sort((a, b) => {
-                    return new Date(a.split('/').reverse().join('-')) - new Date(b.split('/').reverse().join('-'));
-                });
-
-                // Agora para cada artista, criar um dataset
-                for (const artista of artistasSelecionados) {
-                    const historico = await obterDadosHistoricos(artista.ID);
-
-                    // Criar array de popularidade para todas as datas
-                    const popularidades = dadosGrafico.labels.map(data => {
-                        const registro = historico.find(item => item["Data da Requisição"] === data);
-                        return registro ? registro.Popularidade : null;
-                    });
-
-                    // Gerar cor aleatória para o artista no gráfico
-                    const cor = `hsl(${Math.random() * 360}, 70%, 50%)`;
-
-                    // Adicionar ao gráfico
-                    dadosGrafico.datasets.push({
-                        label: artista.Nome,
-                        data: popularidades,
-                        borderColor: cor,
-                        backgroundColor: cor,
-                        tension: 0.3,
-                        fill: false,
-                        hidden: artistasSelecionados.indexOf(artista) < 0
-                    });
-
-                    // Adicionar linha na tabela
-                    const row = tabela.insertRow();
-                    const cellNome = row.insertCell(0);
-                    cellNome.innerHTML = `<strong>${artistasSelecionados.indexOf(artista) + 1}.</strong> ${artista.Nome}`;
-
-                    const cellPopularidade = row.insertCell(1);
-                    cellPopularidade.textContent = artista.Popularidade;
-
-                    const cellSeguidores = row.insertCell(2);
-                    cellSeguidores.textContent = formatarSeguidores(artista.Seguidores);
-
-                    const cellAcoes = row.insertCell(3);
-                    cellAcoes.innerHTML = `<button class="buttonTabela" onclick="mostrarArtistaNoGrafico('${artista.Nome}')">Gráfico</button>
-                                           <button class="buttonTabela" onclick="mostrarArtistaRelacionado('${artista.Nome}')">Artistas Relacionados</button>`;
-
-                    row.classList.add('artista-row');
-
-                    // Adicionar opção no select
-                    const option = document.createElement('option');
-                    option.value = artista.Nome;
-                    option.textContent = artista.Nome;
-                    selectArtista.appendChild(option);
-                }
-
-                // Adicionar opção de dados mockados
-                const optionMock = document.createElement('option');
-                optionMock.value = 'mock';
-                optionMock.textContent = 'Dados Mockados';
-                selectArtista.appendChild(optionMock);
-
-
-                criarGrafico();
-                atualizarKPIs();
-
-            } catch (error) {
-                console.error('Erro ao carregar os dados:', error);
-            }
-        }
-
-        function criarGrafico() {
-            const ctx = document.getElementById('grafico').getContext('2d');
-
-            if (grafico) {
-                grafico.destroy();
-            }
-
-            grafico = new Chart(ctx, {
-                type: 'line',
-                data: dadosGrafico,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Evolução da Popularidade dos Artistas',
-                            font: {
-                                size: 16,
-                            }
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        },
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                boxWidth: 12,
-                                padding: 20
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            title: {
-                                display: true,
-                                text: 'Popularidade'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Data'
-                            }
-                        }
-                    },
-                    interaction: {
-                        mode: 'nearest',
-                        axis: 'x',
-                        intersect: false
-                    }
-                }
-            });
-        }
-
-        // Função para mostrar apenas um artista no gráfico
-        function mostrarArtistaNoGrafico(nomeArtista) {
-            document.getElementById('artista-select').value = nomeArtista;
-
-            dadosGrafico.datasets.forEach(dataset => {
-                dataset.hidden = dataset.label !== nomeArtista;
-            });
-
-            grafico.update();
-        }
-
-        function gerarDadosMockados() {
-            const nomesFicticios = ["Artista A", "Artista B", "Artista C", "Artista D", "Artista E"];
-            const cores = ["#e6194b", "#3cb44b", "#ffe119", "#4363d8", "#f58231"];
-
-            const meses = [
-                "01/2025", "02/2025", "03/2025", "04/2025", "05/2025", "06/2025",
-                "07/2025", "08/2025", "09/2025", "10/2025", "11/2025", "12/2025"
-            ];
-
-            dadosGrafico = {
-                labels: meses,
-                datasets: nomesFicticios.map((nome, i) => {
-                    let valorBase = Math.floor(Math.random() * 60) + 20; // popularidade base entre 20 e 80
-                    const variacao = () => Math.floor(Math.random() * 7 - 3); // variação -3 a +3
-                    let dados = meses.map((_, index) => {
-                        valorBase += variacao();
-                        if (valorBase < 0) valorBase = 0;
-                        if (valorBase > 100) valorBase = 100;
-                        return valorBase;
-                    });
-
-                    return {
-                        label: nome,
-                        data: dados,
-                        borderColor: cores[i % cores.length],
-                        backgroundColor: cores[i % cores.length],
-                        tension: 0.3,
-                        fill: false,
-                        hidden: false
-                    };
-                })
-            };
-        }
-
-        // Função para atualizar o gráfico quando o select muda
-        function atualizarGraficoPorSelect() {
-            const artistaSelecionado = document.getElementById('artista-select').value;
-
-            if (artistaSelecionado === 'todos') {
-                dadosGrafico.datasets.forEach(dataset => dataset.hidden = false);
-                grafico.update();
-            } else if (artistaSelecionado === 'mock') {
-                gerarDadosMockados();
-                criarGrafico();
-                atualizarKPIs();
-            } else {
-                mostrarArtistaNoGrafico(artistaSelecionado);
-                grafico.update();
-            }
-        }
-
-
-        // Função para atualizar os KPIs
-        function atualizarKPIs() {
-            if (artistasSelecionados.length === 0) return;
-
-            let maiorCrescimento = { nome: "", crescimento: 0 };
-            let menorCrescimento = { nome: "", crescimento: 100 };
-
-            for (const artista of artistasSelecionados) {
-                const historico = dadosGrafico.datasets.find(d => d.label === artista.Nome).data;
-                const primeiroValor = historico.find(val => val !== null);
-                const ultimoValor = historico[historico.length - 1];
-
-                if (primeiroValor !== undefined && ultimoValor !== null) {
-                    const crescimento = ultimoValor - primeiroValor;
-
-                    if (crescimento > maiorCrescimento.crescimento) {
-                        maiorCrescimento = { nome: artista.Nome, crescimento };
-                    }
-
-                    if (crescimento < menorCrescimento.crescimento) {
-                        menorCrescimento = { nome: artista.Nome, crescimento };
-                    }
-                }
-            }
-
-            document.getElementById('iap-value').textContent = maiorCrescimento.nome ?
-                `${maiorCrescimento.nome} (+${maiorCrescimento.crescimento})` : "Não encontrado";
-
-            document.getElementById('risco-value').textContent = menorCrescimento.nome ?
-                `${menorCrescimento.nome} (${menorCrescimento.crescimento >= 0 ? '+' : ''}${menorCrescimento.crescimento})` : "Não encontrado";
-        }
-
-        function identificadorDash() {
-            let elementoNome = document.getElementById('nome');
-            if (elementoNome && sessionStorage.NOME_USUARIO) {
-                elementoNome.innerText += `The Town`;
-            }
-        }
-
-        let modalArtistas = null;
-
-        async function mostrarArtistaRelacionado(nomeArtista) {
-            const artistaPrincipal = artistasSelecionados.find(a => a.Nome === nomeArtista);
-            if (!artistaPrincipal) return;
-
-            const response = await fetch('artists_data.json');
-            const todosArtistas = await response.json();
-
-            const relacionados = todosArtistas.filter(a => a["ID Artista Relacionado"] === artistaPrincipal.ID)
-                .sort((a, b) => b.Popularidade - a.Popularidade);
-
-            if (!modalArtistas) {
-                modalArtistas = document.getElementById('modal-artistas');
-                document.querySelector('.close').addEventListener('click', () => {
-                    modalArtistas.style.display = 'none';
-                });
-            }
-
-            document.getElementById('artista-central').textContent = artistaPrincipal.Nome;
-
-            const orbitasContainer = document.getElementById('orbitas');
-            orbitasContainer.innerHTML = '';
-
-            const numOrbitas = Math.min(5, Math.ceil(relacionados.length / 5));
-            const planetasPorOrbita = Math.ceil(relacionados.length / numOrbitas);
-
-            for (let i = 0; i < numOrbitas; i++) {
-                const orbita = document.createElement('div');
-                orbita.className = 'orbita';
-
-                const tamanho = 210 + (i * 120);
-                orbita.style.width = `${tamanho}px`;
-                orbita.style.height = `${tamanho}px`;
-                orbita.style.marginLeft = `-${tamanho / 2}px`;
-                orbita.style.marginTop = `-${tamanho / 2}px`;
-
-
-                orbitasContainer.appendChild(orbita);
-
-                const nomesUsados = new Set();
-                const artistasNaOrbita = relacionados.slice(i * planetasPorOrbita, (i + 1) * planetasPorOrbita)
-                    .filter(artista => {
-                        if (nomesUsados.has(artista.Nome)) return false;
-                        nomesUsados.add(artista.Nome);
-                        return true;
-                    });
-
-                const angulos = gerarAngulosEspacados(artistasNaOrbita.length);
-
-                artistasNaOrbita.forEach((artista, j) => {
-                    const planeta = document.createElement('div');
-                    planeta.className = 'planeta';
-                    planeta.textContent = artista.Nome;
-
-                    const angulo = angulos[j];
-                    const rad = angulo * Math.PI / 180;
-                    const x = Math.cos(angulo * Math.PI / 180) * (tamanho / 2);
-                    const y = Math.sin(angulo * Math.PI / 180) * (tamanho / 2);
-
-                    planeta.style.left = `calc(50% + ${x}px - 30px)`;
-                    planeta.style.top = `calc(50% + ${y}px - 30px)`;
-
-                    // Adicionar tooltip com informações
-                    planeta.title = `${artista.Nome}\nPopularidade: ${artista.Popularidade}\nSeguidores: ${formatarSeguidores(artista.Seguidores)}`;
-
-                    orbitasContainer.appendChild(planeta)
-                });
-            }
-
-            // Mostrar o modal
-            modalArtistas.style.display = 'block';
-        }
-
-        function gerarAngulosEspacados(qtd, minDistanciaGraus = 30) {
-            const angulos = [];
-
-            while (angulos.length < qtd && minDistanciaGraus > 0) {
-                const novo = Math.floor(Math.random() * 360);
-                const distanciaOk = angulos.every(a => Math.abs(novo - a) >= minDistanciaGraus && Math.abs(novo - a) <= 360 - minDistanciaGraus);
-
-                if (distanciaOk) {
-                    angulos.push(novo);
-                }
-            }
-
-            return angulos;
-        }
-
-
-        // Fechar o modal ao clicar fora do conteúdo
-        window.addEventListener('click', (event) => {
-            if (modalArtistas && event.target === modalArtistas) {
-                modalArtistas.style.display = 'none';
-            }
-        });
-
-        document.getElementById('artista-select').addEventListener('change', atualizarGraficoPorSelect);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            identificadorDash();
-            carregarArtistasETabela();
-        });
-
-    </script>
-
+    <script src="../js/dashboard.js"></script>
 </body>
 
 </html>

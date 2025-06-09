@@ -27,86 +27,11 @@
                 <input type="email" id="email" placeholder="E-mail">
                 <input type="password" id="senha" placeholder="Senha">
             </div>
-            <button onclick="submit()">CONECTAR</button>
+            <button type="submit">CONECTAR</button>
         </form>
 
         <a href="cadastro.html">Não tem conta? Cadastre-se</a>
     </main>
 </body>
-
+<script type="module" src="./js/login.js"></script>
 </html>
-
-<script>
-    function submit(){
-        window.location = './dashboard/cards.html'
-    }
-</script>
-
-<!-- <script src="js/sessao.js"></script> -->
-
-<!-- <script>
-    function entrar() {
-        let email = document.getElementById("email").value
-        let senha = document.getElementById("senha").value
-
-        if (email == "" || senha == "") {
-            alert("Campos em branco")
-            return false
-        }
-
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: email,
-                senhaServer: senha
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
-            if (resposta.ok) {
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.USUARIO = json.usuario;
-                    sessionStorage.EMPRESA = json.empresa;
-                    sessionStorage.LINEUPS = JSON.stringify(json.lineup)
-
-
-                    setTimeout(function () {
-                        
-                        aguardar();
-                        window.location = "./dashboard/cards.html";
-                    }, 1000);
-
-                });
-
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizarAguardar(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-
-
-    }
-
-    document.querySelector("form").addEventListener("submit", function (e) {
-        e.preventDefault()
-        entrar()
-    })
-</script> -->

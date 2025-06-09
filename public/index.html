@@ -1,4 +1,3 @@
-</html>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -10,18 +9,14 @@
 </head>
 <body>
   <header>
-    <a href="#"><img src="./assets/logo_sonora.svg" class="logo"></a>
-
+    <a href="../index.html"><img src="../assets/logo_sonora.svg" class="logo"></a>
     <nav>
       <ul>
-        <li class="link-nav sec-atual"><a href="#">Home</a>
-        <li><a class="link-nav" href="login.html">Line-up</a>
-        <li><a class="link-nav" href="dashboard/cards.html">Dashboard</a>
-        <!-- <li><a class="link-nav" href="">Sobre</a> -->
+        <li class="link-nav sec-atual"><a href="../index.html">Home</a>
+        <li><a class="link-nav" href="dashboard/cards.html">Line-ups</a>
+        <li><a class="link-nav" href="dashboard/perfil.html">Perfil</a>
         <li>
-          <a href="login.html">
-            <button>Entrar</button>
-          </a>
+          <button id="btn-login" onclick="acaoPerfil(this)">Sair</button>
       </ul>
     </nav>
   </header>
@@ -156,7 +151,7 @@
       </div>
     </section>
   </main>
-
+    
   <footer>
     <section>
       <img src="./assets/logo_sonora.svg" class="logo">
@@ -193,4 +188,5 @@
   </footer>
 </body>
 <script src="./js/botao_degrade.js"></script>
+<script src="./js/index.js"></script>
 </html>

@@ -12,25 +12,22 @@
 <body>
     <div id="loading"></div>
     <header>
-        <a href="#"><img src="../assets/logo_sonora.svg" class="logo"></a>
-
-        <nav>
-            <ul>
-                <li class="link-nav sec-atual"><a href="../index.html">Home</a>
-                <!-- <li><a class="link-nav" href="#">Line-up</a>
-                <li><a class="link-nav" href="dashboard.html">Dashboard</a> -->
-                <li>
-                    <a href="../index.html">
-                        <button onclick="limparSessao()">Sair</button>
-                    </a>
-            </ul>
-        </nav>
-    </header>
+    <a href="../index.html"><img src="../assets/logo_sonora.svg" class="logo"></a>
+    <nav>
+      <ul>
+        <li class="link-nav sec-atual"><a href="../index.html">Home</a>
+        <li><a class="link-nav" href="cards.html">Line-ups</a>
+        <li><a class="link-nav" href="perfil.html">Perfil</a>
+        <li>
+          <button id="btn-login">Sair</button>
+      </ul>
+    </nav>
+  </header>
 
     <main>
-        <h1 id="nome">Bem vindo</h1>
+        <h1 id="nome">Bem vindo(a), <span id="span_nome_usuario"></span></h1>
         <section id="section-cards" class="section-cards">
-            <a href="dashboard.html">
+            <a href="lineups.html">
                 <div class="card">The town</div>
             </a>
             <div class="card-adicionar">+</div>
@@ -72,73 +69,14 @@
                 Condições.</small>
         </aside>
     </footer>
-    <!-- <script src="../js/sessao.js"></script> -->
-    <!-- <script>
-        // Coloque as funções no escopo global
-        window.carregarInfoUsuario = function() {
-            let elementoNome = document.getElementById('nome');
-            if (elementoNome && sessionStorage.NOME_USUARIO) {
-                elementoNome.innerText += `, ${sessionStorage.NOME_USUARIO}. Acompanhe suas Line Up's`;
-            }
-        
-            // Verifica se LINEUPS existe
-            if (!sessionStorage.LINEUPS) {
-                console.error('Nenhuma lineup encontrada no sessionStorage');
-                return;
-            }
-            
-            try {
-                const lineupsData = JSON.parse(sessionStorage.LINEUPS);
-                const lineups = {};
-                
-                lineupsData.forEach(item => {
-                    if (!lineups[item.nomeLineup]) {
-                        lineups[item.nomeLineup] = {
-                            nome: item.nomeLineup,
-                            artistas: []
-                        };
-                    }
-                    lineups[item.nomeLineup].artistas.push(item);
-                });
-                
-                const sectionCards = document.getElementById('section-cards');
-                if (!sectionCards) return;
-                
-                sectionCards.innerHTML = ''; 
-                
-                for (const lineupName in lineups) {
-                    const lineup = lineups[lineupName];
-                    // Corrigido: usando escape adequado para strings JSON
-                    const lineupJson = JSON.stringify(lineup.nome).replace(/"/g, '&quot;');
-                    
-                    sectionCards.innerHTML += `
-                    <div onclick="entrarNaDash(${lineupJson})" class="card">${lineup.nome}</div>
-                    `;
-                }
-    
-                sectionCards.innerHTML += `
-                    <div class="card-adicionar">+</div>
-                `;
-            } catch (e) {
-                console.error('Erro ao processar lineups:', e);
-            }
-        }
-    
-        // Função global para acessar a dashboard
-        window.entrarNaDash = function(lineup) {
-            try {
-                // Remove aspas extras se existirem (devido ao JSON.stringify)
-                lineup = lineup.replace(/^"|"$/g, '');
-                sessionStorage.LINEUPSELECIONADA = lineup;
-                window.location = 'dashboard.html';
-            } catch (e) {
-                console.error('Erro ao acessar dashboard:', e);
-            }
-        }
-    
-        validarSessao();
-        carregarInfoUsuario();
-    </script> -->
-</body>
+    <script src="../js/sessao.js"></script>
+    <script>
+        span_nome_usuario.innerText = sessionStorage.NOME_USUARIO
 
+        document.querySelector("#btn-login").addEventListener("click", e =>{
+            sessionStorage.clear();
+            location = "../index.html"
+        });
+    </script>
+</body>
 </html>

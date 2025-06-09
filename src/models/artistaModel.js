@@ -100,7 +100,16 @@ function buscarPorNome(nome) {
 
 function buscarRelacionados(artistaId) {
     const instrucaoSql = `
-        SELECT * FROM Artista WHERE fkRelacionadoA = ${artistaId};
+        SELECT DISTINCT 
+          relacionados.idArtista, 
+          relacionados.nome, 
+          relacionados.fkRelacionadoA
+        FROM Artista selecionado
+        JOIN Artista relacionados ON selecionado.fkRelacionadoA = relacionados.fkRelacionadoA
+        WHERE selecionado.idArtista IN (${artistaId})
+        AND relacionados.idArtista NOT IN (${artistaId})
+        ORDER BY RAND()
+        LIMIT 10;
         `
 
     console.log("Executando a instrução SQL: " + instrucaoSql);
@@ -202,17 +211,25 @@ function listarLineups(idUsuario) {
 function buscarLineupPorId(idLineup) {
     const sql = `
     SELECT 
-      a.idArtista,
-      a.nome,
-      s.popularidade,
-      l.ouvintes,
-      l.plays,
-      l.ontour,
-      lu.nomeLineup
+        a.idArtista,
+        a.nome,
+        s.popularidade,
+        lf.ouvintes,
+        lf.plays,
+        lf.ontour,
+        lu.nomeLineup
     FROM LineupArtista la
     JOIN Artista a ON la.fkArtista = a.idArtista
     LEFT JOIN Spotify s ON s.fkArtista = a.idArtista
-    LEFT JOIN LastFm l ON l.fkArtista = a.idArtista
+    LEFT JOIN (
+        SELECT l1.*
+        FROM LastFm l1
+        INNER JOIN (
+            SELECT fkArtista, MAX(dataColeta) AS ultimaData
+            FROM LastFm
+            GROUP BY fkArtista
+        ) l2 ON l1.fkArtista = l2.fkArtista AND l1.dataColeta = l2.ultimaData
+    ) lf ON lf.fkArtista = a.idArtista
     JOIN Lineup lu ON lu.idLineup = la.fkLineup
     WHERE la.fkLineup = ${idLineup};
   `;

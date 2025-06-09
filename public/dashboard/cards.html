@@ -9,33 +9,32 @@
     <link rel="stylesheet" href="../css/cards.css">
     <link rel="stylesheet" href="../css/loading.css">
 </head>
+
 <body>
     <div id="loading"></div>
     <header>
-    <a href="../index.html"><img src="../assets/logo_sonora.svg" class="logo"></a>
-    <nav>
-      <ul>
-        <li class="link-nav sec-atual"><a href="../index.html">Home</a>
-        <li><a class="link-nav" href="cards.html">Line-ups</a>
-        <li><a class="link-nav" href="perfil.html">Perfil</a>
-        <li>
-          <button id="btn-login">Sair</button>
-      </ul>
-    </nav>
-  </header>
+        <a href="../index.html"><img src="../assets/logo_sonora.svg" class="logo"></a>
+        <nav>
+            <ul>
+                <li class="link-nav sec-atual"><a href="../index.html">Home</a>
+                <li><a class="link-nav" href="cards.html">Line-ups</a>
+                <li><a class="link-nav" href="perfil.html">Perfil</a>
+                <li>
+                    <button id="btn-login">Sair</button>
+            </ul>
+        </nav>
+    </header>
 
     <main>
         <h1 id="nome">Bem vindo(a), <span id="span_nome_usuario"></span></h1>
         <section id="section-cards" class="section-cards">
-            <a href="lineups.html">
-                <div class="card">The town</div>
-            </a>
-            <div class="card-adicionar">+</div>
+            <div class="card-adicionar" onclick="location.href='lineups.html'">+</div>
         </section>
+
     </main>
 
     <footer>
-        <section>   
+        <section>
             <img src="../assets/logo_sonora.svg" class="logo">
 
             <address>
@@ -71,12 +70,57 @@
     </footer>
     <script src="../js/sessao.js"></script>
     <script>
-        span_nome_usuario.innerText = sessionStorage.NOME_USUARIO
+        span_nome_usuario.innerText = sessionStorage.NOME_USUARIO;
 
-        document.querySelector("#btn-login").addEventListener("click", e =>{
+        document.querySelector("#btn-login").addEventListener("click", e => {
             sessionStorage.clear();
-            location = "../index.html"
+            location = "../index.html";
         });
+
+        async function carregarLineups() {
+            const idUsuario = sessionStorage.ID_USUARIO;
+            if (!idUsuario) {
+                console.error("ID de usuário não encontrado na sessionStorage");
+                return;
+            }
+
+            try {
+                const resposta = await fetch(`/artista/lineups/${idUsuario}`);
+                if (!resposta.ok) throw new Error("Erro ao buscar line-ups");
+
+                const lineups = await resposta.json();
+                const secao = document.getElementById("section-cards");
+
+                // Insere os cards antes do botão de adicionar
+                const btnAdicionar = document.querySelector(".card-adicionar");
+
+                lineups.forEach(lineup => {
+                    const a = document.createElement("a");
+                    a.href = `lineups.html`;
+                    a.classList.add("card-link");
+
+                    const div = document.createElement("div");
+                    div.classList.add("card");
+                    div.textContent = lineup.nomeLineup;
+
+                    div.addEventListener("click", () => {
+                        sessionStorage.setItem("ID_LINEUP_ATUAL", lineup.idLineup);
+                        sessionStorage.setItem("NOME_LINEUP_ATUAL", lineup.nomeLineup);
+                    });
+
+                    a.appendChild(div);
+                    secao.insertBefore(a, btnAdicionar);
+                });
+
+
+            } catch (erro) {
+                console.error("Erro ao carregar line-ups:", erro);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", carregarLineups);
     </script>
+
 </body>
+
 </html>

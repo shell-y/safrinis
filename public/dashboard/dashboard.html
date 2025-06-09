@@ -18,7 +18,7 @@
     <nav>
       <ul>
         <li class="link-nav sec-atual"><a href="../index.html">Home</a>
-        <li><a class="link-nav" href="../dashboard/lineups.html">Line-ups</a>
+        <li><a class="link-nav" href="cards.html">Line-ups</a>
         <li><a class="link-nav" href="perfil.html">Perfil</a>
         <li>
           <button id="btn-login" onclick="alternarLoginLogout()">Sair</button>
@@ -70,7 +70,7 @@
                 <label for="periodo-select" class="visually-hidden">
                     Selecionar período do gráfico
                 </label>
-                <select id="periodo-select" class="period-select" onchange="atualizarGraficoPeriodo()">
+                <select id="periodo-select" class="period-select" onchange="atualizarGraficoPorSelect()">
                     <option value="7">Últimos 7 dias</option>
                     <option value="30">Últimos 30 dias</option>
                 </select>

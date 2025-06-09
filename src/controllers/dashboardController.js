@@ -174,16 +174,14 @@ async function compararArtistas(req, res) {
 }
 
 async function getDadosComparativos(idArtista) {
-    const [playsHoje, totalPlays, popularidade] = await Promise.all([
+    const [playsHoje, totalPlays] = await Promise.all([
         lastFmModel.getSomaPlaysPorPeriodo(idArtista, 1),
-        lastFmModel.getSomaPlaysPorPeriodo(idArtista, 90),
-        spotifyModel.getPopularidade(idArtista)
+        lastFmModel.getSomaPlaysPorPeriodo(idArtista, 90)
     ]);
 
     return {
         "Plays Diários": playsHoje[0]?.plays || 0,
-        "Total de Plays": totalPlays[0]?.plays || 0,
-        "Popularidade Spotify": popularidade[0]?.popularidade || 0
+        "Total de Plays": totalPlays[0]?.plays || 0
     };
 }
 

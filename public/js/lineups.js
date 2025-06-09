@@ -110,14 +110,32 @@ function carregarSelectLineups() {
             const select = document.getElementById("lineups");
             select.innerHTML = `<option value="" disabled selected>Selecione</option>`;
 
+            const idLineupSalva = sessionStorage.getItem("ID_LINEUP_ATUAL");
+
             lineups.forEach(l => {
-                select.innerHTML += `<option value="${l.idLineup}">${l.nomeLineup}</option>`;
+                const option = document.createElement("option");
+                option.value = l.idLineup;
+                option.textContent = l.nomeLineup;
+
+                if (idLineupSalva && l.idLineup == idLineupSalva) {
+                    option.selected = true;
+                }
+
+                select.appendChild(option);
             });
+
+            if (idLineupSalva) {
+                idLineupAtual = parseInt(idLineupSalva);
+                sessionStorage.removeItem("ID_LINEUP_ATUAL");
+                sessionStorage.removeItem("NOME_LINEUP_ATUAL");
+                abrirLineup();
+            }
         })
         .catch(err => {
             console.error("Erro ao carregar line-ups:", err);
         });
 }
+
 
 function habilitarInput() {
     const input = document.getElementById('nome_lineup');

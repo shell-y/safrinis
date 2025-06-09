@@ -72,12 +72,15 @@ async function prepararDadosGraficoPlays(artistaSelecionado) {
 
         const playsArtista = await response.json();
 
+        console.log(playsArtista)
+
         const labels = playsArtista.map(item => {
-            const data = new Date(item.DATACOLETA);
+            const data = new Date(item.dataColeta);
             return data.toLocaleDateString('pt-BR');
         });
 
-        const playsData = playsArtista.map(item => item.TOTALPLAYS);
+        const playsData = playsArtista.map(item => item.TotalPlays);
+
 
         const ctx = document.getElementById('grafico-plays').getContext('2d');
 

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (idUsuario) {
         document.getElementById("btn-login").innerText = "Sair";
-    }else{
+    } else {
         document.getElementById("btn-login").innerText = "Login";
     }
 });
@@ -19,18 +19,18 @@ document.getElementById('lineups').addEventListener('change', function () {
 
 
 function alternarLoginLogout() {
-  const idUsuario = sessionStorage.ID_USUARIO;
+    const idUsuario = sessionStorage.ID_USUARIO;
 
-  if (idUsuario) {
-    const confirmacao = confirm("Tem certeza que deseja sair?");
-    if (!confirmacao) return;
-    // Usuário está logado → fazer logout
-    sessionStorage.clear();
-    window.location.href = "../login.html"; // redireciona para a página de login
-  } else {
-    // Usuário não está logado → ir para login
-    window.location.href = "../login.html";
-  }
+    if (idUsuario) {
+        const confirmacao = confirm("Tem certeza que deseja sair?");
+        if (!confirmacao) return;
+        // Usuário está logado → fazer logout
+        sessionStorage.clear();
+        window.location.href = "../login.html"; // redireciona para a página de login
+    } else {
+        // Usuário não está logado → ir para login
+        window.location.href = "../login.html";
+    }
 }
 
 function atualizarEstadoBotaoSalvar() {
@@ -70,7 +70,7 @@ function abrirLineup() {
             tabela.innerHTML = "";
 
             artistas.forEach(a => {
-                            console.log('TABELA',a);
+                console.log('TABELA', a);
 
                 tabela.innerHTML += `
           <tr>
@@ -79,6 +79,7 @@ function abrirLineup() {
             <td>${formatarNumeroAbreviado(a.ouvintes) ?? 'N/A'}</td>
             <td>${formatarNumeroAbreviado(a.plays) ?? 'N/A'}</td>
             <td>${a.ontour ? 'Sim' : 'Não'}</td>
+            <td><button id="btnLineup" onclick="dashArtista('${a.nome}')">Painel do artista</button></td>
             <td><a href="#" onclick="excluirLinha(this)">Excluir</a></td>
           </tr>
         `;
@@ -230,9 +231,9 @@ function salvarLineup() {
             } else {
                 alert("Erro ao salvar line-up.");
             }
-                lineupModificada = false;
-    atualizarEstadoBotaoSalvar();
-    history.go(0);
+            lineupModificada = false;
+            atualizarEstadoBotaoSalvar();
+            // history.go(0);
         })
         .catch(err => {
             console.error("Erro ao salvar line-up:", err);

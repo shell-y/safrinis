@@ -5,7 +5,6 @@ const mapaNomeParaId = new Map(); // chave: nome, valor: id
 function obterIdPorNome(nome) {
     return mapaNomeParaId.has(nome) ? mapaNomeParaId.get(nome) : null;
 }
-
 function formatarNumeroAbreviado(numero) {
     const n = Number(numero);
 
@@ -16,7 +15,6 @@ function formatarNumeroAbreviado(numero) {
     if (n >= 1_000) return (n / 1_000).toFixed(1).replace(".0", "") + "k";
     return n.toString();
 }
-
 function formatarDataHora(dataString) {
   const data = new Date(dataString);
   const dia = String(data.getDate()).padStart(2, '0');
@@ -25,6 +23,11 @@ function formatarDataHora(dataString) {
   const hora = String(data.getHours()).padStart(2, '0');
   const min = String(data.getMinutes()).padStart(2, '0');
   return `${dia}/${mes}/${ano} ${hora}:${min}`;
+}
+
+function dashArtista(nomeArtista){
+    sessionStorage.setItem("nomeArtista", nomeArtista);
+    window.location.href = "../dashboard.html";
 }
 
 function adicionarArtista(valueArtista) {
@@ -57,6 +60,7 @@ function adicionarArtista(valueArtista) {
                     <td>${formatarNumeroAbreviado(dados.ouvintes) ?? 'N/A'}</td>
                     <td>${formatarNumeroAbreviado(dados.plays) ?? 'N/A'}</td>
                     <td>${dados.onTour ? 'Sim' : 'Não'}</td>
+                    <td><button id="btnLineup" onclick="dashArtista('${dados.nome}')">Painel do artista</button></td>
                     <td><a href="#" onclick="excluirLinha(this)">Excluir</a></td>
                 </tr>
             `;
@@ -172,6 +176,7 @@ function adicionarRelacionado(nome, popularidade, ouvintes, plays, onTour) {
           <td>${formatarNumeroAbreviado(ouvintes) ?? 'N/A'}</td>
           <td>${formatarNumeroAbreviado(plays) ?? 'N/A'}</td>
           <td>${onTour ? 'Sim' : 'Não'}</td>
+          <td><button id="btnLineup" onclick="dashArtista('${nome}')">Painel do artista</button></td>
           <td><a href="#" onclick="excluirLinha(this)">Excluir</a></td>
           </tr>
           `;

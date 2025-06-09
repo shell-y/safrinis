@@ -27,7 +27,7 @@ function formatarDataHora(dataString) {
 
 function dashArtista(nomeArtista){
     sessionStorage.setItem("nomeArtista", nomeArtista);
-    window.location.href = "../dashboard.html";
+    window.location.href = "./dashboard.html";
 }
 
 function adicionarArtista(valueArtista) {

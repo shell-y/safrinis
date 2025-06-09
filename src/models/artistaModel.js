@@ -100,7 +100,7 @@ function buscarPorNome(nome) {
 
 function buscarRelacionados(artistaId) {
     const instrucaoSql = `
-        SELECT * FROM ARTISTA WHERE FKRELACIONADOA = ${artistaId};
+        SELECT * FROM Artista WHERE fkRelacionadoA = ${artistaId};
         `
 
     console.log("Executando a instrução SQL: " + instrucaoSql);
@@ -243,5 +243,6 @@ module.exports = {
   renomearLineup,
   listarLineups,
   buscarLineupPorId,
-  excluirLineup
+  excluirLineup,
+  buscarRelacionados
 };

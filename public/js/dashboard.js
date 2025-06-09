@@ -1,4 +1,7 @@
-const artistaSelecionado = 'Bruno Mars';
+const artistaSelecionado = sessionStorage.nomeArtista;
+
+document.querySelector("#span_nome_artista").innerText = artistaSelecionado;
+
 let dadosGrafico = {};
 let grafico;
 let graficoPlays;

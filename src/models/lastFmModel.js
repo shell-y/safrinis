@@ -54,12 +54,16 @@ function getPlaysPorPeriodo(idArtista, dias){
     const dataFim = new Date();
 
     const instrucaoSql = `
-    SELECT DATACOLETA, TOTALPLAYS
-    FROM LASTFM 
-        WHERE FKARTISTA = ${idArtista} 
-            AND DATE(DATACOLETA) >= '${dataInicio.toISOString().slice(0,10)}'
-            AND DATE(DATACOLETA) <= '${dataFim.toISOString().slice(0,10)}'
-        ORDER BY DATACOLETA;`
+    SELECT dataColeta, TotalPlays
+    FROM LastFm 
+        WHERE fkArtista = ${idArtista} 
+            AND DATE(dataColeta) >= '${dataInicio.toISOString().slice(0,10)}'
+            AND DATE(dataColeta) <= '${dataFim.toISOString().slice(0,10)}'
+        ORDER BY dataColeta;
+    `
+
+    console.log("Executando a instrução SQL: " + instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
 function deletarRegistrosArtista(idArtista = 0) {

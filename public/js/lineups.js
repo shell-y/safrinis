@@ -91,7 +91,6 @@ function abrirLineup() {
 
             // Muda o texto do botão
             document.getElementById("salvarLineup").innerText = "Salvar alterações";
-            document.getElementById("criarNova").style.display = 'block';
             document.getElementById("titulo_line").innerText = "Minhas line-ups";
         })
         .catch(erro => {
@@ -288,6 +287,18 @@ function excluirLineup() {
             alert("Erro na comunicação com o servidor.");
         });
 }
+
+setTimeout(() => {
+    if(sessionStorage.ID_LINEUP_SELECIONADA
+        && sessionStorage.ID_LINEUP_SELECIONADA != "null"
+    ) {
+        document.querySelector("select#lineups").value = 
+            sessionStorage.ID_LINEUP_SELECIONADA
+        ;
+
+        abrirLineup();
+    }
+},500)
 
 // function ajustarLargura() {
 //       const input = document.getElementById('nome_lineup');
